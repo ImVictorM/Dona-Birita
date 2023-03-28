@@ -1,6 +1,23 @@
-// import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function LoginForm() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  useEffect(() => {
+    function validateLogin() {
+      const regex = /\S+@\S+\.\S+/i;
+      const magicNumber = 5;
+      return (regex.test(email) && password.length > magicNumber);
+    }
+    if (validateLogin()) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [email, password]);
+
   function handleSubmit(event) {
     event.preventDefault();
   }
@@ -10,17 +27,32 @@ function LoginForm() {
       <div className="inputs-container">
         <label htmlFor="email">
           E-mail
-          <input type="text" data-testid="common_login__input-email" id="email" />
+          <input
+            onChange={ (event) => setEmail(event.target.value) }
+            value={ email }
+            type="text"
+            data-testid="common_login__input-email"
+            id="email"
+          />
         </label>
         <label htmlFor="password">
           Senha
           <input
+            onChange={ (event) => setPassword(event.target.value) }
+            value={ password }
             type="password"
             data-testid="common_login__input-password"
             id="password"
           />
         </label>
-        <button type="submit" data-testid="common_login__button-login">Login</button>
+        <button
+          disabled={ isDisabled }
+          type="submit"
+          data-testid="common_login__button-login"
+        >
+          Login
+
+        </button>
         <button
           type="button"
           data-testid="common_login__button-register"
