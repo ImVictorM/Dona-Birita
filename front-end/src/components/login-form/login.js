@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -57,7 +58,9 @@ function LoginForm() {
           type="button"
           data-testid="common_login__button-register"
         >
-          Cadastrar
+          <Link to="/register">
+            Cadastrar
+          </Link>
 
         </button>
       </div>
