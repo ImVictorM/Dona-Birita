@@ -12,7 +12,7 @@ app.use(cors({
   origin: 'http://localhost:3000',
 }));
 
-app.use('/login', userRouter);
+app.use('/user', userRouter);
 
 app.use(handleError);
 

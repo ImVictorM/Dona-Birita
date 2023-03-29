@@ -26,7 +26,7 @@ function LoginForm() {
   }
 
   async function handleClick() {
-    const endpoint = 'http://localhost:3001/login';
+    const endpoint = 'http://localhost:3001/user/login';
     const response = await fetch(endpoint, {
       method: 'POST',
       mode: 'cors',
