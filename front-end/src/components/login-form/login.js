@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 function LoginForm() {
+  const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
+  const [showError, setShowError] = useState(false);
 
   useEffect(() => {
     function validateLogin() {
@@ -21,6 +23,26 @@ function LoginForm() {
 
   function handleSubmit(event) {
     event.preventDefault();
+  }
+
+  async function handleClick() {
+    const endpoint = 'http://localhost:3001/login';
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify({ email, password }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const loginResponse = await response.json();
+
+    if (loginResponse.message) {
+      setShowError(true);
+    } else {
+      history.push('/customer/products');
+    }
   }
 
   return (
@@ -50,6 +72,7 @@ function LoginForm() {
           disabled={ isDisabled }
           type="submit"
           data-testid="common_login__button-login"
+          onClick={ handleClick }
         >
           Login
 
@@ -63,6 +86,12 @@ function LoginForm() {
           </Link>
 
         </button>
+        {
+          showError && (
+            <p data-testid="common_login__element-invalid-email">Algo deu errado!</p>
+          )
+        }
+
       </div>
     </form>
   );
