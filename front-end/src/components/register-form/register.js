@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 function RegisterForm() {
+  const history = useHistory();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [allowedToRegister, setAllowedToRegister] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -24,6 +27,24 @@ function RegisterForm() {
     }
     setAllowedToRegister(validateRegistrationForm());
   }, [name, email, password]);
+
+  async function registerNewUser() {
+    const endpoint = 'http://localhost:3001/user/register';
+    const creationResponse = await fetch(endpoint, {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify({ email, password, name, role: 'customer' }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const CREATED_CODE = 201;
+    if (creationResponse.status !== CREATED_CODE) {
+      setShowError(true);
+    } else {
+      history.push('/customer/products');
+    }
+  }
 
   return (
     <form onSubmit={ handleSubmit }>
@@ -62,9 +83,20 @@ function RegisterForm() {
           type="submit"
           data-testid="common_register__button-register"
           disabled={ !allowedToRegister }
+          onClick={ registerNewUser }
         >
           Registrar
         </button>
+        {
+          showError && (
+            <p
+              data-testid="common_register__element-invalid_register"
+            >
+              Algo deu errado!
+
+            </p>
+          )
+        }
       </div>
     </form>
   );
