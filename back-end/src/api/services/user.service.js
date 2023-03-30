@@ -25,8 +25,10 @@ async function loginUser(userFromReq) {
 
   validateLoginAttempt(userFromReq, userFromDB);
 
-  const token = generateToken(userFromDB);
-  return token;
+  const token = await generateToken(userFromDB);
+  const user = userFromDB.dataValues;
+  delete user.password;
+  return { ...user, token };
 }
 
 async function validateUserAlreadyExists(userFromReq) {
