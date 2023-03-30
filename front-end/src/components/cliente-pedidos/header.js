@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 function HeaderPedidos() {
   return (
     <header>
-      <nav>
+      <nav data-testid="customer_products__element-navbar-link-orders">
         <Link
           to="/"
           data-testid="customer_products__element-navbar-link-products"
