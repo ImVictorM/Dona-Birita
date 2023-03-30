@@ -4,7 +4,7 @@ const handleError = require('./middlewares/errorHandler');
 require('express-async-errors');
 
 const app = express();
-const { userRouter } = require('./routes');
+const { userRouter, productRouter } = require('./routes');
 
 app.use(express.json());
 
@@ -13,6 +13,7 @@ app.use(cors({
 }));
 
 app.use('/user', userRouter);
+app.use('/product', productRouter);
 
 app.use(handleError);
 
