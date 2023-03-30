@@ -41,7 +41,12 @@ function LoginForm() {
     if (loginResponse.message) {
       setShowError(true);
     } else {
-      history.push('/customer/products');
+      localStorage.setItem('user', loginResponse);
+      if (loginResponse.role === 'customer') {
+        history.push('/customer/products');
+      } else if (loginResponse.role === 'administrator') {
+        history.push('/admin/manage');
+      }
     }
   }
 

@@ -3,7 +3,7 @@ const { loginUser, registerNewUser } = require('../services/user.service');
 async function requestLogin(req, res) {
   const userFromReq = req.body;
   const token = await loginUser(userFromReq);
-  return res.status(200).json({ token });
+  return res.status(200).json(token);
 }
 
 async function requestUserRegistration(req, res) {
