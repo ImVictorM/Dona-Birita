@@ -20,7 +20,11 @@ function Card({ id, name, imag, price }) {
         src={ imag }
         alt={ name }
       />
-      <p data-testid={ `customer_products__element-card-price-${id}` }>{ price }</p>
+      <p
+        data-testid={ `customer_products__element-card-price-${id}` }
+      >
+        { price.replace('.', ',') }
+      </p>
       <button
         type="button"
         onClick={ handleClickMinus }
