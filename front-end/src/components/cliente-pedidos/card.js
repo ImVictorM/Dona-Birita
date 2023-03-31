@@ -9,18 +9,26 @@ function Card({ id, name, imag, price }) {
 
     if (quantity > 0) {
       const INVALID_INDEX = -1;
-
-      const indexToUpdate = cart.findIndex((product) => product.id === id);
+      const indexToUpdate = cart.findIndex((product) => product.productId === id);
 
       if (indexToUpdate !== INVALID_INDEX) {
+        const subTotal = quantity * price;
         cart[indexToUpdate].quantity = quantity;
+        cart[indexToUpdate].subTotal = subTotal.toString().replace('.', ',');
         localStorage.setItem('cart', JSON.stringify(cart));
       } else {
-        const newProduct = { id, name, imag, price, quantity };
+        const subTotal = price * quantity;
+        const newProduct = {
+          productId: id,
+          name,
+          unitPrice: price.replace('.', ','),
+          quantity,
+          subTotal: subTotal.toString().replace('.', ','),
+        };
         localStorage.setItem('cart', JSON.stringify([...cart, newProduct]));
       }
     } else {
-      const updatedCart = cart.filter((product) => product.id !== id);
+      const updatedCart = cart.filter((product) => product.productId !== id);
       localStorage.setItem('cart', JSON.stringify(updatedCart));
     }
   }, [id, imag, name, price, quantity]);
@@ -30,8 +38,15 @@ function Card({ id, name, imag, price }) {
   }
 
   function handleClickMinus() {
+    if (quantity <= 0) return setQuantity(0);
     setQuantity(quantity - 1);
   }
+
+  function handleChangeQuantity({ target: { value } }) {
+    if (value <= 0) return setQuantity(0);
+    setQuantity(value);
+  }
+
   return (
     <li>
       <p data-testid={ `customer_products__element-card-title-${id}` }>{ name }</p>
@@ -58,6 +73,8 @@ function Card({ id, name, imag, price }) {
         data-testid={ `customer_products__input-card-quantity-${id}` }
         name="quantidade"
         value={ quantity }
+        onChange={ handleChangeQuantity }
+
       />
       <button
         type="button"

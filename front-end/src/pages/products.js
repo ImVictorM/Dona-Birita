@@ -19,6 +19,7 @@ function Product() {
     }
     fetchProduct();
   }, []);
+
   return (
     <div>
       <h1>Product!</h1>
@@ -33,6 +34,15 @@ function Product() {
             price={ product.price }
           />)) }
       </ul>
+      <button
+        data-testid="customer_products__button-cart"
+        type="button"
+        // disabled={ totalPrice === '0.00' }
+      >
+        <p data-testid="customer_products__checkout-bottom-value">
+          {/* { `${totalPrice}`.replace('.', ',') } */}
+        </p>
+      </button>
     </div>
   );
 }
