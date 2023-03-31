@@ -5,9 +5,10 @@ function Card({ id, name, imag, price }) {
   const [quantity, setQuantity] = useState(0);
 
   useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
     if (quantity > 0) {
       const INVALID_INDEX = -1;
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
       const indexToUpdate = cart.findIndex((product) => product.id === id);
 
@@ -18,6 +19,9 @@ function Card({ id, name, imag, price }) {
         const newProduct = { id, name, imag, price, quantity };
         localStorage.setItem('cart', JSON.stringify([...cart, newProduct]));
       }
+    } else {
+      const updatedCart = cart.filter((product) => product.id !== id);
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
     }
   }, [id, imag, name, price, quantity]);
 
