@@ -3,14 +3,37 @@ import { useState } from 'react';
 
 function Card({ id, name, imag, price }) {
   const [quantity, setQuantity] = useState(0);
+  // const [cart, setCart] = useState([]);
+
+  // useEffect(() => {
+  //   const cartFromLocalStorage = localStorage.getItem('cart');
+
+  //   if (cartFromLocalStorage) {
+  //     setCart(JSON.parse(cartFromLocalStorage));
+  //     console.log('set cart', cart);
+  //     const indexToIncrease = cart.findIndex((product) => product.id === id);
+  //     console.log('index', indexToIncrease);
+  //     const NULL_INDEX = -1;
+  //     if (indexToIncrease === NULL_INDEX) {
+  //       console.log('teste', cart[indexToIncrease]);
+  //       // cart[indexToIncrease].quantity = quantity;
+  //       localStorage.setItem('cart', JSON.stringify(cart));
+  //     }
+  //   } else {
+  //     const product = { id, name, imag, price, quantity };
+  //     console.log('product', product);
+  //     setCart([product]);
+  //     console.log(cart);
+  //     localStorage.setItem('cart', JSON.stringify(cart));
+  //   }
+  // }, [quantity]);
+
   function handleClickAdd() {
-    const result = quantity + 1;
-    setQuantity(result);
+    setQuantity(quantity + 1);
   }
 
   function handleClickMinus() {
-    const result = quantity - 1;
-    setQuantity(result);
+    setQuantity(quantity - 1);
   }
   return (
     <li>
@@ -27,7 +50,7 @@ function Card({ id, name, imag, price }) {
       </p>
       <button
         type="button"
-        onClick={ handleClickMinus }
+        onClick={ () => handleClickMinus() }
         data-testid={ `customer_products__button-card-rm-item-${id}` }
       >
         -
@@ -41,7 +64,7 @@ function Card({ id, name, imag, price }) {
       />
       <button
         type="button"
-        onClick={ handleClickAdd }
+        onClick={ () => handleClickAdd() }
         data-testid={ `customer_products__button-card-add-item-${id}` }
       >
         +

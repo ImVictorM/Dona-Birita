@@ -41,7 +41,7 @@ function LoginForm() {
     if (loginResponse.message) {
       setShowError(true);
     } else {
-      localStorage.setItem('user', loginResponse);
+      localStorage.setItem('user', JSON.stringify(loginResponse));
       if (loginResponse.role === 'customer') {
         history.push('/customer/products');
       } else if (loginResponse.role === 'administrator') {
