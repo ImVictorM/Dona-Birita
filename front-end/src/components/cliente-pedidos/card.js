@@ -1,32 +1,25 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function Card({ id, name, imag, price }) {
   const [quantity, setQuantity] = useState(0);
-  // const [cart, setCart] = useState([]);
 
-  // useEffect(() => {
-  //   const cartFromLocalStorage = localStorage.getItem('cart');
+  useEffect(() => {
+    if (quantity > 0) {
+      const INVALID_INDEX = -1;
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-  //   if (cartFromLocalStorage) {
-  //     setCart(JSON.parse(cartFromLocalStorage));
-  //     console.log('set cart', cart);
-  //     const indexToIncrease = cart.findIndex((product) => product.id === id);
-  //     console.log('index', indexToIncrease);
-  //     const NULL_INDEX = -1;
-  //     if (indexToIncrease === NULL_INDEX) {
-  //       console.log('teste', cart[indexToIncrease]);
-  //       // cart[indexToIncrease].quantity = quantity;
-  //       localStorage.setItem('cart', JSON.stringify(cart));
-  //     }
-  //   } else {
-  //     const product = { id, name, imag, price, quantity };
-  //     console.log('product', product);
-  //     setCart([product]);
-  //     console.log(cart);
-  //     localStorage.setItem('cart', JSON.stringify(cart));
-  //   }
-  // }, [quantity]);
+      const indexToUpdate = cart.findIndex((product) => product.id === id);
+
+      if (indexToUpdate !== INVALID_INDEX) {
+        cart[indexToUpdate].quantity = quantity;
+        localStorage.setItem('cart', JSON.stringify(cart));
+      } else {
+        const newProduct = { id, name, imag, price, quantity };
+        localStorage.setItem('cart', JSON.stringify([...cart, newProduct]));
+      }
+    }
+  }, [id, imag, name, price, quantity]);
 
   function handleClickAdd() {
     setQuantity(quantity + 1);
