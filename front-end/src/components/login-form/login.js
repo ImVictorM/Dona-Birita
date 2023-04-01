@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import Context from '../../context/Context';
 
 function LoginForm() {
   const history = useHistory();
+  const { setUser } = useContext(Context);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
@@ -42,6 +44,7 @@ function LoginForm() {
       setShowError(true);
     } else {
       localStorage.setItem('user', JSON.stringify(loginResponse));
+      setUser(loginResponse);
       if (loginResponse.role === 'customer') {
         history.push('/customer/products');
       } else if (loginResponse.role === 'administrator') {

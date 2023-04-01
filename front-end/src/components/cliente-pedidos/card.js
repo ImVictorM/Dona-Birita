@@ -1,40 +1,66 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import Context from '../../context/Context';
 
 function Card({ id, name, imag, price }) {
   const [quantity, setQuantity] = useState(0);
-  // const [cart, setCart] = useState([]);
+  const { setTotalPrice } = useContext(Context);
 
-  // useEffect(() => {
-  //   const cartFromLocalStorage = localStorage.getItem('cart');
+  useEffect(() => {
+    function sumCart() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartReduce = (cart.reduce(
+        (acc, currentValue) => acc + currentValue.subTotal,
+        0,
+      ));
+      setTotalPrice(cartReduce.toFixed(2));
+    }
 
-  //   if (cartFromLocalStorage) {
-  //     setCart(JSON.parse(cartFromLocalStorage));
-  //     console.log('set cart', cart);
-  //     const indexToIncrease = cart.findIndex((product) => product.id === id);
-  //     console.log('index', indexToIncrease);
-  //     const NULL_INDEX = -1;
-  //     if (indexToIncrease === NULL_INDEX) {
-  //       console.log('teste', cart[indexToIncrease]);
-  //       // cart[indexToIncrease].quantity = quantity;
-  //       localStorage.setItem('cart', JSON.stringify(cart));
-  //     }
-  //   } else {
-  //     const product = { id, name, imag, price, quantity };
-  //     console.log('product', product);
-  //     setCart([product]);
-  //     console.log(cart);
-  //     localStorage.setItem('cart', JSON.stringify(cart));
-  //   }
-  // }, [quantity]);
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    if (quantity > 0) {
+      const INVALID_INDEX = -1;
+      const indexToUpdate = cart.findIndex((product) => product.productId === id);
+
+      if (indexToUpdate !== INVALID_INDEX) {
+        const subTotal = quantity * price;
+        cart[indexToUpdate].quantity = quantity;
+        cart[indexToUpdate].subTotal = subTotal;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        sumCart();
+      } else {
+        const subTotal = price * quantity;
+        const newProduct = {
+          productId: id,
+          name,
+          unitPrice: price,
+          quantity,
+          subTotal,
+        };
+        localStorage.setItem('cart', JSON.stringify([...cart, newProduct]));
+        sumCart();
+      }
+    } else {
+      const updatedCart = cart.filter((product) => product.productId !== id);
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      sumCart();
+    }
+  }, [id, imag, name, price, quantity, setTotalPrice]);
 
   function handleClickAdd() {
     setQuantity(quantity + 1);
   }
 
   function handleClickMinus() {
+    if (quantity <= 0) return setQuantity(0);
     setQuantity(quantity - 1);
   }
+
+  function handleChangeQuantity({ target: { value } }) {
+    if (value <= 0) return setQuantity(0);
+    setQuantity(value);
+  }
+
   return (
     <li>
       <p data-testid={ `customer_products__element-card-title-${id}` }>{ name }</p>
@@ -61,6 +87,8 @@ function Card({ id, name, imag, price }) {
         data-testid={ `customer_products__input-card-quantity-${id}` }
         name="quantidade"
         value={ quantity }
+        onChange={ handleChangeQuantity }
+
       />
       <button
         type="button"
