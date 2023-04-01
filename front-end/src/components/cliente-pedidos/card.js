@@ -1,8 +1,19 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import Context from '../../context/Context';
 
 function Card({ id, name, imag, price }) {
   const [quantity, setQuantity] = useState(0);
+  const { setTotalPrice } = useContext(Context);
+
+  function sumCart() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartReduce = (cart.reduce(
+      (acc, currentValue) => acc + currentValue.subTotal,
+      0,
+    ));
+    setTotalPrice(cartReduce.toFixed(2));
+  }
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -14,22 +25,25 @@ function Card({ id, name, imag, price }) {
       if (indexToUpdate !== INVALID_INDEX) {
         const subTotal = quantity * price;
         cart[indexToUpdate].quantity = quantity;
-        cart[indexToUpdate].subTotal = subTotal.toString().replace('.', ',');
+        cart[indexToUpdate].subTotal = subTotal;
         localStorage.setItem('cart', JSON.stringify(cart));
+        sumCart();
       } else {
         const subTotal = price * quantity;
         const newProduct = {
           productId: id,
           name,
-          unitPrice: price.replace('.', ','),
+          unitPrice: price,
           quantity,
-          subTotal: subTotal.toString().replace('.', ','),
+          subTotal,
         };
         localStorage.setItem('cart', JSON.stringify([...cart, newProduct]));
+        sumCart();
       }
     } else {
       const updatedCart = cart.filter((product) => product.productId !== id);
       localStorage.setItem('cart', JSON.stringify(updatedCart));
+      sumCart();
     }
   }, [id, imag, name, price, quantity]);
 
