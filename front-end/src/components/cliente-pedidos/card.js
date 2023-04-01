@@ -45,7 +45,7 @@ function Card({ id, name, imag, price }) {
       localStorage.setItem('cart', JSON.stringify(updatedCart));
       sumCart();
     }
-  }, [id, imag, name, price, quantity]);
+  }, [id, imag, name, price, quantity, sumCart]);
 
   function handleClickAdd() {
     setQuantity(quantity + 1);
