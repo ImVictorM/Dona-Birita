@@ -4,11 +4,14 @@ import Context from './Context';
 
 function Provider({ children }) {
   const [totalPrice, setTotalPrice] = useState(0);
+  const [user, setUser] = useState({});
 
   const value = useMemo(() => ({
     totalPrice,
     setTotalPrice,
-  }), [totalPrice]);
+    user,
+    setUser,
+  }), [totalPrice, user]);
 
   return (
     <Context.Provider value={ value }>

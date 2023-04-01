@@ -1,6 +1,10 @@
-import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import Context from '../../context/Context';
 
 function HeaderPedidos() {
+  const history = useHistory();
+  const { user } = useContext(Context);
   return (
     <header>
       <nav>
@@ -19,13 +23,19 @@ function HeaderPedidos() {
         <Link
           to="/"
           data-testid="customer_products__element-navbar-user-full-name"
-        />
-        <Link
-          to="/"
+        >
+          { user.name }
+        </Link>
+        <button
+          type="button"
           data-testid="customer_products__element-navbar-link-logout"
+          onClick={ () => {
+            localStorage.removeItem('user');
+            history.push('/');
+          } }
         >
           Sair
-        </Link>
+        </button>
       </nav>
     </header>
   );
