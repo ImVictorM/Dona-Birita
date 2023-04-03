@@ -5,7 +5,7 @@ function AdminForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
-  const [role, setRole] = useState();
+  const [role, setRole] = useState('customer');
 
   useEffect(() => {
     const validRegister = () => {
@@ -22,8 +22,21 @@ function AdminForm() {
     }
   }, [email, password, name]);
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
+
+    const endpoint = 'http://localhost:3001/admin/register';
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify({ name, email, password, role }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: JSON.parse(localStorage.getItem('user')).token,
+      },
+    });
+
+    console.log(response.json());
   }
 
   return (
@@ -36,6 +49,7 @@ function AdminForm() {
           data-testid="admin_manage__input-name"
           onChange={ (event) => setName(event.target.value) }
           id="name"
+          name="name"
         />
       </label>
       <label htmlFor="email">
@@ -46,6 +60,7 @@ function AdminForm() {
           data-testid="admin_manage__input-email"
           onChange={ (event) => setEmail(event.target.value) }
           id="email"
+          name="email"
         />
       </label>
       <label htmlFor="password">
@@ -56,6 +71,7 @@ function AdminForm() {
           data-testid="admin_manage__input-password"
           onChange={ (event) => setPassword(event.target.value) }
           id="password"
+          name="password"
         />
       </label>
       <button
@@ -70,7 +86,8 @@ function AdminForm() {
       <select
         data-testid="admin_manage__select-role"
         value={ role }
-        defaultValue="customer"
+        id="role"
+        name="role"
         onChange={ (event) => setRole(event.target.value) }
       >
         <option value="seller">Vendedor</option>
