@@ -15,12 +15,12 @@ function CheckoutTable() {
       <table>
         <thead>
           <tr>
-            <td>Item</td>
-            <td>Descrição</td>
-            <td>Quantidade</td>
-            <td>Valor unitário</td>
-            <td>Sub-total</td>
-            <td>Remover Item</td>
+            <th>Item</th>
+            <th>Descrição</th>
+            <th>Quantidade</th>
+            <th>Valor unitário</th>
+            <th>Sub-total</th>
+            <th>Remover Item</th>
           </tr>
         </thead>
         <tbody>
@@ -58,14 +58,14 @@ function CheckoutTable() {
                     <span
                       data-testid={ `${TEST_PREFIX}unit-price-${index}` }
                     >
-                      {unitPrice}
+                      {Number(unitPrice).toFixed(2).replace('.', ',')}
                     </span>
                   </td>
                   <td>
                     <span
                       data-testid={ `${TEST_PREFIX}sub-total-${index}` }
                     >
-                      {subTotal}
+                      {Number(subTotal).toFixed(2).replace('.', ',')}
                     </span>
                   </td>
                   <td>
@@ -88,7 +88,7 @@ function CheckoutTable() {
         <span
           data-testid="customer_checkout__element-order-total-price"
         >
-          {context.totalPrice}
+          {Number(context.totalPrice).toFixed(2).replace('.', ',')}
         </span>
       </div>
     </section>
