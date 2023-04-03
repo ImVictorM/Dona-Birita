@@ -3,12 +3,25 @@ import Context from '../../context/Context';
 
 function CheckoutTable() {
   const [cart, setCart] = useState([]);
-  const context = useContext(Context);
+  const { totalPrice, sumCart } = useContext(Context);
 
   useEffect(() => {
     const cartFromLocalStorage = JSON.parse(localStorage.getItem('cart')) || [];
     setCart(cartFromLocalStorage);
   }, []);
+
+  function removeItem(event) {
+    const idProductToRemove = event.target.id;
+    const updatedCart = cart
+      .filter((product) => Number(product.productId) !== Number(idProductToRemove));
+    setCart(updatedCart);
+  }
+
+  // atualiza o cart no local storage sempre que o cart no componente mudar
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    sumCart();
+  }, [cart, sumCart]);
 
   return (
     <section>
@@ -72,6 +85,8 @@ function CheckoutTable() {
                     <button
                       data-testid={ `${TEST_PREFIX}remove-${index}` }
                       type="button"
+                      id={ productId }
+                      onClick={ removeItem }
                     >
                       Remover
 
@@ -88,7 +103,7 @@ function CheckoutTable() {
         <span
           data-testid="customer_checkout__element-order-total-price"
         >
-          {Number(context.totalPrice).toFixed(2).replace('.', ',')}
+          {Number(totalPrice).toFixed(2).replace('.', ',')}
         </span>
       </div>
     </section>
