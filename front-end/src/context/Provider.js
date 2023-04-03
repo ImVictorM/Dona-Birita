@@ -6,11 +6,20 @@ function Provider({ children }) {
   const [totalPrice, setTotalPrice] = useState(0);
   const [user, setUser] = useState({});
 
+  function sumCart() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartReduce = (cart.reduce(
+      (acc, currentValue) => acc + currentValue.subTotal,
+      0,
+    ));
+    setTotalPrice(cartReduce.toFixed(2));
+  }
+
   const value = useMemo(() => ({
     totalPrice,
-    setTotalPrice,
     user,
     setUser,
+    sumCart,
   }), [totalPrice, user]);
 
   return (
