@@ -29,40 +29,53 @@ function CheckoutTable() {
               const { name, productId, quantity, unitPrice, subTotal } = product;
 
               // test ids
-              const ROUTE = 'customer_checkout__element-order-table-';
-              const ITEM_NUMBER = `${ROUTE}item-number-${index}`;
-              const ITEM_DESC = `${ROUTE}name-${index}`;
-              const ITEM_QUANTITY = `${ROUTE}quantity-${index}`;
-              const ITEM_PRICE = `${ROUTE}unit-price-${index} `;
-              const ITEM_SUB_TOTAL = `${ROUTE}sub-total-${index}`;
-              const REMOVE_ITEM = `${ROUTE}remove-${index}`;
-
-              console.log(ITEM_DESC);
+              const TEST_PREFIX = 'customer_checkout__element-order-table-';
 
               return (
                 <tr key={ productId }>
                   <td>
                     <span
-                      data-testid={ ITEM_NUMBER }
+                      data-testid={ `${TEST_PREFIX}item-number-${index}` }
                     >
                       { index + 1}
-
                     </span>
                   </td>
                   <td>
-                    <span data-testid={ ITEM_DESC }>{name}</span>
+                    <span
+                      data-testid={ `${TEST_PREFIX}name-${index}` }
+                    >
+                      {name}
+                    </span>
                   </td>
                   <td>
-                    <span data-testid={ ITEM_QUANTITY }>{quantity}</span>
+                    <span
+                      data-testid={ `${TEST_PREFIX}quantity-${index}` }
+                    >
+                      {quantity}
+                    </span>
                   </td>
                   <td>
-                    <span data-testid={ ITEM_PRICE }>{unitPrice}</span>
+                    <span
+                      data-testid={ `${TEST_PREFIX}unit-price-${index}` }
+                    >
+                      {unitPrice}
+                    </span>
                   </td>
                   <td>
-                    <span data-testid={ ITEM_SUB_TOTAL }>{subTotal}</span>
+                    <span
+                      data-testid={ `${TEST_PREFIX}sub-total-${index}` }
+                    >
+                      {subTotal}
+                    </span>
                   </td>
                   <td>
-                    <button data-testid={ REMOVE_ITEM } type="button">Remover</button>
+                    <button
+                      data-testid={ `${TEST_PREFIX}remove-${index}` }
+                      type="button"
+                    >
+                      Remover
+
+                    </button>
                   </td>
                 </tr>
               );
