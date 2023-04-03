@@ -2,6 +2,11 @@ import { useEffect, useState } from 'react';
 
 function CheckoutForm() {
   const [sellerList, setSellerList] = useState([]);
+  const [selectedSellerId, setSelectedSellerId] = useState('');
+  const [form, setForm] = useState({
+    address: '',
+    number: '',
+  });
 
   useEffect(() => {
     async function getSellerList() {
@@ -20,32 +25,51 @@ function CheckoutForm() {
     getSellerList();
   }, []);
 
+  useEffect(() => {
+    if (sellerList.length > 0) {
+      setSelectedSellerId(sellerList[0].id);
+    }
+  }, [sellerList]);
+
   async function registerSale() {
-    const endpoint = 'http://localhost:3001/sale';
-    const sale = {
-      userId: '1',
-      sellerId: '2',
-      totalPrice: '21.2',
-      deliveryAddress: 'simsimsim',
-      deliveryNumber: 'naonaonao',
-      saleDate: 'Mon Apr 03 2023 18:05:26 GMT-0300',
-      status: 'coisando',
-    };
-    await fetch(endpoint, {
-      method: 'POST',
-      mode: 'cors',
-      body: JSON.stringify(sale),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    // fazer depois
+    // const endpoint = 'http://localhost:3001/sale';
+    // const sale = {
+    //   userId: '1',
+    //   sellerId: '2',
+    //   totalPrice: '21.2',
+    //   deliveryAddress: 'simsimsim',
+    //   deliveryNumber: 'naonaonao',
+    //   saleDate: 'Mon Apr 03 2023 18:05:26 GMT-0300',
+    //   status: 'coisando',
+    // };
+    // await fetch(endpoint, {
+    //   method: 'POST',
+    //   mode: 'cors',
+    //   body: JSON.stringify(sale),
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // });
+  }
+
+  function handleChange({ target }) {
+    const fieldName = target.name;
+    const fieldValue = target.value;
+    setForm({ ...form, [fieldName]: fieldValue });
   }
 
   return (
     <form>
       <label htmlFor="seller">
         <p>P. Vendedora Responsável:</p>
-        <select data-testid="customer_checkout__select-seller" id="seller">
+        <select
+          onChange={ handleChange }
+          data-testid="customer_checkout__select-seller"
+          id="seller"
+          name="sellerId"
+          value={ selectedSellerId }
+        >
           {
             sellerList.map((seller) => {
               const { id, name } = seller;
@@ -54,6 +78,7 @@ function CheckoutForm() {
               );
             })
           }
+          <option>teste</option>
         </select>
       </label>
       <label htmlFor="address">
@@ -62,6 +87,9 @@ function CheckoutForm() {
           data-testid="customer_checkout__input-address"
           type="text"
           id="address"
+          name="address"
+          value={ form.address }
+          onChange={ handleChange }
         />
       </label>
       <label htmlFor="number">
@@ -69,7 +97,10 @@ function CheckoutForm() {
         <input
           type="number"
           id="number"
+          name="number"
           data-testid="customer_checkout__input-address-number"
+          value={ form.number }
+          onChange={ handleChange }
         />
       </label>
       <button
