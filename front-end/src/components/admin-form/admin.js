@@ -100,7 +100,7 @@ function AdminForm() {
       </select>
       {
         showError && (
-          <p data-testid="common_login__element-invalid-email">
+          <p data-testid="admin_manage__element-invalid-register">
             Nome ou e-mail já cadastrado!
           </p>
         )
