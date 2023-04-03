@@ -49,6 +49,8 @@ function LoginForm() {
         history.push('/customer/products');
       } else if (loginResponse.role === 'administrator') {
         history.push('/admin/manage');
+      } else if (loginResponse.role === 'seller') {
+        history.push('/customer/orders');
       }
     }
   }
