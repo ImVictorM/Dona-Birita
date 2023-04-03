@@ -26,29 +26,21 @@ function CheckoutTable() {
         <tbody>
           {
             cart.map((product, index) => {
-              const { name, id, quantity, price } = product;
-              const subTotal = price * quantity;
+              const { name, productId, quantity, unitPrice, subTotal } = product;
 
               // test ids
-              const ITEM_NUMBER = `
-              customer_checkout__element-order-table-item-number-${index}
-              `;
-              const ITEM_DESC = `customer_checkout__element-order-table-name-${index}`;
-              const ITEM_QUANTITY = `
-              customer_checkout__element-order-table-quantity-${index}
-              `;
-              const ITEM_PRICE = `
-              customer_checkout__element-order-table-unit-price-${index}
-              `;
-              const ITEM_SUB_TOTAL = `
-              customer_checkout__element-order-table-sub-total-${index}
-              `;
-              const REMOVE_ITEM = `
-              customer_checkout__element-order-table-remove-${index}
-              `;
+              const ROUTE = 'customer_checkout__element-order-table-';
+              const ITEM_NUMBER = `${ROUTE}item-number-${index}`;
+              const ITEM_DESC = `${ROUTE}name-${index}`;
+              const ITEM_QUANTITY = `${ROUTE}quantity-${index}`;
+              const ITEM_PRICE = `${ROUTE}unit-price-${index} `;
+              const ITEM_SUB_TOTAL = `${ROUTE}sub-total-${index}`;
+              const REMOVE_ITEM = `${ROUTE}remove-${index}`;
+
+              console.log(ITEM_DESC);
 
               return (
-                <tr key={ id }>
+                <tr key={ productId }>
                   <td>
                     <span
                       data-testid={ ITEM_NUMBER }
@@ -64,7 +56,7 @@ function CheckoutTable() {
                     <span data-testid={ ITEM_QUANTITY }>{quantity}</span>
                   </td>
                   <td>
-                    <span data-testid={ ITEM_PRICE }>{price}</span>
+                    <span data-testid={ ITEM_PRICE }>{unitPrice}</span>
                   </td>
                   <td>
                     <span data-testid={ ITEM_SUB_TOTAL }>{subTotal}</span>

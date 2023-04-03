@@ -1,10 +1,11 @@
 import CheckoutTable from '../components/checkout/checkoutTable';
 import CheckoutForm from '../components/checkout/checkoutForm';
+import HeaderPedidos from '../components/cliente-pedidos/header';
 
 function Checkout() {
   return (
     <div>
-      <h1>Tela de Checkout!</h1>
+      <HeaderPedidos />
       <CheckoutTable />
       <CheckoutForm />
     </div>
