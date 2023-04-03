@@ -6,6 +6,7 @@ function AdminForm() {
   const [password, setPassword] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
   const [role, setRole] = useState('customer');
+  const [showError, setShowError] = useState(false);
 
   useEffect(() => {
     const validRegister = () => {
@@ -36,7 +37,11 @@ function AdminForm() {
       },
     });
 
-    console.log(response.json());
+    const loginResponse = await response.json();
+
+    if (loginResponse.message) {
+      setShowError(true);
+    } else setShowError(false);
   }
 
   return (
@@ -93,6 +98,13 @@ function AdminForm() {
         <option value="seller">Vendedor</option>
         <option value="customer">Cliente</option>
       </select>
+      {
+        showError && (
+          <p data-testid="common_login__element-invalid-email">
+            Nome ou e-mail já cadastrado!
+          </p>
+        )
+      }
     </form>
   );
 }
