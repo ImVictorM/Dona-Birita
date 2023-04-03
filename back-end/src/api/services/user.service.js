@@ -53,12 +53,11 @@ async function registerNewUser(userFromReq) {
 }
 
 async function getAllUserByRole(role) {
-  const sellerList = await User.findAll({
-    where: {
-      role,
-    },
+  const userList = await User.findAll({
+    where: { role },
+    attributes: { exclude: ['password'] },
   });
-  return sellerList;
+  return userList;
 }
 
 module.exports = {

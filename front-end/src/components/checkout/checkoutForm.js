@@ -1,4 +1,25 @@
+import { useEffect, useState } from 'react';
+
 function CheckoutForm() {
+  const [sellerList, setSellerList] = useState([]);
+
+  useEffect(() => {
+    async function getSellerList() {
+      const endpoint = 'http://localhost:3001/user/seller';
+
+      const response = await fetch(endpoint, {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const sellersFromDB = await response.json();
+      setSellerList(sellersFromDB);
+    }
+    getSellerList();
+  }, []);
+
   async function registerSale() {
     const endpoint = 'http://localhost:3001/sale';
     const sale = {
@@ -25,8 +46,14 @@ function CheckoutForm() {
       <label htmlFor="seller">
         <p>P. Vendedora Responsável:</p>
         <select data-testid="customer_checkout__select-seller" id="seller">
-          <option value="">Marcola</option>
-          <option value="">Lamborguine</option>
+          {
+            sellerList.map((seller) => {
+              const { id, name } = seller;
+              return (
+                <option key={ id } value={ id }>{name}</option>
+              );
+            })
+          }
         </select>
       </label>
       <label htmlFor="address">
