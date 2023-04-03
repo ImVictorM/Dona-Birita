@@ -6,7 +6,6 @@ require('express-async-errors');
 const app = express();
 const { userRouter, productRouter, salesRouter, adminRouter } = require('./routes');
 
-
 app.use('/images', express.static(`${__dirname}/images`));
 
 app.use(express.json());
