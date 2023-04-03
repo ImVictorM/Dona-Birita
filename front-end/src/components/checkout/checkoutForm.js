@@ -1,4 +1,25 @@
 function CheckoutForm() {
+  async function registerSale() {
+    const endpoint = 'http://localhost:3001/sale';
+    const sale = {
+      userId: '1',
+      sellerId: '2',
+      totalPrice: '21.2',
+      deliveryAddress: 'simsimsim',
+      deliveryNumber: 'naonaonao',
+      saleDate: 'Mon Apr 03 2023 18:05:26 GMT-0300',
+      status: 'coisando',
+    };
+    await fetch(endpoint, {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify(sale),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+
   return (
     <form>
       <label htmlFor="seller">
@@ -27,6 +48,7 @@ function CheckoutForm() {
       <button
         type="button"
         data-testid="customer_checkout__button-submit-order"
+        onClick={ registerSale }
       >
         Finalizar Pedido
       </button>
