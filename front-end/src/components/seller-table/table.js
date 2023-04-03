@@ -6,10 +6,9 @@ function Table() {
   useEffect(() => {
     const { id } = JSON.parse(localStorage.getItem('user'));
     async function fetchOrders() {
-      const response = await fetch('http://localhost:3001/customer/orders/', {
+      const response = await fetch(`http://localhost:3001/customer/orders/${id}`, {
         method: 'GET',
         mode: 'cors',
-        body: JSON.stringify(id),
         headers: {
           'Content-Type': 'application/json',
         },
