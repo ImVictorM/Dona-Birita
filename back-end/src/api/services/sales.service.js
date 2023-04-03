@@ -1,11 +1,17 @@
 const { Sale } = require('../../database/models');
+const { User } = require('../../database/models');
 
-async function allSaleService(sellerId) {
-  const saleFromDB = await Sale.findAll(
-    { where: { sellerId } },
-  );
-  console.log(saleFromDB);
-  return saleFromDB;
+async function allSaleService(id) {
+  const user = await User.findByPk(id);
+
+  if (user.role === 'seller') {
+    return Sale.findAll(
+      { where: { sellerId: id } },
+    );
+  } 
+    return Sale.findAll(
+      { where: { userId: id } },
+    );
 }
 
 module.exports = {

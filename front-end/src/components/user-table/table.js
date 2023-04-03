@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function SellerTable() {
+function UserTable() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -27,31 +27,27 @@ function SellerTable() {
           {orders.map((order) => (
             <tr key={ order.id }>
               <td
-                data-testid={ `seller_orders__element-order-date-${order.id}` }
-              >
-                {order.saleDate
-                  .toLocaleString().substr(0, SUBSTR).split('-').reverse()
-                  .join('/') }
-              </td>
-              <td
                 data-testid={ `seller_orders__element-order-id-${order.id}` }
               >
                 {order.id}
               </td>
               <td
-                data-testid={ `seller_orders__element-delivery-status-${order.id}` }
+                data-testid={ `customer_orders__element-delivery-status-${order.id}` }
               >
                 {order.status}
               </td>
               <td
-                data-testid={ `seller_orders__element-card-price${order.id}` }
+                data-testid={ `customer_orders__element-order-date-${order.id}` }
+              >
+                {order.saleDate
+                  .toLocaleString().substr(0, SUBSTR).split('-').reverse()
+                  .join('/') }
+              </td>
+
+              <td
+                data-testid={ `customer_orders__element-card-price-${order.id}` }
               >
                 {`R$ ${order.totalPrice}`}
-              </td>
-              <td
-                data-testid={ `seller_orders__element-card-address${order.id}` }
-              >
-                {`${order.deliveryAddress}, ${order.deliveryNumber}`}
               </td>
             </tr>
           ))}
@@ -61,4 +57,4 @@ function SellerTable() {
   );
 }
 
-export default SellerTable;
+export default UserTable;
