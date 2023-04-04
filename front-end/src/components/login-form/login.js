@@ -11,6 +11,18 @@ function LoginForm() {
   const [showError, setShowError] = useState(false);
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (user && user.role === 'customer') {
+      history.push('/customer/products');
+    } else if (user && user.role === 'administrator') {
+      history.push('/admin/manage');
+    } else if (user && user.role === 'seller') {
+      history.push('/seller/orders');
+    }
+  });
+
+  useEffect(() => {
     function validateLogin() {
       const regex = /\S+@\S+\.\S+/i;
       const magicNumber = 5;
