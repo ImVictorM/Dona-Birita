@@ -101,7 +101,6 @@ function CheckoutForm() {
               );
             })
           }
-          <option>teste</option>
         </select>
       </label>
       <label htmlFor="address">

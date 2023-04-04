@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function UserTable() {
   const [orders, setOrders] = useState([]);
@@ -15,6 +16,7 @@ function UserTable() {
       });
       const data = await response.json();
       setOrders(data);
+      console.log('data', typeof data[0].totalPrice);
     }
     fetchOrders();
   }, []);
@@ -24,32 +26,36 @@ function UserTable() {
     <div>
       <table>
         <tbody>
-          {orders.map((order) => (
-            <tr key={ order.id }>
-              <td
-                data-testid={ `seller_orders__element-order-id-${order.id}` }
-              >
-                {order.id}
-              </td>
-              <td
-                data-testid={ `customer_orders__element-delivery-status-${order.id}` }
-              >
-                {order.status}
-              </td>
-              <td
-                data-testid={ `customer_orders__element-order-date-${order.id}` }
-              >
-                {order.saleDate
-                  .toLocaleString().substr(0, SUBSTR).split('-').reverse()
-                  .join('/') }
-              </td>
+          {orders.length > 0 && orders.map((order) => (
+            <div key={ order.id }>
+              <Link to={ `/customer/orders/${order.id}` }>
+                <tr>
+                  <td
+                    data-testid={ `customer_orders__element-order-id-${order.id}` }
+                  >
+                    {order.id}
+                  </td>
+                  <td
+                    data-testid={ `customer_orders__element-delivery-status-${order.id}` }
+                  >
+                    {order.status}
+                  </td>
+                  <td
+                    data-testid={ `customer_orders__element-order-date-${order.id}` }
+                  >
+                    {order.saleDate
+                      .toLocaleString().substr(0, SUBSTR).split('-').reverse()
+                      .join('/') }
+                  </td>
 
-              <td
-                data-testid={ `customer_orders__element-card-price-${order.id}` }
-              >
-                {`R$ ${order.totalPrice}`}
-              </td>
-            </tr>
+                  <td
+                    data-testid={ `customer_orders__element-card-price-${order.id}` }
+                  >
+                    {order.totalPrice.replace(/\./, ',')}
+                  </td>
+                </tr>
+              </Link>
+            </div>
           ))}
         </tbody>
       </table>
