@@ -1,4 +1,4 @@
-const { loginUser, registerNewUser } = require('../services/user.service');
+const { loginUser, registerNewUser, getAllUserByRole } = require('../services/user.service');
 
 async function requestLogin(req, res) {
   const userFromReq = req.body;
@@ -12,7 +12,14 @@ async function requestUserRegistration(req, res) {
   return res.status(201).json(createdUser);
 }
 
+async function requestAllUserByRole(req, res) {
+  const { role } = req.params;
+  const sellerList = await getAllUserByRole(role);
+  return res.status(200).json(sellerList);
+}
+
 module.exports = {
   requestLogin,
   requestUserRegistration,
+  requestAllUserByRole,
 };

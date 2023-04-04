@@ -52,7 +52,16 @@ async function registerNewUser(userFromReq) {
   return createdUser;
 }
 
+async function getAllUserByRole(role) {
+  const userList = await User.findAll({
+    where: { role },
+    attributes: { exclude: ['password'] },
+  });
+  return userList;
+}
+
 module.exports = {
   loginUser,
   registerNewUser,
+  getAllUserByRole,
 };

@@ -1,8 +1,9 @@
 const express = require('express');
-const { allSaleController } = require('../controllers/saleController');
 
 const router = express.Router();
 
-router.get('/orders/:id', allSaleController);
+const { requestToRegisterNewSale } = require('../controllers/sale.controller');
+
+router.post('/', requestToRegisterNewSale);
 
 module.exports = router;
