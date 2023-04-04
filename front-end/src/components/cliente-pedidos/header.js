@@ -9,13 +9,13 @@ function HeaderPedidos() {
     <header>
       <nav>
         <Link
-          to="/"
+          to="/customer/products"
           data-testid="customer_products__element-navbar-link-products"
         >
           Produtos
         </Link>
         <Link
-          to="/"
+          to="/customer/orders"
           data-testid="customer_products__element-navbar-link-orders"
         >
           Meus Pedidos
