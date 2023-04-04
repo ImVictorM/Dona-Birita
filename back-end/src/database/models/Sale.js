@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
     deliveryNumber: { type: DataTypes.STRING },
     saleDate: { 
       type: DataTypes.DATE,
-      defaultValue: Date.now(),
     },
     status: { type: DataTypes.STRING }
   },

@@ -52,6 +52,7 @@ function CheckoutForm() {
       deliveryNumber: form.number,
       status: 'Pendente',
       products,
+      saleDate: new Date().toISOString(),
     };
     return sale;
   }
