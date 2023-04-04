@@ -5,4 +5,3 @@ const adminRouter = require('./adminRoutes');
 const salesRouter = require('./saleRoutes');
 
 module.exports = { userRouter, productRouter, saleRouter, salesRouter, adminRouter };
-
