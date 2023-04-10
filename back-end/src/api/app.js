@@ -4,7 +4,8 @@ const handleError = require('./middlewares/errorHandler');
 require('express-async-errors');
 
 const app = express();
-const { userRouter, productRouter, salesRouter, adminRouter } = require('./routes');
+
+const { userRouter, productRouter, salesRouter, saleRouter, adminRouter } = require('./routes');
 
 app.use('/images', express.static(`${__dirname}/images`));
 
@@ -16,8 +17,8 @@ app.use(cors({
 
 app.use('/user', userRouter);
 app.use('/product', productRouter);
+app.use('/sale', saleRouter);
 app.use('/admin', adminRouter);
-
 app.use('/customer', salesRouter);
 
 app.use(handleError);

@@ -4,18 +4,9 @@ import Context from '../../context/Context';
 
 function Card({ id, name, imag, price }) {
   const [quantity, setQuantity] = useState(0);
-  const { setTotalPrice } = useContext(Context);
+  const { sumCart } = useContext(Context);
 
   useEffect(() => {
-    function sumCart() {
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      const cartReduce = (cart.reduce(
-        (acc, currentValue) => acc + currentValue.subTotal,
-        0,
-      ));
-      setTotalPrice(cartReduce.toFixed(2));
-    }
-
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
     if (quantity > 0) {
@@ -45,7 +36,7 @@ function Card({ id, name, imag, price }) {
       localStorage.setItem('cart', JSON.stringify(updatedCart));
       sumCart();
     }
-  }, [id, imag, name, price, quantity, setTotalPrice]);
+  }, [id, imag, name, price, quantity, sumCart]);
 
   function handleClickAdd() {
     setQuantity(quantity + 1);

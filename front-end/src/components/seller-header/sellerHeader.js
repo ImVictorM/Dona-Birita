@@ -2,23 +2,17 @@ import { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Context from '../../context/Context';
 
-function HeaderPedidos() {
+function HeaderSeller() {
   const history = useHistory();
   const { user } = useContext(Context);
   return (
     <header>
       <nav>
         <Link
-          to="/customer/products"
-          data-testid="customer_products__element-navbar-link-products"
-        >
-          Produtos
-        </Link>
-        <Link
-          to="/customer/orders"
+          to="/seller/orders"
           data-testid="customer_products__element-navbar-link-orders"
         >
-          Meus Pedidos
+          Pedidos
         </Link>
         <Link
           to="/"
@@ -41,4 +35,4 @@ function HeaderPedidos() {
   );
 }
 
-export default HeaderPedidos;
+export default HeaderSeller;
