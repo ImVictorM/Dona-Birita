@@ -1,4 +1,9 @@
-const { loginUser, registerNewUser, getAllUserByRole } = require('../services/user.service');
+const { 
+  loginUser, 
+  registerNewUser, 
+  getAllUserByRole, 
+  getUserById,
+ } = require('../services/user.service');
 
 async function requestLogin(req, res) {
   const userFromReq = req.body;
@@ -18,8 +23,15 @@ async function requestAllUserByRole(req, res) {
   return res.status(200).json(sellerList);
 }
 
+async function findUserById(req, res) {
+  const { id } = req.params;
+  const user = await getUserById(id);
+  res.status(200).json(user);
+}
+
 module.exports = {
   requestLogin,
   requestUserRegistration,
   requestAllUserByRole,
+  findUserById,
 };
