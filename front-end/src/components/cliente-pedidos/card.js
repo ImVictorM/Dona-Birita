@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useContext, useEffect, useState } from 'react';
 import Context from '../../context/Context';
+import './card.css';
 
 function Card({ id, name, imag, price }) {
   const [quantity, setQuantity] = useState(0);
@@ -53,42 +54,47 @@ function Card({ id, name, imag, price }) {
   }
 
   return (
-    <li>
+    <li className="card">
       <p data-testid={ `customer_products__element-card-title-${id}` }>{ name }</p>
       <img
         data-testid={ `customer_products__img-card-bg-image-${id}` }
         src={ imag }
         alt={ name }
       />
-      <p
-        data-testid={ `customer_products__element-card-price-${id}` }
-      >
-        { price.replace('.', ',') }
-      </p>
-      <button
-        type="button"
-        onClick={ () => handleClickMinus() }
-        data-testid={ `customer_products__button-card-rm-item-${id}` }
-      >
-        -
+      <div className="price-container">
+        <span>R$: </span>
+        <span
+          data-testid={ `customer_products__element-card-price-${id}` }
+        >
+          { price.replace('.', ',') }
+        </span>
+      </div>
+      <div className="quantity-container">
+        <button
+          type="button"
+          onClick={ () => handleClickMinus() }
+          data-testid={ `customer_products__button-card-rm-item-${id}` }
+        >
+          -
 
-      </button>
-      <input
-        type="number"
-        data-testid={ `customer_products__input-card-quantity-${id}` }
-        name="quantidade"
-        value={ quantity }
-        onChange={ handleChangeQuantity }
+        </button>
+        <input
+          type="number"
+          data-testid={ `customer_products__input-card-quantity-${id}` }
+          name="quantidade"
+          value={ quantity }
+          onChange={ handleChangeQuantity }
 
-      />
-      <button
-        type="button"
-        onClick={ () => handleClickAdd() }
-        data-testid={ `customer_products__button-card-add-item-${id}` }
-      >
-        +
+        />
+        <button
+          type="button"
+          onClick={ () => handleClickAdd() }
+          data-testid={ `customer_products__button-card-add-item-${id}` }
+        >
+          +
 
-      </button>
+        </button>
+      </div>
     </li>
   );
 }

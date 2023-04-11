@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import HeaderPedidos from '../components/cliente-pedidos/header';
 import Card from '../components/cliente-pedidos/card';
 import Context from '../context/Context';
+import './products.css';
 
 function Product() {
   const history = useHistory();
@@ -27,19 +28,8 @@ function Product() {
   }, []);
 
   return (
-    <div>
-      <h1>Product!</h1>
+    <>
       <HeaderPedidos />
-      <ul>
-        { products.map((product) => (
-          <Card
-            key={ product.id }
-            id={ product.id }
-            name={ product.name }
-            imag={ product.urlImage }
-            price={ product.price }
-          />)) }
-      </ul>
       <button
         data-testid="customer_products__button-cart"
         type="button"
@@ -47,12 +37,27 @@ function Product() {
         onClick={ () => {
           history.push('/customer/checkout');
         } }
+        className="cart-button"
       >
-        <p data-testid="customer_products__checkout-bottom-value">
+        <span>🛒 Total: </span>
+        <span data-testid="customer_products__checkout-bottom-value">
           { `${totalPrice}`.replace('.', ',') }
-        </p>
+        </span>
       </button>
-    </div>
+      <div className="container-products">
+        <ul className="container-card">
+          { products.map((product) => (
+            <Card
+              key={ product.id }
+              id={ product.id }
+              name={ product.name }
+              imag={ product.urlImage }
+              price={ product.price }
+            />)) }
+        </ul>
+
+      </div>
+    </>
   );
 }
 
