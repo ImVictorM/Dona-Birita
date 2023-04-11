@@ -55,7 +55,6 @@ function Product() {
               price={ product.price }
             />)) }
         </ul>
-
       </div>
     </>
   );
