@@ -17,7 +17,6 @@ function UserTable() {
       });
       const data = await response.json();
       setOrders(data);
-      console.log('data', typeof data[0].totalPrice);
     }
     fetchOrders();
   }, []);
