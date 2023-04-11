@@ -19,19 +19,20 @@ async function requestUserRegistration(req, res) {
 
 async function requestAllUserByRole(req, res) {
   const { role } = req.params;
+
   const sellerList = await getAllUserByRole(role);
   return res.status(200).json(sellerList);
 }
 
-async function findUserById(req, res) {
+async function requestUserById(req, res) {
   const { id } = req.params;
   const user = await getUserById(id);
-  res.status(200).json(user);
+  return res.status(200).json(user);
 }
 
 module.exports = {
   requestLogin,
   requestUserRegistration,
   requestAllUserByRole,
-  findUserById,
+  requestUserById,
 };

@@ -33,9 +33,16 @@ async function allSaleService(id) {
       { where: { sellerId: id } },
     );
   } 
-    return Sale.findAll(
-      { where: { userId: id } },
-    );
+    return Sale.findAll({ 
+      where: { userId: id }, 
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: ['name'],
+        },
+      ],
+    });
 }
 
 module.exports = {
