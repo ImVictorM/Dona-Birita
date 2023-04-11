@@ -39,7 +39,7 @@ function Product() {
         } }
         className="cart-button"
       >
-        <span>🛒 Total: </span>
+        <span>🛒 Total - R$: </span>
         <span data-testid="customer_products__checkout-bottom-value">
           { `${totalPrice}`.replace('.', ',') }
         </span>

@@ -71,7 +71,7 @@ function LoginForm() {
 
   return (
     <div className="bubbles">
-      <form onSubmit={ handleSubmit }>
+      <form onSubmit={ handleSubmit } className="login-register-form">
         <div className="inputs-container">
           <h1>Login 🍺</h1>
           <label htmlFor="email">

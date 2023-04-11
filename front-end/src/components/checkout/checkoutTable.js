@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import Context from '../../context/Context';
+import './checkoutTable.css';
 
 function CheckoutTable() {
   const [cart, setCart] = useState([]);
@@ -25,7 +26,7 @@ function CheckoutTable() {
 
   return (
     <section>
-      <table>
+      <table className="cart-table">
         <thead>
           <tr>
             <th>Item</th>
@@ -68,6 +69,7 @@ function CheckoutTable() {
                     </span>
                   </td>
                   <td>
+                    <span>R$: </span>
                     <span
                       data-testid={ `${TEST_PREFIX}unit-price-${index}` }
                     >
@@ -75,6 +77,7 @@ function CheckoutTable() {
                     </span>
                   </td>
                   <td>
+                    <span>R$: </span>
                     <span
                       data-testid={ `${TEST_PREFIX}sub-total-${index}` }
                     >
@@ -98,7 +101,7 @@ function CheckoutTable() {
           }
         </tbody>
       </table>
-      <div>
+      <div className="total-cart">
         <span>Total: R$ </span>
         <span
           data-testid="customer_checkout__element-order-total-price"
