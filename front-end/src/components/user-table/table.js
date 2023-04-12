@@ -23,43 +23,54 @@ function UserTable() {
 
   const SUBSTR = 10;
   return (
-    <div>
-      <table>
-        <tbody>
-          {orders.length > 0 && orders.map((order) => (
-            <div key={ order.id }>
-              <Link to={ `/customer/orders/${order.id}` }>
-                <tr>
-                  <td
-                    data-testid={ `customer_orders__element-order-id-${order.id}` }
-                  >
-                    {order.id}
-                  </td>
-                  <td
-                    data-testid={ `customer_orders__element-delivery-status-${order.id}` }
-                  >
-                    {order.status}
-                  </td>
-                  <td
-                    data-testid={ `customer_orders__element-order-date-${order.id}` }
-                  >
-                    {order.saleDate
-                      .toLocaleString().substr(0, SUBSTR).split('-').reverse()
-                      .join('/') }
-                  </td>
-
-                  <td
-                    data-testid={ `customer_orders__element-card-price-${order.id}` }
-                  >
-                    {order.totalPrice.replace(/\./, ',')}
-                  </td>
-                </tr>
-              </Link>
+    <section className="order-container">
+      {
+        orders.length > 0 && orders.map((order) => (
+          <Link
+            to={ `/customer/orders/${order.id}` }
+            key={ order.id }
+            className="order-card"
+          >
+            <div>
+              <span>Pedido</span>
+              <span
+                data-testid={ `customer_orders__element-order-id-${order.id}` }
+              >
+                {order.id}
+              </span>
             </div>
-          ))}
-        </tbody>
-      </table>
-    </div>
+
+            <div>
+              <span>Status</span>
+              <span
+                data-testid={ `customer_orders__element-delivery-status-${order.id}` }
+              >
+                {order.status}
+              </span>
+            </div>
+            <div>
+              <span>Data</span>
+              <span
+                data-testid={ `customer_orders__element-order-date-${order.id}` }
+              >
+                {order.saleDate
+                  .toLocaleString().substr(0, SUBSTR).split('-').reverse()
+                  .join('/') }
+              </span>
+            </div>
+            <div>
+              <span>Total</span>
+              <span
+                data-testid={ `customer_orders__element-card-price-${order.id}` }
+              >
+                {order.totalPrice.replace(/\./, ',')}
+              </span>
+            </div>
+          </Link>
+        ))
+      }
+    </section>
+
   );
 }
 

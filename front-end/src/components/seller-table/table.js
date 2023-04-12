@@ -22,47 +22,60 @@ function SellerTable() {
 
   const SUBSTR = 10;
   return (
-    <div>
-      <table>
-        <tbody>
-          {orders.map((order) => (
-            <div key={ order.id }>
-              <Link to={ `/seller/orders/${order.id}` }>
-                <tr>
-                  <td
-                    data-testid={ `seller_orders__element-order-date-${order.id}` }
-                  >
-                    {order.saleDate
-                      .toLocaleString().substr(0, SUBSTR).split('-').reverse()
-                      .join('/') }
-                  </td>
-                  <td
-                    data-testid={ `seller_orders__element-order-id-${order.id}` }
-                  >
-                    {order.id}
-                  </td>
-                  <td
-                    data-testid={ `seller_orders__element-delivery-status-${order.id}` }
-                  >
-                    {order.status}
-                  </td>
-                  <td
-                    data-testid={ `seller_orders__element-card-price${order.id}` }
-                  >
-                    {`R$ ${order.totalPrice}`}
-                  </td>
-                  <td
-                    data-testid={ `seller_orders__element-card-address${order.id}` }
-                  >
-                    {`${order.deliveryAddress}, ${order.deliveryNumber}`}
-                  </td>
-                </tr>
-              </Link>
+    <section className="order-container">
+      {
+        orders.map((order) => (
+          <Link
+            to={ `/seller/orders/${order.id}` }
+            key={ order.id }
+            className="order-card"
+          >
+            <div>
+              <span>Data</span>
+              <span
+                data-testid={ `seller_orders__element-order-date-${order.id}` }
+              >
+                {order.saleDate
+                  .toLocaleString().substr(0, SUBSTR).split('-').reverse()
+                  .join('/') }
+              </span>
             </div>
-          ))}
-        </tbody>
-      </table>
-    </div>
+            <div>
+              <span>Pedido</span>
+              <span
+                data-testid={ `seller_orders__element-order-id-${order.id}` }
+              >
+                {order.id}
+              </span>
+            </div>
+            <div>
+              <span>Status</span>
+              <span
+                data-testid={ `seller_orders__element-delivery-status-${order.id}` }
+              >
+                {order.status}
+              </span>
+            </div>
+            <div>
+              <span>Total</span>
+              <span
+                data-testid={ `seller_orders__element-card-price${order.id}` }
+              >
+                {`R$ ${order.totalPrice}`}
+              </span>
+            </div>
+            <div>
+              <span>Endereço</span>
+              <span
+                data-testid={ `seller_orders__element-card-address${order.id}` }
+              >
+                {`${order.deliveryAddress}, ${order.deliveryNumber}`}
+              </span>
+            </div>
+          </Link>
+        ))
+      }
+    </section>
   );
 }
 

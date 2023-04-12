@@ -10,12 +10,12 @@
   padding: 0;
 }
 
-.checkout-form label, button {
+.checkout-form label, .checkout-form button {
   max-width: 600px;
   width: 90%;
 }
 
-.checkout-form select, input {
+.checkout-form select, .checkout-form input {
   border-radius: 5px;
   box-shadow: 1px 2px 5px rgba(17, 17, 17, 0.329);
   height: 30px;
