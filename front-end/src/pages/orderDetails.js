@@ -1,32 +1,17 @@
+import React from 'react';
 import HeaderPedidos from '../components/cliente-pedidos/header';
+import HeaderSeller from '../components/seller-header/sellerHeader';
+import SellerDetails from '../components/seller-table/seller-details';
+import UserDetails from '../components/user-table/user-details';
 
 function OrderDetails() {
+  const { role } = JSON.parse(localStorage.getItem('user'));
   return (
     <div>
-      <HeaderPedidos />
-      <h1>Order Details</h1>
-      <p data-testid="customer_order_details__element-order-details-label-order-id">
-        Order Id
-      </p>
-      <p data-testid="customer_order_details__element-order-details-label-seller-name">
-        Seller Name
-      </p>
-      <p data-testid="customer_order_details__element-order-details-label-order-date">
-        Order Date
-      </p>
-      <p
-        data-testid="customer_order_details__element-order-details-label-delivery-status"
-      >
-        Delivery Status
-      </p>
-      <button
-        type="button"
-        data-testid="customer_order_details__button-delivery-check"
-      >
-        Check?
-
-      </button>
-      <p data-testid="customer_order_details__element-order-total-price">Total?</p>
+      <div>
+        {role === 'seller' ? <HeaderSeller /> : <HeaderPedidos />}
+        {role === 'seller' ? <SellerDetails /> : <UserDetails />}
+      </div>
     </div>
   );
 }

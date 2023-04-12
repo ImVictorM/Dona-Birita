@@ -6,6 +6,7 @@ function UserTable() {
 
   useEffect(() => {
     const { id } = JSON.parse(localStorage.getItem('user'));
+
     async function fetchOrders() {
       const response = await fetch(`http://localhost:3001/customer/orders/${id}`, {
         method: 'GET',
@@ -16,12 +17,12 @@ function UserTable() {
       });
       const data = await response.json();
       setOrders(data);
-      console.log('data', typeof data[0].totalPrice);
     }
     fetchOrders();
   }, []);
 
   const SUBSTR = 10;
+
   return (
     <div>
       <table>

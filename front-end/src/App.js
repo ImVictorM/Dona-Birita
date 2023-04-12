@@ -24,7 +24,6 @@ function App() {
       <Route path="/customer/orders/" component={ CustomerOrders } />
       <Route path="/seller/orders/:id" component={ OrderDetails } />
       <Route path="/seller/orders/" component={ CustomerOrders } />
-
     </Switch>
   );
 }

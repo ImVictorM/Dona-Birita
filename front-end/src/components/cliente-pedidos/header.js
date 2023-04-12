@@ -1,10 +1,11 @@
-import { useContext } from 'react';
+import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import Context from '../../context/Context';
+// import Context from '../../context/Context';
 
 function HeaderPedidos() {
   const history = useHistory();
-  const { user } = useContext(Context);
+  // const { user } = useContext(Context);
+  const { name } = JSON.parse(localStorage.getItem('user'));
   return (
     <header>
       <nav>
@@ -24,7 +25,7 @@ function HeaderPedidos() {
           to="/"
           data-testid="customer_products__element-navbar-user-full-name"
         >
-          { user.name }
+          { name }
         </Link>
         <button
           type="button"

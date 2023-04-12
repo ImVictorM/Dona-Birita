@@ -5,7 +5,7 @@ require('express-async-errors');
 
 const app = express();
 
-const { userRouter, productRouter, salesRouter, saleRouter, adminRouter } = require('./routes');
+const { userRouter, productRouter, saleRouter, adminRouter } = require('./routes');
 
 app.use('/images', express.static(`${__dirname}/images`));
 
@@ -19,7 +19,7 @@ app.use('/user', userRouter);
 app.use('/product', productRouter);
 app.use('/sale', saleRouter);
 app.use('/admin', adminRouter);
-app.use('/customer', salesRouter);
+app.use('/customer', saleRouter);
 
 app.use(handleError);
 
