@@ -9,6 +9,7 @@
   justify-content: space-between;
   margin: 7px;
   max-width: 350px;
+  min-width: 220px;
   width: 30%;
 }
 
@@ -18,8 +19,10 @@
 
 .card img {
   border-radius: 10px;
-  height: 170px;
-  width: 160px;
+  height: 55%;
+  max-height: 170px;
+  max-width: 160px;
+  width: 70%;
 }
 
 .card .price-container {
