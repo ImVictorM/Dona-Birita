@@ -14,15 +14,13 @@ function SellerDetails() {
 
   const CARACTER_DATA = 10;
 
-  function getLocalStorage() {
-    const cart = JSON.parse(localStorage.getItem('cart'));
-    setCart(cart);
+  function updateProducts([{ products }]) {
+    setCart(products);
   }
 
   useEffect(() => {
-    const { id } = JSON.parse(localStorage.getItem('user'));
     async function fetchOrders() {
-      const response = await fetch(`http://localhost:3001/sale/orders/${id}`, {
+      const response = await fetch(`http://localhost:3001/product/${Number(getIdUrl)}`, {
         method: 'GET',
         mode: 'cors',
         headers: {
@@ -31,12 +29,10 @@ function SellerDetails() {
       });
       const data = await response.json();
       console.log(data);
-      const test = data.filter((iten) => iten.id === Number(getIdUrl));
-      console.log(test);
-      setOrder(test);
+      updateProducts(data);
+      setOrder(data);
     }
     fetchOrders();
-    getLocalStorage();
   }, []);
 
   useEffect(() => {
@@ -50,9 +46,11 @@ function SellerDetails() {
           },
         });
         const dataSeller = await response.json();
+        console.log(dataSeller);
         setSeller(dataSeller);
       }
     }
+    // getLocalStorage();
     findUserById();
   }, [getOrder, setOrder]);
 
@@ -69,7 +67,7 @@ function SellerDetails() {
   return (
     <div className="improviso">
       <h1>Detalhes do pedido</h1>
-      {getOrder ? getOrder.map((iten) => (
+      {getOrder.length ? getOrder.map((iten) => (
         <div key={ iten.id }>
           <p
             data-testid={ `${TEST_PREFIX}label-order-id` }
@@ -125,9 +123,11 @@ function SellerDetails() {
         </thead>
         <tbody>
           {
-            getCart.map((product, index) => {
-              const { name, productId, quantity, unitPrice, subTotal } = product;
-
+            getCart.length ? getCart.map((product, index) => {
+              const { name, price, SaleProduct: { productId, quantity,
+              } } = product;
+              const unitPrice = Number(price);
+              const subTotal = unitPrice * quantity;
               // test ids
 
               return (
@@ -157,7 +157,7 @@ function SellerDetails() {
                     <span
                       data-testid={ `${TEST_PREFIX}unit-price-${index}` }
                     >
-                      {Number(unitPrice).toFixed(2).replace('.', ',')}
+                      {unitPrice.toFixed(2).replace('.', ',')}
                     </span>
                   </td>
                   <td>
@@ -169,7 +169,7 @@ function SellerDetails() {
                   </td>
                 </tr>
               );
-            })
+            }) : <tr>Loading...</tr>
           }
         </tbody>
       </table>
