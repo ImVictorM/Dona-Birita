@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 function SellerDetails() {
   const history = useHistory();
   const [getOrder, setOrder] = useState([]);
-  const [seller, setSeller] = useState({});
+  const [statusSales, setStatusSales] = useState('');
   const [getCart, setCart] = useState([]);
 
   const getUrl = history.location.pathname;
@@ -18,48 +18,35 @@ function SellerDetails() {
     setCart(products);
   }
 
+  const contentTypes = 'application/json';
+
   useEffect(() => {
     async function fetchOrders() {
       const response = await fetch(`http://localhost:3001/product/${Number(getIdUrl)}`, {
         method: 'GET',
         mode: 'cors',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': contentTypes,
         },
       });
       const data = await response.json();
-      console.log(data);
       updateProducts(data);
+      setStatusSales(data[0].status);
       setOrder(data);
     }
     fetchOrders();
   }, []);
 
-  useEffect(() => {
-    async function findUserById() {
-      if (getOrder.length > 0 && getOrder[0].sellerId) {
-        const response = await fetch(`http://localhost:3001/user/id/${getOrder[0].sellerId}`, {
-          method: 'GET',
-          mode: 'cors',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        const dataSeller = await response.json();
-        console.log(dataSeller);
-        setSeller(dataSeller);
-      }
-    }
-    // getLocalStorage();
-    findUserById();
-  }, [getOrder, setOrder]);
-
-  function disabledButton(status) {
-    return status !== 'Pendente';
-  }
-
-  function disabledButton2(status) {
-    return status === 'Pendente';
+  async function handleStatus(status) {
+    await fetch(`http://localhost:3001/sale/${getIdUrl}`, {
+      method: 'PATCH',
+      mode: 'cors',
+      headers: {
+        'Content-Type': contentTypes,
+      },
+      body: JSON.stringify({ status }),
+    });
+    setStatusSales(status);
   }
 
   const TEST_PREFIX = 'seller_order_details__element-order-details-';
@@ -74,11 +61,11 @@ function SellerDetails() {
           >
             { iten.id }
           </p>
-          <p
+          {/* <p
             data-testid={ `${TEST_PREFIX}label-seller-name ` }
           >
             { seller.name }
-          </p>
+          </p> */}
           <p
             data-testid={ `${TEST_PREFIX}label-order-date ` }
           >
@@ -88,12 +75,13 @@ function SellerDetails() {
           <p
             data-testid={ `${TEST_PREFIX}label-delivery-status ` }
           >
-            { getOrder[0].status }
+            { statusSales }
           </p>
           <button
             type="button"
             data-testid="seller_order_details__button-preparing-check"
-            disabled={ disabledButton(getOrder[0].status) }
+            disabled={ statusSales !== 'Pendente' }
+            onClick={ () => handleStatus('Preparando') }
           >
             PREPARAR PEDIDOS
 
@@ -101,7 +89,9 @@ function SellerDetails() {
           <button
             type="button"
             data-testid="seller_order_details__button-dispatch-check"
-            disabled={ disabledButton2(getOrder[0].status) }
+            disabled={ ['Pendente', 'Em Trânsito', 'Entregue']
+              .includes(statusSales) }
+            onClick={ () => handleStatus('Em Trânsito') }
           >
             SAIU PARA ENTREGA
 

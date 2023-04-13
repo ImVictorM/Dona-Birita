@@ -45,7 +45,12 @@ async function allSaleService(id) {
     });
 }
 
+async function updateState(status, id) {
+  await Sale.update({ status }, { where: { id } });
+}
+
 module.exports = {
   registerNewSale,
   allSaleService,
+  updateState,
 };
