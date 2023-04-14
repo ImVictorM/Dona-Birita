@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import '../user-table/table.css';
 import { useHistory } from 'react-router-dom';
+import Context from '../../context/Context';
 
 function SellerDetails() {
   const history = useHistory();
+  const { handleStatus, statusSales, setStatusSales } = useContext(Context);
   const [getOrder, setOrder] = useState([]);
-  const [statusSales, setStatusSales] = useState('');
+  // const [statusSales, setStatusSales] = useState('');
   const [getCart, setCart] = useState([]);
 
   const getUrl = history.location.pathname;
@@ -30,6 +32,7 @@ function SellerDetails() {
         },
       });
       const data = await response.json();
+      console.log(data);
       updateProducts(data);
       setStatusSales(data[0].status);
       setOrder(data);
@@ -37,17 +40,17 @@ function SellerDetails() {
     fetchOrders();
   }, []);
 
-  async function handleStatus(status) {
-    await fetch(`http://localhost:3001/sale/${getIdUrl}`, {
-      method: 'PATCH',
-      mode: 'cors',
-      headers: {
-        'Content-Type': contentTypes,
-      },
-      body: JSON.stringify({ status }),
-    });
-    setStatusSales(status);
-  }
+  // async function handleStatus(status) {
+  //   await fetch(`http://localhost:3001/sale/${getIdUrl}`, {
+  //     method: 'PATCH',
+  //     mode: 'cors',
+  //     headers: {
+  //       'Content-Type': contentTypes,
+  //     },
+  //     body: JSON.stringify({ status }),
+  //   });
+  //   setStatusSales(status);
+  // }
 
   const TEST_PREFIX = 'seller_order_details__element-order-details-';
 
@@ -81,7 +84,7 @@ function SellerDetails() {
             type="button"
             data-testid="seller_order_details__button-preparing-check"
             disabled={ statusSales !== 'Pendente' }
-            onClick={ () => handleStatus('Preparando') }
+            onClick={ () => handleStatus('Preparando', getIdUrl) }
           >
             PREPARAR PEDIDOS
 
@@ -91,7 +94,7 @@ function SellerDetails() {
             data-testid="seller_order_details__button-dispatch-check"
             disabled={ ['Pendente', 'Em Trânsito', 'Entregue']
               .includes(statusSales) }
-            onClick={ () => handleStatus('Em Trânsito') }
+            onClick={ () => handleStatus('Em Trânsito', getIdUrl) }
           >
             SAIU PARA ENTREGA
 

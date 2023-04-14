@@ -5,6 +5,8 @@ import Context from './Context';
 function Provider({ children }) {
   const [totalPrice, setTotalPrice] = useState(0);
   const [user, setUser] = useState({});
+  const [statusSales, setStatusSales] = useState('');
+  const contentType = 'application/json';
 
   function sumCart() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -15,11 +17,26 @@ function Provider({ children }) {
     setTotalPrice(cartReduce.toFixed(2));
   }
 
+  async function handleStatus(status, id) {
+    await fetch(`http://localhost:3001/sale/${id}`, {
+      method: 'PATCH',
+      mode: 'cors',
+      headers: {
+        'Content-Type': contentType,
+      },
+      body: JSON.stringify({ status }),
+    });
+    setStatusSales(status);
+  }
+
   const value = useMemo(() => ({
     totalPrice,
     user,
     setUser,
     sumCart,
+    handleStatus,
+    statusSales,
+    setStatusSales,
   }), [totalPrice, user]);
 
   return (
