@@ -1,11 +1,12 @@
-import { useContext } from 'react';
+import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Context from '../../context/Context';
 import '../cliente-pedidos/header.css';
 
 function HeaderSeller() {
   const history = useHistory();
-  const { user } = useContext(Context);
+  // const { user } = useContext(Context);
+  const { name } = JSON.parse(localStorage.getItem('user'));
   return (
     <header className="main-header">
       <nav>

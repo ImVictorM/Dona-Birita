@@ -33,12 +33,24 @@ async function allSaleService(id) {
       { where: { sellerId: id } },
     );
   } 
-    return Sale.findAll(
-      { where: { userId: id } },
-    );
+    return Sale.findAll({ 
+      where: { userId: id }, 
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: ['name'],
+        },
+      ],
+    });
+}
+
+async function updateState(status, id) {
+  await Sale.update({ status }, { where: { id } });
 }
 
 module.exports = {
   registerNewSale,
   allSaleService,
+  updateState,
 };

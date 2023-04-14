@@ -60,8 +60,14 @@ async function getAllUserByRole(role) {
   return userList;
 }
 
+async function getUserById(id) {
+  const user = await User.findByPk(id);
+  return user;
+}
+
 module.exports = {
   loginUser,
   registerNewUser,
   getAllUserByRole,
+  getUserById,
 };
