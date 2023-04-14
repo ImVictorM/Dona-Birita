@@ -40,18 +40,6 @@ function SellerDetails() {
     fetchOrders();
   }, []);
 
-  // async function handleStatus(status) {
-  //   await fetch(`http://localhost:3001/sale/${getIdUrl}`, {
-  //     method: 'PATCH',
-  //     mode: 'cors',
-  //     headers: {
-  //       'Content-Type': contentTypes,
-  //     },
-  //     body: JSON.stringify({ status }),
-  //   });
-  //   setStatusSales(status);
-  // }
-
   const TEST_PREFIX = 'seller_order_details__element-order-details-';
 
   return (
@@ -64,11 +52,6 @@ function SellerDetails() {
           >
             { iten.id }
           </p>
-          {/* <p
-            data-testid={ `${TEST_PREFIX}label-seller-name ` }
-          >
-            { seller.name }
-          </p> */}
           <p
             data-testid={ `${TEST_PREFIX}label-order-date ` }
           >
