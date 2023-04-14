@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import '../login-form/login.css';
 
 function RegisterForm() {
   const history = useHistory();
@@ -47,58 +48,76 @@ function RegisterForm() {
   }
 
   return (
-    <form onSubmit={ handleSubmit }>
-      <div className="inputs-container">
-        <label htmlFor="name">
-          Nome:
-          <input
-            onChange={ (event) => setName(event.target.value) }
-            value={ name }
-            type="text"
-            data-testid="common_register__input-name"
-            id="name"
-          />
-        </label>
-        <label htmlFor="email">
-          E-mail
-          <input
-            onChange={ (event) => setEmail(event.target.value) }
-            value={ email }
-            type="email"
-            data-testid="common_register__input-email"
-            id="email"
-          />
-        </label>
-        <label htmlFor="password">
-          Senha
-          <input
-            onChange={ (event) => setPassword(event.target.value) }
-            value={ password }
-            type="password"
-            data-testid="common_register__input-password"
-            id="password"
-          />
-        </label>
-        <button
-          type="submit"
-          data-testid="common_register__button-register"
-          disabled={ !allowedToRegister }
-          onClick={ registerNewUser }
-        >
-          Registrar
-        </button>
-        {
-          showError && (
-            <p
-              data-testid="common_register__element-invalid_register"
-            >
-              Algo deu errado!
+    <div className="bubbles">
 
-            </p>
-          )
-        }
-      </div>
-    </form>
+      <form onSubmit={ handleSubmit } className="login-register-form">
+        <div className="inputs-container">
+          <h1>Cadastre-se:</h1>
+          <label htmlFor="name">
+            Nome:
+            <input
+              onChange={ (event) => setName(event.target.value) }
+              value={ name }
+              type="text"
+              data-testid="common_register__input-name"
+              id="name"
+            />
+          </label>
+          <label htmlFor="email">
+            E-mail
+            <input
+              onChange={ (event) => setEmail(event.target.value) }
+              value={ email }
+              type="email"
+              data-testid="common_register__input-email"
+              id="email"
+            />
+          </label>
+          <label htmlFor="password">
+            Senha
+            <input
+              onChange={ (event) => setPassword(event.target.value) }
+              value={ password }
+              type="password"
+              data-testid="common_register__input-password"
+              id="password"
+            />
+          </label>
+          <div className="login-buttons">
+            <button
+              type="submit"
+              data-testid="common_register__button-register"
+              disabled={ !allowedToRegister }
+              onClick={ registerNewUser }
+            >
+              Registrar
+            </button>
+            <button type="button" onClick={ () => history.push('/') }>
+              Voltar
+            </button>
+          </div>
+          {
+            showError && (
+              <p
+                data-testid="common_register__element-invalid_register"
+              >
+                Algo deu errado!
+              </p>
+            )
+          }
+        </div>
+      </form>
+      <div className="bubble" />
+      <div className="bubble" />
+      <div className="bubble" />
+      <div className="bubble" />
+      <div className="bubble" />
+      <div className="bubble" />
+      <div className="bubble" />
+      <div className="bubble" />
+      <div className="bubble" />
+      <div className="bubble" />
+    </div>
   );
 }
 

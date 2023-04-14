@@ -1,6 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+// import { FaUserAlt } from 'react-icons/fa';
 import Context from '../../context/Context';
+import './login.css';
 
 function LoginForm() {
   const history = useHistory();
@@ -68,54 +70,68 @@ function LoginForm() {
   }
 
   return (
-    <form onSubmit={ handleSubmit }>
-      <div className="inputs-container">
-        <label htmlFor="email">
-          E-mail
-          <input
-            onChange={ (event) => setEmail(event.target.value) }
-            value={ email }
-            type="text"
-            data-testid="common_login__input-email"
-            id="email"
-          />
-        </label>
-        <label htmlFor="password">
-          Senha
-          <input
-            onChange={ (event) => setPassword(event.target.value) }
-            value={ password }
-            type="password"
-            data-testid="common_login__input-password"
-            id="password"
-          />
-        </label>
-        <button
-          disabled={ isDisabled }
-          type="submit"
-          data-testid="common_login__button-login"
-          onClick={ handleClick }
-        >
-          Login
+    <div className="bubbles">
+      <form onSubmit={ handleSubmit } className="login-register-form">
+        <div className="inputs-container">
+          <h1>Login 🍺</h1>
+          <label htmlFor="email">
+            E-mail
+            <input
+              onChange={ (event) => setEmail(event.target.value) }
+              value={ email }
+              type="text"
+              data-testid="common_login__input-email"
+              id="email"
+              placeholder="Digite seu e-mail"
+            />
+          </label>
+          <label htmlFor="password">
+            Senha
+            <input
+              onChange={ (event) => setPassword(event.target.value) }
+              value={ password }
+              type="password"
+              data-testid="common_login__input-password"
+              id="password"
+              placeholder="Digite sua senha"
+            />
+          </label>
+          <div className="login-buttons">
+            <button
+              disabled={ isDisabled }
+              type="submit"
+              data-testid="common_login__button-login"
+              onClick={ handleClick }
+            >
+              Login
+            </button>
+            <button
+              type="button"
+              data-testid="common_login__button-register"
+              onClick={ () => history.push('/register') }
+            >
+              Cadastrar
+            </button>
+          </div>
+          {
+            showError && (
+              <p data-testid="common_login__element-invalid-email">Algo deu errado!</p>
+            )
+          }
 
-        </button>
-        <button
-          type="button"
-          data-testid="common_login__button-register"
-        >
-          <Link to="/register">
-            Cadastrar
-          </Link>
-
-        </button>
-        {
-          showError && (
-            <p data-testid="common_login__element-invalid-email">Algo deu errado!</p>
-          )
-        }
-
-      </div>
-    </form>
+        </div>
+      </form>
+      <div className="bubble" />
+      <div className="bubble" />
+      <div className="bubble" />
+      <div className="bubble" />
+      <div className="bubble" />
+      <div className="bubble" />
+      <div className="bubble" />
+      <div className="bubble" />
+      <div className="bubble" />
+      <div className="bubble" />
+    </div>
   );
 }
 

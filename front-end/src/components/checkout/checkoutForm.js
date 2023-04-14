@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from '../../context/Context';
+import './checkoutForm.css';
 
 function CheckoutForm() {
   const history = useHistory();
@@ -84,7 +85,7 @@ function CheckoutForm() {
   }
 
   return (
-    <form>
+    <form className="checkout-form">
       <label htmlFor="seller">
         <p>P. Vendedora Responsável:</p>
         <select
@@ -130,6 +131,7 @@ function CheckoutForm() {
         type="button"
         data-testid="customer_checkout__button-submit-order"
         onClick={ registerSale }
+        className="finish-sale-btn"
       >
         Finalizar Pedido
       </button>

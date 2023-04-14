@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import './admin.css';
 
 function AdminForm() {
   const [name, setName] = useState('');
@@ -45,40 +46,55 @@ function AdminForm() {
   }
 
   return (
-    <form onSubmit={ handleSubmit }>
-      <label htmlFor="name">
-        Nome Completo:
-        <input
-          value={ name }
-          type="text"
-          data-testid="admin_manage__input-name"
-          onChange={ (event) => setName(event.target.value) }
-          id="name"
-          name="name"
-        />
-      </label>
-      <label htmlFor="email">
-        E-Mail:
-        <input
-          value={ email }
-          type="email"
-          data-testid="admin_manage__input-email"
-          onChange={ (event) => setEmail(event.target.value) }
-          id="email"
-          name="email"
-        />
-      </label>
-      <label htmlFor="password">
-        Senha:
-        <input
-          value={ password }
-          type="text"
-          data-testid="admin_manage__input-password"
-          onChange={ (event) => setPassword(event.target.value) }
-          id="password"
-          name="password"
-        />
-      </label>
+    <form onSubmit={ handleSubmit } className="adm-register-form">
+      <div className="adm-register-form-inputs">
+        <label htmlFor="name">
+          Nome Completo:
+          <input
+            value={ name }
+            type="text"
+            data-testid="admin_manage__input-name"
+            onChange={ (event) => setName(event.target.value) }
+            id="name"
+            name="name"
+          />
+        </label>
+        <label htmlFor="email">
+          E-Mail:
+          <input
+            value={ email }
+            type="email"
+            data-testid="admin_manage__input-email"
+            onChange={ (event) => setEmail(event.target.value) }
+            id="email"
+            name="email"
+          />
+        </label>
+        <label htmlFor="password">
+          Senha:
+          <input
+            value={ password }
+            type="text"
+            data-testid="admin_manage__input-password"
+            onChange={ (event) => setPassword(event.target.value) }
+            id="password"
+            name="password"
+          />
+        </label>
+        <label htmlFor="role">
+          Tipo:
+          <select
+            data-testid="admin_manage__select-role"
+            value={ role }
+            id="role"
+            name="role"
+            onChange={ (event) => setRole(event.target.value) }
+          >
+            <option value="seller">Vendedor</option>
+            <option value="customer">Cliente</option>
+          </select>
+        </label>
+      </div>
       <button
         type="button"
         data-testid="admin_manage__button-register"
@@ -88,16 +104,7 @@ function AdminForm() {
       >
         Cadastrar
       </button>
-      <select
-        data-testid="admin_manage__select-role"
-        value={ role }
-        id="role"
-        name="role"
-        onChange={ (event) => setRole(event.target.value) }
-      >
-        <option value="seller">Vendedor</option>
-        <option value="customer">Cliente</option>
-      </select>
+
       {
         showError && (
           <p data-testid="admin_manage__element-invalid-register">
