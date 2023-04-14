@@ -11,37 +11,20 @@ function UserDetails() {
   const [getCart, setCart] = useState([]);
   // const [statusSales, setStatusSales] = useState('');
 
+  const contentTypes = 'application/json';
+
   const getUrl = history.location.pathname;
   const CARACTER_NUMBER = 17;
   const getIdUrl = getUrl.substring(CARACTER_NUMBER);
 
   const CARACTER_DATA = 10;
 
-  function getLocalStorage() {
-    const cart = JSON.parse(localStorage.getItem('cart'));
-    setCart(cart);
-  }
+  // function getLocalStorage() {
+  //   const cart = JSON.parse(localStorage.getItem('cart'));
+  //   setCart(cart);
+  // }
 
   const contentType = 'application/json';
-
-  useEffect(() => {
-    const { id } = JSON.parse(localStorage.getItem('user'));
-    async function fetchOrders() {
-      const response = await fetch(`http://localhost:3001/customer/orders/${id}`, {
-        method: 'GET',
-        mode: 'cors',
-        headers: {
-          'Content-Type': contentType,
-        },
-      });
-      const data = await response.json();
-      const test = data.filter((iten) => iten.id === Number(getIdUrl));
-      setOrder(test);
-      setStatusSales(test[0].status);
-    }
-    fetchOrders();
-    getLocalStorage();
-  }, []);
 
   useEffect(() => {
     async function findUserById() {
@@ -60,19 +43,51 @@ function UserDetails() {
     findUserById();
   }, [getOrder, setOrder]);
 
-  // async function handleStatus(status) {
-  //   await fetch(`http://localhost:3001/sale/${getIdUrl}`, {
-  //     method: 'PATCH',
-  //     mode: 'cors',
-  //     headers: {
-  //       'Content-Type': contentType,
-  //     },
-  //     body: JSON.stringify({ status }),
-  //   });
-  //   setStatusSales(status);
-  // }
+  function updateProducts([{ products }]) {
+    setCart(products);
+  }
+
+  useEffect(() => {
+    async function fetchOrders() {
+      const response = await fetch(`http://localhost:3001/product/${Number(getIdUrl)}`, {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+          'Content-Type': contentTypes,
+        },
+      });
+      const data = await response.json();
+      console.log('REQUISIÇÃO QUE não existia', data);
+
+      updateProducts(data);
+      setStatusSales(data[0].status);
+      setOrder(data);
+    }
+    fetchOrders();
+  }, []);
+
+  // useEffect(() => {
+  //   const { id } = JSON.parse(localStorage.getItem('user'));
+  //   async function fetchOrders() {
+  //     const response = await fetch(`http://localhost:3001/customer/orders/${id}`, {
+  //       method: 'GET',
+  //       mode: 'cors',
+  //       headers: {
+  //         'Content-Type': contentType,
+  //       },
+  //     });
+  //     const data = await response.json();
+  //     const test = data.filter((iten) => iten.id === Number(getIdUrl));
+  //     console.log('REQUISIÇÃO QUE JÁ EXISTIA', test);
+  //     setOrder(test);
+  //     setStatusSales(test[0].status);
+  //   }
+  //   fetchOrders();
+  //   getLocalStorage();
+  // }, []);
 
   const dataTest = 'customer_order_details__element-order-details-label-delivery-status';
+  console.log('teste', getCart);
 
   return (
     <div className="improviso">
@@ -126,9 +141,11 @@ function UserDetails() {
         </thead>
         <tbody>
           {
-            getCart.map((product, index) => {
-              const { name, productId, quantity, unitPrice, subTotal } = product;
-
+            getCart.length > 0 && getCart.map((product, index) => {
+              const { name, price, SaleProduct: { productId, quantity,
+              } } = product;
+              const unitPrice = Number(price);
+              const subTotal = unitPrice * quantity;
               // test ids
               const TEST_PREFIX = 'customer_order_details__element-order-table-';
 

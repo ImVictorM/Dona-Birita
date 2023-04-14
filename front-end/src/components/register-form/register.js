@@ -43,6 +43,18 @@ function RegisterForm() {
     if (creationResponse.status !== CREATED_CODE) {
       setShowError(true);
     } else {
+      const endpointLogin = 'http://localhost:3001/user/login';
+      const responseLogin = await fetch(endpointLogin, {
+        method: 'POST',
+        mode: 'cors',
+        body: JSON.stringify({ email, password }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const loginResponse = await responseLogin.json();
+
+      localStorage.setItem('user', JSON.stringify(loginResponse));
       history.push('/customer/products');
     }
   }
