@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import './table.css';
 import { useHistory } from 'react-router-dom';
+import Context from '../../context/Context';
 
 function UserDetails() {
   const history = useHistory();
+  const { handleStatus, statusSales, setStatusSales } = useContext(Context);
   const [getOrder, setOrder] = useState([]);
   const [seller, setSeller] = useState({});
   const [getCart, setCart] = useState([]);
+  // const [statusSales, setStatusSales] = useState('');
 
   const getUrl = history.location.pathname;
   const CARACTER_NUMBER = 17;
@@ -19,6 +22,8 @@ function UserDetails() {
     setCart(cart);
   }
 
+  const contentType = 'application/json';
+
   useEffect(() => {
     const { id } = JSON.parse(localStorage.getItem('user'));
     async function fetchOrders() {
@@ -26,12 +31,13 @@ function UserDetails() {
         method: 'GET',
         mode: 'cors',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': contentType,
         },
       });
       const data = await response.json();
       const test = data.filter((iten) => iten.id === Number(getIdUrl));
       setOrder(test);
+      setStatusSales(test[0].status);
     }
     fetchOrders();
     getLocalStorage();
@@ -44,7 +50,7 @@ function UserDetails() {
           method: 'GET',
           mode: 'cors',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': contentType,
           },
         });
         const dataSeller = await response.json();
@@ -54,9 +60,17 @@ function UserDetails() {
     findUserById();
   }, [getOrder, setOrder]);
 
-  function disabledButton(status) {
-    return status !== 'Entregue';
-  }
+  // async function handleStatus(status) {
+  //   await fetch(`http://localhost:3001/sale/${getIdUrl}`, {
+  //     method: 'PATCH',
+  //     mode: 'cors',
+  //     headers: {
+  //       'Content-Type': contentType,
+  //     },
+  //     body: JSON.stringify({ status }),
+  //   });
+  //   setStatusSales(status);
+  // }
 
   const dataTest = 'customer_order_details__element-order-details-label-delivery-status';
 
@@ -84,12 +98,13 @@ function UserDetails() {
           <p
             data-testid={ dataTest }
           >
-            { getOrder[0].status }
+            { statusSales }
           </p>
           <button
             type="button"
             data-testid="customer_order_details__button-delivery-check"
-            disabled={ disabledButton(getOrder[0].status) }
+            disabled={ statusSales !== 'Em Trânsito' }
+            onClick={ () => handleStatus('Entregue', getIdUrl) }
           >
             MARCAR COMO ENTREGUE
 

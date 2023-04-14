@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import '../user-table/table.css';
 import { useHistory } from 'react-router-dom';
+import Context from '../../context/Context';
 
 function SellerDetails() {
   const history = useHistory();
+  const { handleStatus, statusSales, setStatusSales } = useContext(Context);
   const [getOrder, setOrder] = useState([]);
-  const [seller, setSeller] = useState({});
+  // const [statusSales, setStatusSales] = useState('');
   const [getCart, setCart] = useState([]);
 
   const getUrl = history.location.pathname;
@@ -14,73 +16,59 @@ function SellerDetails() {
 
   const CARACTER_DATA = 10;
 
-  function getLocalStorage() {
-    const cart = JSON.parse(localStorage.getItem('cart'));
-    setCart(cart);
+  function updateProducts([{ products }]) {
+    setCart(products);
   }
 
+  const contentTypes = 'application/json';
+
   useEffect(() => {
-    const { id } = JSON.parse(localStorage.getItem('user'));
     async function fetchOrders() {
-      const response = await fetch(`http://localhost:3001/sale/orders/${id}`, {
+      const response = await fetch(`http://localhost:3001/product/${Number(getIdUrl)}`, {
         method: 'GET',
         mode: 'cors',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': contentTypes,
         },
       });
       const data = await response.json();
       console.log(data);
-      const test = data.filter((iten) => iten.id === Number(getIdUrl));
-      console.log(test);
-      setOrder(test);
+      updateProducts(data);
+      setStatusSales(data[0].status);
+      setOrder(data);
     }
     fetchOrders();
-    getLocalStorage();
   }, []);
 
-  useEffect(() => {
-    async function findUserById() {
-      if (getOrder.length > 0 && getOrder[0].sellerId) {
-        const response = await fetch(`http://localhost:3001/user/id/${getOrder[0].sellerId}`, {
-          method: 'GET',
-          mode: 'cors',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        const dataSeller = await response.json();
-        setSeller(dataSeller);
-      }
-    }
-    findUserById();
-  }, [getOrder, setOrder]);
-
-  function disabledButton(status) {
-    return status !== 'Pendente';
-  }
-
-  function disabledButton2(status) {
-    return status === 'Pendente';
-  }
+  // async function handleStatus(status) {
+  //   await fetch(`http://localhost:3001/sale/${getIdUrl}`, {
+  //     method: 'PATCH',
+  //     mode: 'cors',
+  //     headers: {
+  //       'Content-Type': contentTypes,
+  //     },
+  //     body: JSON.stringify({ status }),
+  //   });
+  //   setStatusSales(status);
+  // }
 
   const TEST_PREFIX = 'seller_order_details__element-order-details-';
 
   return (
     <div className="improviso">
       <h1>Detalhes do pedido</h1>
-      {getOrder ? getOrder.map((iten) => (
+      {getOrder.length ? getOrder.map((iten) => (
         <div key={ iten.id }>
           <p
             data-testid={ `${TEST_PREFIX}label-order-id` }
           >
             { iten.id }
           </p>
-          <p
+          {/* <p
             data-testid={ `${TEST_PREFIX}label-seller-name ` }
           >
             { seller.name }
-          </p>
+          </p> */}
           <p
             data-testid={ `${TEST_PREFIX}label-order-date ` }
           >
@@ -90,12 +78,13 @@ function SellerDetails() {
           <p
             data-testid={ `${TEST_PREFIX}label-delivery-status ` }
           >
-            { getOrder[0].status }
+            { statusSales }
           </p>
           <button
             type="button"
             data-testid="seller_order_details__button-preparing-check"
-            disabled={ disabledButton(getOrder[0].status) }
+            disabled={ statusSales !== 'Pendente' }
+            onClick={ () => handleStatus('Preparando', getIdUrl) }
           >
             PREPARAR PEDIDOS
 
@@ -103,7 +92,9 @@ function SellerDetails() {
           <button
             type="button"
             data-testid="seller_order_details__button-dispatch-check"
-            disabled={ disabledButton2(getOrder[0].status) }
+            disabled={ ['Pendente', 'Em Trânsito', 'Entregue']
+              .includes(statusSales) }
+            onClick={ () => handleStatus('Em Trânsito', getIdUrl) }
           >
             SAIU PARA ENTREGA
 
@@ -125,9 +116,11 @@ function SellerDetails() {
         </thead>
         <tbody>
           {
-            getCart.map((product, index) => {
-              const { name, productId, quantity, unitPrice, subTotal } = product;
-
+            getCart.length ? getCart.map((product, index) => {
+              const { name, price, SaleProduct: { productId, quantity,
+              } } = product;
+              const unitPrice = Number(price);
+              const subTotal = unitPrice * quantity;
               // test ids
 
               return (
@@ -157,7 +150,7 @@ function SellerDetails() {
                     <span
                       data-testid={ `${TEST_PREFIX}unit-price-${index}` }
                     >
-                      {Number(unitPrice).toFixed(2).replace('.', ',')}
+                      {unitPrice.toFixed(2).replace('.', ',')}
                     </span>
                   </td>
                   <td>
@@ -169,7 +162,7 @@ function SellerDetails() {
                   </td>
                 </tr>
               );
-            })
+            }) : <tr>Loading...</tr>
           }
         </tbody>
       </table>
