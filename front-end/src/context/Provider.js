@@ -37,7 +37,7 @@ function Provider({ children }) {
     handleStatus,
     statusSales,
     setStatusSales,
-  }), [totalPrice, user]);
+  }), [totalPrice, user, statusSales]);
 
   return (
     <Context.Provider value={ value }>
