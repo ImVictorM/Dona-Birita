@@ -7,8 +7,8 @@ const {
 
 async function requestLogin(req, res) {
   const userFromReq = req.body;
-  const token = await loginUser(userFromReq);
-  return res.status(200).json(token);
+  const userWithToken = await loginUser(userFromReq);
+  return res.status(200).json(userWithToken);
 }
 
 async function requestUserRegistration(req, res) {
