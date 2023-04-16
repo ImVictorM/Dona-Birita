@@ -8,8 +8,14 @@ async function requestWithCORS(endpoint, method, body) {
     },
   });
 
-  const formattedResponse = await response.json();
-  return formattedResponse;
+  const responseHasBody = response.headers.get('content-type');
+
+  if (responseHasBody) {
+    const formattedResponse = await response.json();
+    return formattedResponse;
+  }
+
+  return {};
 }
 
 export default requestWithCORS;

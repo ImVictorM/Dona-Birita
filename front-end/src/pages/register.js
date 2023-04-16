@@ -1,10 +1,11 @@
 import RegisterForm from '../components/register-form/register';
+import Bubbles from '../components/bubbles/bubbles';
 
 function Register() {
   return (
-    <div>
+    <Bubbles>
       <RegisterForm />
-    </div>
+    </Bubbles>
   );
 }
 

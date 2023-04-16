@@ -1,10 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Context from './Context';
+import { POST_USER_LOGIN } from '../utils/backendEndpoints';
+import requestWithCORS from '../utils/requestWithCORS';
 
 function Provider({ children }) {
   const [totalPrice, setTotalPrice] = useState(0);
-  const [user, setUser] = useState({});
   const [statusSales, setStatusSales] = useState('');
   const contentType = 'application/json';
 
@@ -29,15 +30,23 @@ function Provider({ children }) {
     setStatusSales(status);
   }
 
+  async function loginUser(userInfo) {
+    const responseLogin = await requestWithCORS(POST_USER_LOGIN, 'POST', userInfo);
+    if (responseLogin.message) {
+      throw new Error('Bad Request');
+    }
+    localStorage.setItem('user', JSON.stringify(responseLogin));
+    return responseLogin;
+  }
+
   const value = useMemo(() => ({
     totalPrice,
-    user,
-    setUser,
     sumCart,
     handleStatus,
     statusSales,
     setStatusSales,
-  }), [totalPrice, user, statusSales]);
+    loginUser,
+  }), [totalPrice, statusSales]);
 
   return (
     <Context.Provider value={ value }>

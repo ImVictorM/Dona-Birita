@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import './login.css';
-import requestWithCORS from '../../utils/requestWithCORS';
-import { POST_LOGIN_ENDPOINT } from '../../utils/backendEndpoints';
+import Context from '../../context/Context';
 
 function LoginForm() {
   const history = useHistory();
@@ -10,6 +9,7 @@ function LoginForm() {
   const [password, setPassword] = useState('');
   const [loginIsDisabled, setLoginIsDisabled] = useState(true);
   const [showError, setShowError] = useState(false);
+  const { loginUser } = useContext(Context);
 
   const LOGGED_USER_ENDPOINTS = {
     customer: '/customer/products',
@@ -34,14 +34,11 @@ function LoginForm() {
   }, [email, password]);
 
   async function handleLogin() {
-    const loginInfo = { email, password };
-    const loginResponse = await requestWithCORS(POST_LOGIN_ENDPOINT, 'POST', loginInfo);
-
-    if (loginResponse.message) {
+    try {
+      const user = await loginUser({ email, password });
+      history.push(LOGGED_USER_ENDPOINTS[user.role]);
+    } catch (error) {
       setShowError(true);
-    } else {
-      localStorage.setItem('user', JSON.stringify(loginResponse));
-      history.push(LOGGED_USER_ENDPOINTS[loginResponse.role]);
     }
   }
 
