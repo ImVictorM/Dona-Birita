@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import './table.css';
 import { useHistory } from 'react-router-dom';
-import Context from '../../context/Context';
+import { Context } from '../../context/Context';
 
 function UserDetails() {
   const history = useHistory();

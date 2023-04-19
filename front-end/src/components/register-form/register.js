@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import '../login-form/login.css';
 import requestWithCORS from '../../utils/requestWithCORS';
 import { POST_USER_REGISTER } from '../../utils/backendEndpoints';
-import Context from '../../context/Context';
+import { Context } from '../../context/Context';
 
 function RegisterForm() {
   const history = useHistory();

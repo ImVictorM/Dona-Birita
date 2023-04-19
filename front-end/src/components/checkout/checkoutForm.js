@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import Context from '../../context/Context';
+import { CartContext } from '../../context/Context';
 import './checkoutForm.css';
 
 function CheckoutForm() {
@@ -11,7 +11,7 @@ function CheckoutForm() {
     address: '',
     number: '',
   });
-  const { totalPrice } = useContext(Context);
+  const { cartTotal } = useContext(CartContext);
 
   useEffect(() => {
     async function getSellerList() {
@@ -48,7 +48,7 @@ function CheckoutForm() {
     const sale = {
       userId: user.id,
       sellerId: selectedSellerId,
-      totalPrice,
+      totalPrice: cartTotal,
       deliveryAddress: form.address,
       deliveryNumber: form.number,
       status: 'Pendente',

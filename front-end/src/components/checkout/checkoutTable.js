@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
-import Context from '../../context/Context';
+import { CartContext } from '../../context/Context';
 import './checkoutTable.css';
 
 function CheckoutTable() {
   const [cart, setCart] = useState([]);
-  const { totalPrice, sumCart } = useContext(Context);
+  const { cartTotal, sumCart } = useContext(CartContext);
 
   useEffect(() => {
     const cartFromLocalStorage = JSON.parse(localStorage.getItem('cart')) || [];
@@ -106,7 +106,7 @@ function CheckoutTable() {
         <span
           data-testid="customer_checkout__element-order-total-price"
         >
-          {Number(totalPrice).toFixed(2).replace('.', ',')}
+          {Number(cartTotal).toFixed(2).replace('.', ',')}
         </span>
       </div>
     </section>

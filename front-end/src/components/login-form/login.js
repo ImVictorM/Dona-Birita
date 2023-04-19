@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import './login.css';
-import Context from '../../context/Context';
+import { Context } from '../../context/Context';
 
 function LoginForm() {
   const history = useHistory();

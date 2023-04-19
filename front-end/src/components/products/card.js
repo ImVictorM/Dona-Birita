@@ -1,51 +1,29 @@
 import PropTypes from 'prop-types';
-import { useContext, useEffect, useState } from 'react';
-import Context from '../../context/Context';
+import { useContext, useState } from 'react';
+import { CartContext } from '../../context/Context';
 import './card.css';
 
 function Card({ id, name, imag, price }) {
-  const [quantity, setQuantity] = useState(0);
-  const { sumCart } = useContext(Context);
+  const [quantity, setQuantity] = useState(undefined);
+  const { updateCart, cart } = useContext(CartContext);
 
-  useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    if (quantity > 0) {
-      const INVALID_INDEX = -1;
-      const indexToUpdate = cart.findIndex((product) => product.productId === id);
-
-      if (indexToUpdate !== INVALID_INDEX) {
-        const subTotal = quantity * price;
-        cart[indexToUpdate].quantity = quantity;
-        cart[indexToUpdate].subTotal = subTotal;
-        localStorage.setItem('cart', JSON.stringify(cart));
-        sumCart();
-      } else {
-        const subTotal = price * quantity;
-        const newProduct = {
-          productId: id,
-          name,
-          unitPrice: price,
-          quantity,
-          subTotal,
-        };
-        localStorage.setItem('cart', JSON.stringify([...cart, newProduct]));
-        sumCart();
-      }
-    } else {
-      const updatedCart = cart.filter((product) => product.productId !== id);
-      localStorage.setItem('cart', JSON.stringify(updatedCart));
-      sumCart();
-    }
-  }, [id, imag, name, price, quantity, sumCart]);
+  useState(() => {
+    const product = cart.find((p) => p.productId === id) || {};
+    setQuantity(product.quantity || 0);
+  });
 
   function handleClickAdd() {
-    setQuantity(quantity + 1);
+    const newQuantity = quantity + 1;
+    setQuantity(newQuantity);
+    updateCart({ id, name, price, quantity: newQuantity });
   }
 
   function handleClickMinus() {
-    if (quantity <= 0) return setQuantity(0);
-    setQuantity(quantity - 1);
+    const newQuantity = quantity - 1;
+    if (quantity > 0) {
+      setQuantity(newQuantity);
+      updateCart({ id, name, price, quantity: newQuantity });
+    }
   }
 
   function handleChangeQuantity({ target: { value } }) {

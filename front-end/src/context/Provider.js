@@ -1,22 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import Context from './Context';
+import { Context } from './Context';
 import { POST_USER_LOGIN } from '../utils/backendEndpoints';
 import requestWithCORS from '../utils/requestWithCORS';
 
 function Provider({ children }) {
-  const [totalPrice, setTotalPrice] = useState(0);
   const [statusSales, setStatusSales] = useState('');
   const contentType = 'application/json';
-
-  function sumCart() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const cartReduce = (cart.reduce(
-      (acc, currentValue) => acc + currentValue.subTotal,
-      0,
-    ));
-    setTotalPrice(cartReduce.toFixed(2));
-  }
 
   async function handleStatus(status, id) {
     await fetch(`http://localhost:3001/sale/${id}`, {
@@ -40,13 +30,11 @@ function Provider({ children }) {
   }
 
   const value = useMemo(() => ({
-    totalPrice,
-    sumCart,
     handleStatus,
     statusSales,
     setStatusSales,
     loginUser,
-  }), [totalPrice, statusSales]);
+  }), [statusSales]);
 
   return (
     <Context.Provider value={ value }>
