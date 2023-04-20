@@ -27,8 +27,9 @@ function Card({ id, name, imag, price }) {
   }
 
   function handleChangeQuantity({ target: { value } }) {
-    if (value <= 0) return setQuantity(0);
-    setQuantity(value);
+    if (value > 0) {
+      setQuantity(Number(value));
+    }
   }
 
   return (
@@ -50,7 +51,7 @@ function Card({ id, name, imag, price }) {
       <div className="quantity-container">
         <button
           type="button"
-          onClick={ () => handleClickMinus() }
+          onClick={ handleClickMinus }
           data-testid={ `customer_products__button-card-rm-item-${id}` }
         >
           -
@@ -66,7 +67,7 @@ function Card({ id, name, imag, price }) {
         />
         <button
           type="button"
-          onClick={ () => handleClickAdd() }
+          onClick={ handleClickAdd }
           data-testid={ `customer_products__button-card-add-item-${id}` }
         >
           +

@@ -48,8 +48,10 @@ async function validateUserAlreadyExists(userFromReq) {
 async function registerNewUser(userFromReq) {
   await validateUserAlreadyExists(userFromReq);
   const passwordHash = hashPassword(userFromReq.password);
-  const createdUser = await User.create({ ...userFromReq, password: passwordHash });
-  return createdUser;
+  await User.create({ ...userFromReq, password: passwordHash });
+
+  const userWithToken = await loginUser(userFromReq);
+  return userWithToken;
 }
 
 async function getAllUserByRole(role) {

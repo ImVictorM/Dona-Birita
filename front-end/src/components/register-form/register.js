@@ -1,9 +1,8 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../login-form/login.css';
 import requestWithCORS from '../../utils/requestWithCORS';
 import { POST_USER_REGISTER } from '../../utils/backendEndpoints';
-import { Context } from '../../context/Context';
 
 function RegisterForm() {
   const history = useHistory();
@@ -12,7 +11,6 @@ function RegisterForm() {
   const [password, setPassword] = useState('');
   const [allowedToRegister, setAllowedToRegister] = useState(false);
   const [showError, setShowError] = useState(false);
-  const { loginUser } = useContext(Context);
 
   useEffect(() => {
     function registrationFormIsValid() {
@@ -39,12 +37,14 @@ function RegisterForm() {
     if (creationResponse.message) {
       throw new Error('Bad Request');
     }
+
+    return creationResponse;
   }
 
   async function handleUserRegistration() {
     try {
-      await registerUser();
-      await loginUser({ email, password });
+      const user = await registerUser();
+      localStorage.setItem('user', JSON.stringify(user));
       history.push('/customer/products');
     } catch (error) {
       setShowError(true);

@@ -13,8 +13,8 @@ async function requestLogin(req, res) {
 
 async function requestUserRegistration(req, res) {
   const userToRegister = req.body;
-  const createdUser = await registerNewUser(userToRegister);
-  return res.status(201).json(createdUser);
+  const userWithToken = await registerNewUser(userToRegister);
+  return res.status(201).json(userWithToken);
 }
 
 async function requestAllUserByRole(req, res) {

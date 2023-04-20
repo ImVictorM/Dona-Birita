@@ -1,7 +1,8 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import requestWithCORS from '../../utils/requestWithCORS';
+import { POST_USER_LOGIN } from '../../utils/backendEndpoints';
 import './login.css';
-import { Context } from '../../context/Context';
 
 function LoginForm() {
   const history = useHistory();
@@ -9,7 +10,6 @@ function LoginForm() {
   const [password, setPassword] = useState('');
   const [loginIsDisabled, setLoginIsDisabled] = useState(true);
   const [showError, setShowError] = useState(false);
-  const { loginUser } = useContext(Context);
 
   const LOGGED_USER_ENDPOINTS = {
     customer: '/customer/products',
@@ -32,6 +32,15 @@ function LoginForm() {
     }
     setLoginIsDisabled(!loginInfoIsValid());
   }, [email, password]);
+
+  async function loginUser(userInfo) {
+    const responseLogin = await requestWithCORS(POST_USER_LOGIN, 'POST', userInfo);
+    if (responseLogin.message) {
+      throw new Error('Bad Request');
+    }
+    localStorage.setItem('user', JSON.stringify(responseLogin));
+    return responseLogin;
+  }
 
   async function handleLogin() {
     try {

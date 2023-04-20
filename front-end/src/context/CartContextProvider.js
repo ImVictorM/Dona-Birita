@@ -38,10 +38,10 @@ function CartContextProvider({ children }) {
   }
 
   const updateCart = useCallback((product) => {
-    if (product.quantity > 0) {
-      addToCart(product);
-    } else {
+    if (product.quantity === 0) {
       removeFromCart(product);
+    } else {
+      addToCart(product);
     }
   }, [addToCart]);
 
