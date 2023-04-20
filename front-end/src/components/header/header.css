@@ -17,6 +17,7 @@
 
 .main-header nav div span {
   color: #ff8e00;
+  text-transform: none;
 }
 
 .main-header nav div > * {

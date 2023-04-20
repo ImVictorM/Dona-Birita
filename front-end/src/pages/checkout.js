@@ -1,6 +1,6 @@
 import CheckoutTable from '../components/checkout/checkoutTable';
 import CheckoutForm from '../components/checkout/checkoutForm';
-import HeaderPedidos from '../components/cliente-pedidos/header';
+import HeaderPedidos from '../components/header/header';
 
 function Checkout() {
   return (

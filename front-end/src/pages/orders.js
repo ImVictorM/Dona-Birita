@@ -1,4 +1,4 @@
-import HeaderPedidos from '../components/cliente-pedidos/header';
+import HeaderPedidos from '../components/header/header';
 import SellerTable from '../components/seller-table/table';
 import UserTable from '../components/user-table/table';
 import HeaderSeller from '../components/seller-header/sellerHeader';

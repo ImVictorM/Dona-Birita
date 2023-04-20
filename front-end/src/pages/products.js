@@ -1,4 +1,4 @@
-import HeaderPedidos from '../components/cliente-pedidos/header';
+import HeaderPedidos from '../components/header/header';
 import ProductList from '../components/products/productList';
 import TotalButton from '../components/products/totalButton';
 

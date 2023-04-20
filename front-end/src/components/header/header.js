@@ -32,7 +32,7 @@ function HeaderPedidos() {
             type="button"
             data-testid="customer_products__element-navbar-link-logout"
             onClick={ () => {
-              localStorage.removeItem('user');
+              localStorage.clear();
               history.push('/');
             } }
           >

@@ -29,6 +29,7 @@ function Card({ id, name, imag, price }) {
   function handleChangeQuantity({ target: { value } }) {
     if (value > 0) {
       setQuantity(Number(value));
+      updateCart({ id, name, price, quantity: value });
     }
   }
 

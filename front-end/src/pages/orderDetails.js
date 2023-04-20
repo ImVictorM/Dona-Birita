@@ -1,5 +1,5 @@
 import React from 'react';
-import HeaderPedidos from '../components/cliente-pedidos/header';
+import HeaderPedidos from '../components/header/header';
 import HeaderSeller from '../components/seller-header/sellerHeader';
 import SellerDetails from '../components/seller-table/seller-details';
 import UserDetails from '../components/user-table/user-details';

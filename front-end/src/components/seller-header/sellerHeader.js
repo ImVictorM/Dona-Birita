@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import '../cliente-pedidos/header.css';
+import '../header/header.css';
 
 function HeaderSeller() {
   const history = useHistory();
