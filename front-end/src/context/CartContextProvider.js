@@ -33,13 +33,13 @@ function CartContextProvider({ children }) {
     }
   }, [cart]);
 
-  function removeFromCart({ id }) {
+  function removeFromCart(id) {
     setCart((prevCart) => prevCart.filter((currP) => currP.productId !== id));
   }
 
   const updateCart = useCallback((product) => {
     if (product.quantity === 0) {
-      removeFromCart(product);
+      removeFromCart(product.id);
     } else {
       addToCart(product);
     }
@@ -55,6 +55,7 @@ function CartContextProvider({ children }) {
     cartTotal,
     cart,
     updateCart,
+    removeFromCart,
   }), [cart, cartTotal, updateCart]);
 
   return (

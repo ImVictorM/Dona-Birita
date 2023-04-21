@@ -1,10 +1,11 @@
-async function requestWithCORS(endpoint, method, body) {
-  const response = await fetch(endpoint, {
-    method,
+async function requestWithCORS(options, body, auth) {
+  const response = await fetch(options.endpoint, {
+    method: options.method,
     mode: 'cors',
     body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',
+      Authorization: auth,
     },
   });
 
@@ -12,6 +13,9 @@ async function requestWithCORS(endpoint, method, body) {
 
   if (responseHasBody) {
     const formattedResponse = await response.json();
+    if (formattedResponse.message) {
+      throw new Error(formattedResponse.message);
+    }
     return formattedResponse;
   }
 

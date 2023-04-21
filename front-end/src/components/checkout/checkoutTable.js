@@ -1,28 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { CartContext } from '../../context/Context';
 import './checkoutTable.css';
 
 function CheckoutTable() {
-  const [cart, setCart] = useState([]);
-  const { cartTotal, sumCart } = useContext(CartContext);
-
-  useEffect(() => {
-    const cartFromLocalStorage = JSON.parse(localStorage.getItem('cart')) || [];
-    setCart(cartFromLocalStorage);
-  }, []);
-
-  function removeItem(event) {
-    const idProductToRemove = event.target.id;
-    const updatedCart = cart
-      .filter((product) => Number(product.productId) !== Number(idProductToRemove));
-    setCart(updatedCart);
-  }
-
-  // atualiza o cart no local storage sempre que o cart no componente mudar
-  useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart));
-    sumCart();
-  }, [cart, sumCart]);
+  const { cartTotal, cart, removeFromCart } = useContext(CartContext);
 
   return (
     <section>
@@ -42,7 +23,6 @@ function CheckoutTable() {
             cart.map((product, index) => {
               const { name, productId, quantity, unitPrice, subTotal } = product;
 
-              // test ids
               const TEST_PREFIX = 'customer_checkout__element-order-table-';
 
               return (
@@ -51,7 +31,7 @@ function CheckoutTable() {
                     <span
                       data-testid={ `${TEST_PREFIX}item-number-${index}` }
                     >
-                      { index + 1}
+                      { index + 1 }
                     </span>
                   </td>
                   <td>
@@ -89,7 +69,7 @@ function CheckoutTable() {
                       data-testid={ `${TEST_PREFIX}remove-${index}` }
                       type="button"
                       id={ productId }
-                      onClick={ removeItem }
+                      onClick={ () => removeFromCart(productId) }
                     >
                       Remover
 

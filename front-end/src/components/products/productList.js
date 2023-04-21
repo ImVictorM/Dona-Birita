@@ -9,7 +9,7 @@ function ProductList() {
 
   useEffect(() => {
     async function fetchProductList() {
-      const productsFromDB = await requestWithCORS(GET_ALL_PRODUCTS, 'GET');
+      const productsFromDB = await requestWithCORS(GET_ALL_PRODUCTS);
       setProducts(productsFromDB);
     }
     fetchProductList();

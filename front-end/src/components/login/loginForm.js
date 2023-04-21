@@ -34,10 +34,7 @@ function LoginForm() {
   }, [email, password]);
 
   async function loginUser(userInfo) {
-    const responseLogin = await requestWithCORS(POST_USER_LOGIN, 'POST', userInfo);
-    if (responseLogin.message) {
-      throw new Error('Bad Request');
-    }
+    const responseLogin = await requestWithCORS(POST_USER_LOGIN, userInfo);
     localStorage.setItem('user', JSON.stringify(responseLogin));
     return responseLogin;
   }

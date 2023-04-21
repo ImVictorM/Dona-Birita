@@ -29,15 +29,7 @@ function RegisterForm() {
 
   async function registerUser() {
     const userToRegister = { email, password, name, role: 'customer' };
-    const creationResponse = await requestWithCORS(
-      POST_USER_REGISTER,
-      'POST',
-      userToRegister,
-    );
-    if (creationResponse.message) {
-      throw new Error('Bad Request');
-    }
-
+    const creationResponse = await requestWithCORS(POST_USER_REGISTER, userToRegister);
     return creationResponse;
   }
 

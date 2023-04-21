@@ -1,11 +1,11 @@
 import CheckoutTable from '../components/checkout/checkoutTable';
 import CheckoutForm from '../components/checkout/checkoutForm';
-import HeaderPedidos from '../components/header/header';
+import Header from '../components/header/header';
 
 function Checkout() {
   return (
     <div>
-      <HeaderPedidos />
+      <Header />
       <CheckoutTable />
       <CheckoutForm />
     </div>

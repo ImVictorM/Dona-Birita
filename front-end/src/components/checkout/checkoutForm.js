@@ -1,30 +1,23 @@
 import { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { CartContext } from '../../context/Context';
+import requestWithCORS from '../../utils/requestWithCORS';
+import { GET_SELLER_LIST, POST_SALE_REGISTER } from '../../utils/backendEndpoints';
 import './checkoutForm.css';
 
 function CheckoutForm() {
   const history = useHistory();
   const [sellerList, setSellerList] = useState([]);
-  const [selectedSellerId, setSelectedSellerId] = useState('');
   const [form, setForm] = useState({
     address: '',
     number: '',
+    sellerId: '',
   });
-  const { cartTotal } = useContext(CartContext);
+  const { cartTotal, cart } = useContext(CartContext);
 
   useEffect(() => {
     async function getSellerList() {
-      const endpoint = 'http://localhost:3001/user/seller';
-
-      const response = await fetch(endpoint, {
-        method: 'GET',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const sellersFromDB = await response.json();
+      const sellersFromDB = await requestWithCORS(GET_SELLER_LIST);
       setSellerList(sellersFromDB);
     }
     getSellerList();
@@ -32,26 +25,21 @@ function CheckoutForm() {
 
   useEffect(() => {
     if (sellerList.length > 0) {
-      setSelectedSellerId(sellerList[0].id);
+      setForm((prevForm) => ({ ...prevForm, sellerId: sellerList[0].id }));
     }
   }, [sellerList]);
 
   function makeSaleObj() {
-    const cart = JSON.parse(localStorage.getItem('cart'));
     const user = JSON.parse(localStorage.getItem('user'));
-
-    const products = cart.reduce((acc, curr) => {
-      const { productId, quantity } = curr;
-      return [...acc, { productId, quantity }];
-    }, []);
-
+    const products = cart.map(({ productId, quantity }) => ({ productId, quantity }));
+    const INITIAL_SALE_STATUS = 'Pendente';
     const sale = {
       userId: user.id,
-      sellerId: selectedSellerId,
+      sellerId: form.sellerId,
       totalPrice: cartTotal,
       deliveryAddress: form.address,
       deliveryNumber: form.number,
-      status: 'Pendente',
+      status: INITIAL_SALE_STATUS,
       products,
       saleDate: new Date().toISOString(),
     };
@@ -59,23 +47,11 @@ function CheckoutForm() {
   }
 
   async function registerSale() {
-    const endpoint = 'http://localhost:3001/sale';
+    const { token } = JSON.parse(localStorage.getItem('user'));
     const sale = makeSaleObj();
-    const creationResponse = await fetch(endpoint, {
-      method: 'POST',
-      mode: 'cors',
-      body: JSON.stringify(sale),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: JSON.parse(localStorage.getItem('user')).token,
-      },
-    });
-
-    const CREATED_CODE = 201;
-    if (creationResponse.status === CREATED_CODE) {
-      const { id: saleId } = await creationResponse.json();
-      history.push(`/customer/orders/${saleId}`);
-    }
+    const creationResponse = await requestWithCORS(POST_SALE_REGISTER, sale, token);
+    const { id: saleId } = creationResponse;
+    history.push(`/customer/orders/${saleId}`);
   }
 
   function handleChange({ target }) {
@@ -93,7 +69,7 @@ function CheckoutForm() {
           data-testid="customer_checkout__select-seller"
           id="seller"
           name="sellerId"
-          value={ selectedSellerId }
+          value={ form.sellerId }
         >
           {
             sellerList.map((seller) => {

@@ -1,3 +1,24 @@
-export const POST_USER_LOGIN = 'http://localhost:3001/user/login';
-export const GET_ALL_PRODUCTS = 'http://localhost:3001/product/';
-export const POST_USER_REGISTER = 'http://localhost:3001/user/register';
+export const POST_USER_LOGIN = {
+  endpoint: 'http://localhost:3001/user/login',
+  method: 'POST',
+};
+
+export const GET_ALL_PRODUCTS = {
+  endpoint: 'http://localhost:3001/product/',
+  method: 'GET',
+};
+
+export const POST_USER_REGISTER = {
+  endpoint: 'http://localhost:3001/user/register',
+  method: 'POST',
+};
+
+export const GET_SELLER_LIST = {
+  endpoint: 'http://localhost:3001/user/seller',
+  method: 'GET',
+};
+
+export const POST_SALE_REGISTER = {
+  endpoint: 'http://localhost:3001/sale',
+  method: 'POST',
+};
