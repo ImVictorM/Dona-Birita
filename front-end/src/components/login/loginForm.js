@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import requestWithCORS from '../../utils/requestWithCORS';
 import { POST_USER_LOGIN } from '../../utils/backendEndpoints';
-import './login.css';
+import './loginForm.css';
 
 function LoginForm() {
   const history = useHistory();

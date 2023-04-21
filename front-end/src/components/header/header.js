@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './header.css';
 
-function HeaderPedidos() {
+function Header() {
   const history = useHistory();
   const { name } = JSON.parse(localStorage.getItem('user'));
   return (
@@ -44,4 +44,4 @@ function HeaderPedidos() {
   );
 }
 
-export default HeaderPedidos;
+export default Header;

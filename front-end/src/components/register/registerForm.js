@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import '../login-form/login.css';
+import '../login/loginForm.css';
 import requestWithCORS from '../../utils/requestWithCORS';
 import { POST_USER_REGISTER } from '../../utils/backendEndpoints';
 
