@@ -4,29 +4,33 @@ import './header.css';
 
 function Header() {
   const history = useHistory();
-  const { name } = JSON.parse(localStorage.getItem('user'));
+  const user = JSON.parse(localStorage.getItem('user'));
   return (
     <header className="main-header">
       <nav>
         <div>
+          {
+            user.role === 'customer' && (
+              <Link
+                to="/customer/products"
+                data-testid="customer_products__element-navbar-link-products"
+              >
+                Produtos
+              </Link>
+            )
+          }
           <Link
-            to="/customer/products"
-            data-testid="customer_products__element-navbar-link-products"
-          >
-            Produtos
-          </Link>
-          <Link
-            to="/customer/orders"
+            to={ `/${user.role}/orders` }
             data-testid="customer_products__element-navbar-link-orders"
           >
-            Meus Pedidos
+            { user.role === 'customer' ? 'Meus Pedidos' : 'Pedidos' }
           </Link>
         </div>
         <div>
           <span
             data-testid="customer_products__element-navbar-user-full-name"
           >
-            { name }
+            { user.name }
           </span>
           <button
             type="button"
