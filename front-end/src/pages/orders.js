@@ -1,14 +1,12 @@
 import Header from '../components/header/header';
-import SellerTable from '../components/seller-table/table';
-import UserTable from '../components/user-table/table';
+import OrderList from '../components/orders/orderList';
 
 function Orders() {
-  const { role } = JSON.parse(localStorage.getItem('user'));
   return (
-    <div>
+    <section>
       <Header />
-      {role === 'seller' ? <SellerTable /> : <UserTable />}
-    </div>
+      <OrderList />
+    </section>
   );
 }
 
