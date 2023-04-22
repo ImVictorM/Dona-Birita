@@ -1,4 +1,9 @@
-const { registerNewSale, allSaleService, updateState } = require('../services/sale.service');
+const { 
+  registerNewSale, 
+  allSaleService, 
+  updateState, 
+  getSaleByID,
+} = require('../services/sale.service');
 
 async function requestToRegisterNewSale(req, res) {
   const saleToRegister = req.body;
@@ -19,8 +24,15 @@ async function updateSale(req, res) {
   res.status(200).end();
 }
 
+async function requestSaleByID(req, res) {
+  const { id } = req.params;
+  const sale = await getSaleByID(id);
+  return res.status(200).json(sale);
+}
+
 module.exports = {
   requestToRegisterNewSale,
   allSaleController,
+  requestSaleByID,
   updateSale,
 };

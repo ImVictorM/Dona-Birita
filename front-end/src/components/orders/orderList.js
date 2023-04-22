@@ -18,7 +18,7 @@ function OrderList() {
       setOrders(data);
     }
     fetchOrders();
-  }, []);
+  }, [user.id]);
 
   const SUBSTR = 10;
 

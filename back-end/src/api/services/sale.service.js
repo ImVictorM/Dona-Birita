@@ -1,5 +1,5 @@
 const { Sequelize } = require('sequelize');
-const { Sale, SaleProduct, User } = require('../../database/models');
+const { Sale, SaleProduct, User, Product } = require('../../database/models');
 
 const { NODE_ENV } = process.env;
 
@@ -23,6 +23,28 @@ async function registerNewSale(saleFromReq) {
   });
 
   return transaction;
+}
+
+async function getSaleByID(id) {
+  const sale = await Sale.findOne({
+    where: { id },
+    include: [
+      {
+        model: Product,
+        as: 'products',
+        attributes: ['name', 'price'],
+        through: { model: SaleProduct },
+      },
+      {
+        model: User,
+        as: 'seller',
+        attributes: { exclude: ['password'] },
+      },
+    ],
+    attributes: { exclude: ['sellerId'] },
+  });
+
+  return sale;
 }
 
 async function allSaleService(id) {
@@ -52,5 +74,6 @@ async function updateState(status, id) {
 module.exports = {
   registerNewSale,
   allSaleService,
+  getSaleByID,
   updateState,
 };
