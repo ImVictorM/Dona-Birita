@@ -63,7 +63,7 @@ function Order() {
               }
             </p>
             <p
-              data-testid={ TEST_PREFIX }
+              data-testid={ `${TEST_PREFIX}label-delivery-status` }
             >
               { order.status }
             </p>
@@ -74,9 +74,18 @@ function Order() {
                 : <SellerControllers orderStatus={ order.status } />
             }
 
-            <p data-testid="customer_order_details__element-order-total-price">
-              {`Total: R$ ${order.totalPrice.replace('.', ',')}`}
-            </p>
+            <div>
+              <span>Total: R$ </span>
+              <span
+                data-testid={
+                  `${user.role}_order_details__element-order-total-price`
+                }
+              >
+                {`${order.totalPrice.replace('.', ',')}`}
+
+              </span>
+            </div>
+
             <OrderProducts products={ order.products } />
           </section>
         ) : <p>Loading...</p>

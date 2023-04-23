@@ -23,41 +23,41 @@ function OrderProducts({ products }) {
 
             const subTotal = Number(price) * Number(quantity);
 
-            const TEST_PREFIX2 = 'customer_order_details__element-order-table-';
+            const TEST_PREFIX = 'customer_order_details__element-order-table-';
 
             return (
               <tr key={ productId }>
                 <td>
                   <span
-                    data-testid={ `${TEST_PREFIX2}item-number-${index}` }
+                    data-testid={ `${TEST_PREFIX}item-number-${index}` }
                   >
                     { index + 1 }
                   </span>
                 </td>
                 <td>
                   <span
-                    data-testid={ `${TEST_PREFIX2}name-${index}` }
+                    data-testid={ `${TEST_PREFIX}name-${index}` }
                   >
                     {name}
                   </span>
                 </td>
                 <td>
                   <span
-                    data-testid={ `${TEST_PREFIX2}quantity-${index}` }
+                    data-testid={ `${TEST_PREFIX}quantity-${index}` }
                   >
                     {quantity}
                   </span>
                 </td>
                 <td>
                   <span
-                    data-testid={ `${TEST_PREFIX2}unit-price-${index}` }
+                    data-testid={ `${TEST_PREFIX}unit-price-${index}` }
                   >
                     {Number(price).toFixed(2).replace('.', ',')}
                   </span>
                 </td>
                 <td>
                   <span
-                    data-testid={ `${TEST_PREFIX2}sub-total-${index}` }
+                    data-testid={ `${TEST_PREFIX}sub-total-${index}` }
                   >
                     {Number(subTotal).toFixed(2).replace('.', ',')}
                   </span>
