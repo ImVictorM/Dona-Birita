@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { useContext } from 'react';
-import { Context } from '../../context/Context';
+import { OrderContext } from '../../context/Context';
 
-function SellerControllers({ orderStatus }) {
+function SellerControllers() {
   const { id: ID_FROM_URL } = useParams();
-  const { handleStatus } = useContext(Context);
+  const { updateOrderStatus, orderStatus } = useContext(OrderContext);
 
   return (
     <div>
@@ -13,7 +12,7 @@ function SellerControllers({ orderStatus }) {
         type="button"
         data-testid="seller_order_details__button-preparing-check"
         disabled={ orderStatus !== 'Pendente' }
-        onClick={ () => handleStatus('Preparando', ID_FROM_URL) }
+        onClick={ () => updateOrderStatus('Preparando', ID_FROM_URL) }
       >
         PREPARAR PEDIDOS
 
@@ -21,10 +20,8 @@ function SellerControllers({ orderStatus }) {
       <button
         type="button"
         data-testid="seller_order_details__button-dispatch-check"
-        disabled={
-          ['Pendente', 'Em Trânsito', 'Entregue'].includes(orderStatus)
-        }
-        onClick={ () => handleStatus('Em Trânsito', ID_FROM_URL) }
+        disabled={ orderStatus !== 'Preparando' }
+        onClick={ () => updateOrderStatus('Em Trânsito', ID_FROM_URL) }
       >
         SAIU PARA ENTREGA
 
@@ -32,9 +29,5 @@ function SellerControllers({ orderStatus }) {
     </div>
   );
 }
-
-SellerControllers.propTypes = {
-  orderStatus: PropTypes.string.isRequired,
-};
 
 export default SellerControllers;

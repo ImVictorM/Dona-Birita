@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import requestWithCORS from '../../utils/requestWithCORS';
 import OrderProducts from './orderProducts';
 import SellerControllers from './sellerControllers';
 import CustomerControllers from './customerControllers';
+import { OrderContext } from '../../context/Context';
 
 function Order() {
   const { id: ID_FROM_URL } = useParams();
   const user = JSON.parse(localStorage.getItem('user'));
   const [order, setOrder] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const { orderStatus, setOrderStatus } = useContext(OrderContext);
 
   useEffect(() => {
     setIsLoading(Object.keys(order).length === 0);
@@ -24,9 +26,10 @@ function Order() {
 
       const orderFromDB = await requestWithCORS(options);
       setOrder(orderFromDB);
+      setOrderStatus(orderFromDB.status);
     }
     fetchOrder();
-  }, [ID_FROM_URL]);
+  }, [ID_FROM_URL, setOrderStatus]);
 
   const SLICE_DATE_AT_INDEX = 10;
   const TEST_PREFIX = `${user.role}_order_details__element-order-details-`;
@@ -65,13 +68,13 @@ function Order() {
             <p
               data-testid={ `${TEST_PREFIX}label-delivery-status` }
             >
-              { order.status }
+              { orderStatus }
             </p>
 
             {
               user.role === 'customer'
-                ? <CustomerControllers orderStatus={ order.status } />
-                : <SellerControllers orderStatus={ order.status } />
+                ? <CustomerControllers />
+                : <SellerControllers />
             }
 
             <div>

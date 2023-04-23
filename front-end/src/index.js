@@ -4,16 +4,16 @@ import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import App from './App';
-import Provider from './context/Provider';
+import OrderContextProvider from './context/OrderContextProvider';
 import CartContextProvider from './context/CartContextProvider';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <CartContextProvider>
-        <Provider>
+        <OrderContextProvider>
           <App />
-        </Provider>
+        </OrderContextProvider>
       </CartContextProvider>
     </BrowserRouter>
   </React.StrictMode>,
