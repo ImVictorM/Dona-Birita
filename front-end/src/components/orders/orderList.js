@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import requestWithCORS from '../../utils/requestWithCORS';
 
 function OrderList() {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -7,20 +8,19 @@ function OrderList() {
 
   useEffect(() => {
     async function fetchOrders() {
-      const response = await fetch(`http://localhost:3001/customer/orders/${user.id}`, {
+      const options = {
+        endpoint: `http://localhost:3001/customer/orders/${user.id}`,
         method: 'GET',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const data = await response.json();
-      setOrders(data);
+      };
+
+      const ordersFromDB = await requestWithCORS(options);
+
+      setOrders(ordersFromDB);
     }
     fetchOrders();
   }, [user.id]);
 
-  const SUBSTR = 10;
+  const SLICE_DATE_AT_INDEX = 10;
 
   return (
     <section className="order-container">
@@ -36,9 +36,13 @@ function OrderList() {
               <span
                 data-testid={ `${user.role}_orders__element-order-date-${order.id}` }
               >
-                {order.saleDate
-                  .toLocaleString().substr(0, SUBSTR).split('-').reverse()
-                  .join('/') }
+                {
+                  order.saleDate
+                    .toLocaleString()
+                    .substr(0, SLICE_DATE_AT_INDEX)
+                    .split('-').reverse()
+                    .join('/')
+                }
               </span>
             </div>
             <div>
@@ -59,10 +63,11 @@ function OrderList() {
             </div>
             <div>
               <span>Total</span>
+              <span>R$</span>
               <span
-                data-testid={ `${user.role}_orders__element-card-price${order.id}` }
+                data-testid={ `${user.role}_orders__element-card-price-${order.id}` }
               >
-                {`R$ ${order.totalPrice}`}
+                {order.totalPrice.replace('.', ',')}
               </span>
             </div>
             {

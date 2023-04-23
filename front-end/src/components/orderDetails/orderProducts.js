@@ -14,11 +14,14 @@ function OrderProducts({ products }) {
       </thead>
       <tbody>
         {
-          products.length > 0 && products.map((product, index) => {
-            const { name, price, SaleProduct: { productId, quantity,
-            } } = product;
-            const unitPrice = Number(price);
-            const subTotal = unitPrice * quantity;
+          products.map((product, index) => {
+            const {
+              name,
+              price,
+              SaleProduct: { productId, quantity },
+            } = product;
+
+            const subTotal = Number(price) * Number(quantity);
 
             const TEST_PREFIX2 = 'customer_order_details__element-order-table-';
 
@@ -28,7 +31,7 @@ function OrderProducts({ products }) {
                   <span
                     data-testid={ `${TEST_PREFIX2}item-number-${index}` }
                   >
-                    { index + 1}
+                    { index + 1 }
                   </span>
                 </td>
                 <td>
@@ -49,7 +52,7 @@ function OrderProducts({ products }) {
                   <span
                     data-testid={ `${TEST_PREFIX2}unit-price-${index}` }
                   >
-                    {Number(unitPrice).toFixed(2).replace('.', ',')}
+                    {Number(price).toFixed(2).replace('.', ',')}
                   </span>
                 </td>
                 <td>
@@ -69,7 +72,14 @@ function OrderProducts({ products }) {
 }
 
 OrderProducts.propTypes = {
-  products: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  products: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    price: PropTypes.string,
+    SaleProduct: PropTypes.shape({
+      productId: PropTypes.number,
+      quantity: PropTypes.number,
+    }),
+  })).isRequired,
 };
 
 export default OrderProducts;
