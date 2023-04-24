@@ -4,13 +4,13 @@ import { OrderContext } from '../../context/Context';
 
 function CustomerControllers() {
   const { id: ID_FROM_URL } = useParams();
-  const { updateOrderStatus, orderStatus } = useContext(OrderContext);
+  const { updateOrderStatus, selectedOrder } = useContext(OrderContext);
 
   return (
     <button
       type="button"
       data-testid="customer_order_details__button-delivery-check"
-      disabled={ orderStatus !== 'Em Trânsito' }
+      disabled={ selectedOrder.status !== 'Em Trânsito' }
       onClick={ () => updateOrderStatus('Entregue', ID_FROM_URL) }
     >
       MARCAR COMO ENTREGUE

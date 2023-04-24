@@ -19,7 +19,6 @@ app.use('/user', userRouter);
 app.use('/product', productRouter);
 app.use('/sale', saleRouter);
 app.use('/admin', adminRouter);
-app.use('/customer', saleRouter);
 
 app.use(handleError);
 

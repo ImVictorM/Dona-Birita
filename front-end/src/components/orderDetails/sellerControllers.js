@@ -4,14 +4,14 @@ import { OrderContext } from '../../context/Context';
 
 function SellerControllers() {
   const { id: ID_FROM_URL } = useParams();
-  const { updateOrderStatus, orderStatus } = useContext(OrderContext);
+  const { updateOrderStatus, selectedOrder } = useContext(OrderContext);
 
   return (
     <div>
       <button
         type="button"
         data-testid="seller_order_details__button-preparing-check"
-        disabled={ orderStatus !== 'Pendente' }
+        disabled={ selectedOrder.status !== 'Pendente' }
         onClick={ () => updateOrderStatus('Preparando', ID_FROM_URL) }
       >
         PREPARAR PEDIDOS
@@ -20,7 +20,7 @@ function SellerControllers() {
       <button
         type="button"
         data-testid="seller_order_details__button-dispatch-check"
-        disabled={ orderStatus !== 'Preparando' }
+        disabled={ selectedOrder.status !== 'Preparando' }
         onClick={ () => updateOrderStatus('Em Trânsito', ID_FROM_URL) }
       >
         SAIU PARA ENTREGA

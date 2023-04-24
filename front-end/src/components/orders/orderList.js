@@ -1,24 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import requestWithCORS from '../../utils/requestWithCORS';
+import { OrderContext } from '../../context/Context';
 
 function OrderList() {
   const user = JSON.parse(localStorage.getItem('user'));
-  const [orders, setOrders] = useState([]);
+  const { orders, fetchUserOrders } = useContext(OrderContext);
 
   useEffect(() => {
-    async function fetchOrders() {
-      const options = {
-        endpoint: `http://localhost:3001/customer/orders/${user.id}`,
-        method: 'GET',
-      };
-
-      const ordersFromDB = await requestWithCORS(options);
-
-      setOrders(ordersFromDB);
-    }
-    fetchOrders();
-  }, [user.id]);
+    fetchUserOrders(user.id, user.role);
+  }, [fetchUserOrders, user.id, user.role]);
 
   const SLICE_DATE_AT_INDEX = 10;
 

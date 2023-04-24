@@ -47,24 +47,22 @@ async function getSaleByID(id) {
   return sale;
 }
 
-async function allSaleService(id) {
-  const user = await User.findByPk(id);
-
-  if (user.role === 'seller') {
-    return Sale.findAll(
-      { where: { sellerId: id } },
-    );
-  } 
-    return Sale.findAll({ 
-      where: { userId: id }, 
-      include: [
-        {
-          model: User,
-          as: 'user',
-          attributes: ['name'],
-        },
-      ],
+async function getUserSales(id, role) {
+  if (role === 'seller') {
+    return Sale.findAll({
+      where: { sellerId: id }, 
     });
+  } 
+  return Sale.findAll({ 
+    where: { userId: id }, 
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: ['name'],
+      },
+    ],
+  });
 }
 
 async function updateState(status, id) {
@@ -73,7 +71,7 @@ async function updateState(status, id) {
 
 module.exports = {
   registerNewSale,
-  allSaleService,
+  getUserSales,
   getSaleByID,
   updateState,
 };

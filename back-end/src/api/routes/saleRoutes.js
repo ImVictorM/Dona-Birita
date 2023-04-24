@@ -4,14 +4,14 @@ const router = express.Router();
 
 const {
   requestToRegisterNewSale,
-  allSaleController,
+  requestUserSales,
   updateSale,
   requestSaleByID,
 } = require('../controllers/sale.controller');
 
 router.get('/:id', requestSaleByID);
 router.post('/', requestToRegisterNewSale);
-router.get('/orders/:id', allSaleController);
+router.get('/:role/:id', requestUserSales);
 router.patch('/:id', updateSale);
 
 module.exports = router;

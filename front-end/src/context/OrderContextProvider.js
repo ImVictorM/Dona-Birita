@@ -4,7 +4,18 @@ import { OrderContext } from './Context';
 import requestWithCORS from '../utils/requestWithCORS';
 
 function OrderContextProvider({ children }) {
-  const [orderStatus, setOrderStatus] = useState('');
+  const [selectedOrder, setSelectedOrder] = useState({});
+  const [orders, setOrders] = useState([]);
+
+  async function fetchOrderByID(id) {
+    const options = {
+      endpoint: `http://localhost:3001/sale/${id}`,
+      method: 'GET',
+    };
+
+    const orderFromDB = await requestWithCORS(options);
+    setSelectedOrder(orderFromDB);
+  }
 
   async function updateOrderStatus(status, id) {
     const options = {
@@ -12,14 +23,24 @@ function OrderContextProvider({ children }) {
       method: 'PATCH',
     };
     await requestWithCORS(options, { status });
-    setOrderStatus(status);
+  }
+
+  async function fetchUserOrders(userId, userRole) {
+    const options = {
+      endpoint: `http://localhost:3001/sale/${userRole}/${userId}`,
+      method: 'GET',
+    };
+    const ordersFromDB = await requestWithCORS(options);
+    setOrders(ordersFromDB);
   }
 
   const value = useMemo(() => ({
+    orders,
+    selectedOrder,
+    fetchOrderByID,
     updateOrderStatus,
-    orderStatus,
-    setOrderStatus,
-  }), [orderStatus]);
+    fetchUserOrders,
+  }), [orders, selectedOrder]);
 
   return (
     <OrderContext.Provider value={ value }>
