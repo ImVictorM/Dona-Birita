@@ -51,6 +51,14 @@
   width: 30%;
 }
 
-.adm-register-form button:hover {
+.adm-register-form button:disabled {
+  background-color: #00234738;
+}
+
+.adm-register-form button:enabled:hover {
   background-color: rgb(0, 44, 88);
+}
+
+.error {
+  color: red;
 }

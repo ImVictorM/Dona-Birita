@@ -19,12 +19,20 @@ function Header() {
               </Link>
             )
           }
-          <Link
-            to={ `/${user.role}/orders` }
-            data-testid="customer_products__element-navbar-link-orders"
-          >
-            { user.role === 'customer' ? 'Meus Pedidos' : 'Pedidos' }
-          </Link>
+          {
+            user.role !== 'administrator' ? (
+              <Link
+                to={ `/${user.role}/orders` }
+                data-testid="customer_products__element-navbar-link-orders"
+              >
+                { user.role === 'customer' ? 'Meus Pedidos' : 'Pedidos' }
+              </Link>
+
+            ) : (
+              <p>Gerenciar Usuários</p>
+            )
+          }
+
         </div>
         <div>
           <span

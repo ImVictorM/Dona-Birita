@@ -13,6 +13,11 @@ export const POST_USER_REGISTER = {
   method: 'POST',
 };
 
+export const ADMIN_POST_USER_REGISTER = {
+  endpoint: 'http://localhost:3001/admin/register',
+  method: 'POST',
+};
+
 export const GET_SELLER_LIST = {
   endpoint: 'http://localhost:3001/user/seller',
   method: 'GET',

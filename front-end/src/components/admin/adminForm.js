@@ -1,52 +1,47 @@
 import { useEffect, useState } from 'react';
-import './admin.css';
+import requestWithCORS from '../../utils/requestWithCORS';
+import './adminForm.css';
+import { ADMIN_POST_USER_REGISTER } from '../../utils/backendEndpoints';
 
 function AdminForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isDisabled, setIsDisabled] = useState(true);
   const [role, setRole] = useState('customer');
+  const [password, setPassword] = useState('');
+
+  const [canRegister, setCanRegister] = useState(true);
   const [showError, setShowError] = useState(false);
 
   useEffect(() => {
-    const validRegister = () => {
-      const regex = /\S+@\S+\.\S+/i;
-      const minCharPass = 5;
-      const minCharName = 11;
-      return (regex.test(email)
-      && password.length > minCharPass && name.length > minCharName);
+    const formIsValid = () => {
+      const emailRegex = /\S+@\S+\.\S+/i;
+      const MIN_PASS_LENGTH = 6;
+      const MIN_NAME_LENGTH = 12;
+      return (
+        emailRegex.test(email)
+        && password.length >= MIN_PASS_LENGTH
+        && name.length >= MIN_NAME_LENGTH
+      );
     };
-    if (validRegister()) {
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
-    }
+    setCanRegister(formIsValid());
   }, [email, password, name]);
 
-  async function handleSubmit(event) {
-    event.preventDefault();
-
-    const endpoint = 'http://localhost:3001/admin/register';
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      mode: 'cors',
-      body: JSON.stringify({ name, email, password, role }),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: JSON.parse(localStorage.getItem('user')).token,
-      },
-    });
-
-    const loginResponse = await response.json();
-
-    if (loginResponse.message) {
+  async function registerNewUser() {
+    const userToRegister = { name, email, password, role };
+    const auth = JSON.parse(localStorage.getItem('user')).token;
+    try {
+      await requestWithCORS(
+        ADMIN_POST_USER_REGISTER,
+        userToRegister,
+        auth,
+      );
+    } catch (error) {
       setShowError(true);
-    } else setShowError(false);
+    }
   }
 
   return (
-    <form onSubmit={ handleSubmit } className="adm-register-form">
+    <form className="adm-register-form">
       <div className="adm-register-form-inputs">
         <label htmlFor="name">
           Nome Completo:
@@ -99,15 +94,15 @@ function AdminForm() {
         type="button"
         data-testid="admin_manage__button-register"
         value="register-button"
-        onClick={ handleSubmit }
-        disabled={ isDisabled }
+        onClick={ registerNewUser }
+        disabled={ !canRegister }
       >
         Cadastrar
       </button>
 
       {
         showError && (
-          <p data-testid="admin_manage__element-invalid-register">
+          <p className="error" data-testid="admin_manage__element-invalid-register">
             Nome ou e-mail já cadastrado!
           </p>
         )

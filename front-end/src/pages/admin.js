@@ -1,10 +1,12 @@
-import AdminForm from '../components/admin-form/admin';
+import AdminForm from '../components/admin/adminForm';
+import Header from '../components/header/header';
 
 function Admin() {
   return (
-    <div>
+    <section>
+      <Header />
       <AdminForm />
-    </div>
+    </section>
   );
 }
 
