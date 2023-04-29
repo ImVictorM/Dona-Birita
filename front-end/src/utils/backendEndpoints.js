@@ -14,7 +14,7 @@ export const POST_USER_REGISTER = {
 };
 
 export const ADMIN_POST_USER_REGISTER = {
-  endpoint: 'http://localhost:3001/admin/register',
+  endpoint: 'http://localhost:3001/admin/user/register',
   method: 'POST',
 };
 

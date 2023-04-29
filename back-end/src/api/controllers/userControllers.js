@@ -1,8 +1,9 @@
 const { 
   loginUser, 
   registerNewUser, 
-  getAllUserByRole, 
-  getUserById,
+  getAllUserByRole,
+  removeUser,
+  getUsersDifferentThanADM,
  } = require('../services/user.service');
 
 async function requestLogin(req, res) {
@@ -24,15 +25,21 @@ async function requestAllUserByRole(req, res) {
   return res.status(200).json(sellerList);
 }
 
-async function requestUserById(req, res) {
+async function requestUsersDifferentThanADM(_req, res) {
+  const userList = await getUsersDifferentThanADM();
+  return res.status(200).json(userList);
+}
+
+async function requestToDeleteUser(req, res) {
   const { id } = req.params;
-  const user = await getUserById(id);
-  return res.status(200).json(user);
+  await removeUser(id);
+  return res.status(204).end();
 }
 
 module.exports = {
   requestLogin,
   requestUserRegistration,
   requestAllUserByRole,
-  requestUserById,
+  requestUsersDifferentThanADM,
+  requestToDeleteUser,
 };

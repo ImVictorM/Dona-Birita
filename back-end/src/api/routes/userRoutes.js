@@ -3,14 +3,14 @@ const {
   requestLogin, 
   requestUserRegistration, 
   requestAllUserByRole,
-  requestUserById,
+  requestUsersDifferentThanADM,
 } = require('../controllers/userControllers');
 
 const router = express.Router();
 
 router.post('/login', requestLogin);
 router.post('/register', requestUserRegistration);
-router.get('/id/:id', requestUserById);
 router.get('/:role', requestAllUserByRole);
+router.get('/', requestUsersDifferentThanADM);
 
 module.exports = router;

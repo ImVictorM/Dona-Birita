@@ -54,6 +54,13 @@ async function registerNewUser(userFromReq) {
   return userWithToken;
 }
 
+async function getUsersDifferentThanADM() {
+  const userList = await User.findAll({
+    where: { role: { [Op.not]: 'administrator' } },
+  });
+  return userList;
+}
+
 async function getAllUserByRole(role) {
   const userList = await User.findAll({
     where: { role },
@@ -62,14 +69,21 @@ async function getAllUserByRole(role) {
   return userList;
 }
 
-async function getUserById(id) {
-  const user = await User.findByPk(id);
-  return user;
+async function removeUser(id) {
+  await User.destroy({
+    where: {
+      [Op.and]: [
+        { id },
+        { role: { [Op.not]: 'administrator' } },
+      ],
+    },
+  });
 }
 
 module.exports = {
   loginUser,
   registerNewUser,
   getAllUserByRole,
-  getUserById,
+  getUsersDifferentThanADM,
+  removeUser,
 };
