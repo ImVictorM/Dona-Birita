@@ -8,6 +8,11 @@ export const GET_ALL_PRODUCTS = {
   method: 'GET',
 };
 
+export const GET_USER_LIST = {
+  endpoint: 'http://localhost:3001/user/',
+  method: 'GET',
+};
+
 export const POST_USER_REGISTER = {
   endpoint: 'http://localhost:3001/user/register',
   method: 'POST',

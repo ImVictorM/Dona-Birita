@@ -2,7 +2,7 @@ async function requestWithCORS(options, body, auth) {
   const response = await fetch(options.endpoint, {
     method: options.method,
     mode: 'cors',
-    body: JSON.stringify(body),
+    body: body ? JSON.stringify(body) : null,
     headers: {
       'Content-Type': 'application/json',
       Authorization: auth,
