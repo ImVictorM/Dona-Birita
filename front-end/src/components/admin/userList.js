@@ -1,27 +1,12 @@
-import { useEffect, useState } from 'react';
-import requestWithCORS from '../../utils/requestWithCORS';
-import { GET_USER_LIST } from '../../utils/backendEndpoints';
+import { useEffect, useContext } from 'react';
+import { UserContext } from '../../context/Context';
 
 function UserList() {
-  const [users, setUsers] = useState([]);
+  const { users, getUsersDifferentThanADM, deleteUser } = useContext(UserContext);
 
   useEffect(() => {
-    async function getUserList() {
-      const userListFromDB = await requestWithCORS(GET_USER_LIST);
-      setUsers(userListFromDB);
-    }
-
-    getUserList();
-  }, []);
-
-  async function deleteUser(id) {
-    const options = {
-      endpoint: `http://localhost:3001/admin/user/${id}`,
-      method: 'DELETE',
-    };
-    const auth = JSON.parse(localStorage.getItem('user')).token;
-    await requestWithCORS(options, null, auth);
-  }
+    getUsersDifferentThanADM();
+  }, [getUsersDifferentThanADM]);
 
   return (
     <section>

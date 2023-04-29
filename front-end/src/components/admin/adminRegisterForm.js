@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
-import requestWithCORS from '../../utils/requestWithCORS';
+import { useEffect, useState, useContext } from 'react';
 import './adminRegisterForm.css';
-import { ADMIN_POST_USER_REGISTER } from '../../utils/backendEndpoints';
+import { UserContext } from '../../context/Context';
 
 function AdminRegisterForm() {
   const [name, setName] = useState('');
@@ -9,7 +8,8 @@ function AdminRegisterForm() {
   const [role, setRole] = useState('customer');
   const [password, setPassword] = useState('');
 
-  const [canRegister, setCanRegister] = useState(true);
+  const { registerNewUser } = useContext(UserContext);
+  const [canRegister, setCanRegister] = useState(false);
   const [showError, setShowError] = useState(false);
 
   useEffect(() => {
@@ -26,15 +26,11 @@ function AdminRegisterForm() {
     setCanRegister(formIsValid());
   }, [email, password, name]);
 
-  async function registerNewUser() {
+  async function handleUserRegistration() {
     const userToRegister = { name, email, password, role };
     const auth = JSON.parse(localStorage.getItem('user')).token;
     try {
-      await requestWithCORS(
-        ADMIN_POST_USER_REGISTER,
-        userToRegister,
-        auth,
-      );
+      await registerNewUser(userToRegister, auth);
     } catch (error) {
       setShowError(true);
     }
@@ -94,7 +90,7 @@ function AdminRegisterForm() {
         type="button"
         data-testid="admin_manage__button-register"
         value="register-button"
-        onClick={ registerNewUser }
+        onClick={ handleUserRegistration }
         disabled={ !canRegister }
       >
         Cadastrar
