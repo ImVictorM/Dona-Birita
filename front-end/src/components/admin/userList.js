@@ -4,13 +4,15 @@ import { GET_USER_LIST } from '../../utils/backendEndpoints';
 
 function UserList() {
   const [users, setUsers] = useState([]);
+
   useEffect(() => {
     async function getUserList() {
       const userListFromDB = await requestWithCORS(GET_USER_LIST);
       setUsers(userListFromDB);
     }
+
     getUserList();
-  });
+  }, []);
 
   async function deleteUser(id) {
     const options = {

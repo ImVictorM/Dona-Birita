@@ -4,17 +4,14 @@ import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import App from './App';
-import OrderContextProvider from './context/OrderContextProvider';
-import CartContextProvider from './context/CartContextProvider';
+import Provider from './context/Provider';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <CartContextProvider>
-        <OrderContextProvider>
-          <App />
-        </OrderContextProvider>
-      </CartContextProvider>
+      <Provider>
+        <App />
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root'),

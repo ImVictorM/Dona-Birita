@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import requestWithCORS from '../../utils/requestWithCORS';
-import './adminForm.css';
+import './adminRegisterForm.css';
 import { ADMIN_POST_USER_REGISTER } from '../../utils/backendEndpoints';
 
-function AdminForm() {
+function AdminRegisterForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('customer');
@@ -111,4 +111,4 @@ function AdminForm() {
   );
 }
 
-export default AdminForm;
+export default AdminRegisterForm;

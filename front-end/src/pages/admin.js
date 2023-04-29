@@ -1,4 +1,4 @@
-import AdminForm from '../components/admin/adminForm';
+import AdminRegisterForm from '../components/admin/adminRegisterForm';
 import Header from '../components/header/header';
 import UserList from '../components/admin/userList';
 
@@ -6,7 +6,7 @@ function Admin() {
   return (
     <section>
       <Header />
-      <AdminForm />
+      <AdminRegisterForm />
       <UserList />
     </section>
   );

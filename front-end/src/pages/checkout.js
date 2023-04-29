@@ -1,4 +1,4 @@
-import CheckoutTable from '../components/checkout/checkoutTable';
+import CheckoutProducts from '../components/checkout/checkoutProducts';
 import CheckoutForm from '../components/checkout/checkoutForm';
 import Header from '../components/header/header';
 
@@ -6,7 +6,7 @@ function Checkout() {
   return (
     <div>
       <Header />
-      <CheckoutTable />
+      <CheckoutProducts />
       <CheckoutForm />
     </div>
   );

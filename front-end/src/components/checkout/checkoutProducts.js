@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import { CartContext } from '../../context/Context';
-import './checkoutTable.css';
+import './checkoutProducts.css';
 
-function CheckoutTable() {
+function CheckoutProducts() {
   const { cartTotal, cart, removeFromCart } = useContext(CartContext);
 
   return (
@@ -93,4 +93,4 @@ function CheckoutTable() {
   );
 }
 
-export default CheckoutTable;
+export default CheckoutProducts;
