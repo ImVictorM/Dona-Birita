@@ -7,8 +7,8 @@ function OrderList() {
   const { orders, fetchUserOrders } = useContext(OrderContext);
 
   useEffect(() => {
-    fetchUserOrders(user.id, user.role);
-  }, [fetchUserOrders, user.id, user.role]);
+    fetchUserOrders();
+  }, [fetchUserOrders]);
 
   const SLICE_DATE_AT_INDEX = 10;
 
