@@ -3,7 +3,7 @@ const adminGuard = require('../middlewares/adminGuard');
 const { 
   requestUserRegistration,
   requestToDeleteUser,
- } = require('../controllers/userControllers');
+ } = require('../controllers/user.controller');
 
 const router = express.Router();
 

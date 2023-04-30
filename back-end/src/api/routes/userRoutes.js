@@ -4,7 +4,7 @@ const {
   requestUserRegistration, 
   requestAllUserByRole,
   requestUsersDifferentThanADM,
-} = require('../controllers/userControllers');
+} = require('../controllers/user.controller');
 
 const router = express.Router();
 
