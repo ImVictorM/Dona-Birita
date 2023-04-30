@@ -4,7 +4,7 @@ import { UserContext } from './Context';
 import requestWithCORS from '../utils/requestWithCORS';
 import { GET_USER_LIST, ADMIN_POST_USER_REGISTER } from '../utils/backendEndpoints';
 
-function UserContextProvider({ children }) {
+function ADMContextProvider({ children }) {
   const [users, setUsers] = useState([]);
 
   const getUsersDifferentThanADM = useCallback(async () => {
@@ -45,8 +45,8 @@ function UserContextProvider({ children }) {
   );
 }
 
-UserContextProvider.propTypes = {
+ADMContextProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default UserContextProvider;
+export default ADMContextProvider;

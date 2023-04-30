@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
 import CartContextProvider from './CartContextProvider';
 import OrderContextProvider from './OrderContextProvider';
-import UserContextProvider from './UserContextProvider';
+import ADMContextProvider from './ADMContextProvider';
 
 function Provider({ children }) {
   return (
     <CartContextProvider>
       <OrderContextProvider>
-        <UserContextProvider>
+        <ADMContextProvider>
           { children }
-        </UserContextProvider>
+        </ADMContextProvider>
       </OrderContextProvider>
     </CartContextProvider>
   );
