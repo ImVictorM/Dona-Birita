@@ -1,4 +1,9 @@
-const { registerNewSale, allSaleService, updateState } = require('../services/sale.service');
+const { 
+  registerNewSale, 
+  getUserSales,
+  updateState, 
+  getSaleByID,
+} = require('../services/sale.service');
 
 async function requestToRegisterNewSale(req, res) {
   const saleToRegister = req.body;
@@ -6,10 +11,10 @@ async function requestToRegisterNewSale(req, res) {
   return res.status(201).json(createdSale);
 }
 
-async function allSaleController(req, res) {
-  const { id } = req.params;
-  const getAllSale = await allSaleService(id);
-  res.status(200).json(getAllSale);
+async function requestUserSales(req, res) {
+  const { id, role } = req.params;
+  const saleList = await getUserSales(id, role);
+  return res.status(200).json(saleList);
 }
 
 async function updateSale(req, res) {
@@ -19,8 +24,15 @@ async function updateSale(req, res) {
   res.status(200).end();
 }
 
+async function requestSaleByID(req, res) {
+  const { id } = req.params;
+  const sale = await getSaleByID(id);
+  return res.status(200).json(sale);
+}
+
 module.exports = {
   requestToRegisterNewSale,
-  allSaleController,
+  requestUserSales,
+  requestSaleByID,
   updateSale,
 };

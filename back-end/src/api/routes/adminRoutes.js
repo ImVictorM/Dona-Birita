@@ -1,11 +1,15 @@
 const express = require('express');
-const { registerUser } = require('../controllers/admin.controller');
 const adminGuard = require('../middlewares/adminGuard');
+const { 
+  requestUserRegistration,
+  requestToDeleteUser,
+ } = require('../controllers/user.controller');
 
 const router = express.Router();
 
 router.use(adminGuard);
 
-router.post('/register', registerUser);
+router.post('/user/register', requestUserRegistration);
+router.delete('/user/:id', requestToDeleteUser);
 
 module.exports = router;

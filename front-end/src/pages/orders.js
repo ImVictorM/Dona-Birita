@@ -1,16 +1,13 @@
-import HeaderPedidos from '../components/cliente-pedidos/header';
-import SellerTable from '../components/seller-table/table';
-import UserTable from '../components/user-table/table';
-import HeaderSeller from '../components/seller-header/sellerHeader';
+import Header from '../components/header/header';
+import OrderList from '../components/orders/orderList';
 
-function CustomerOrders() {
-  const { role } = JSON.parse(localStorage.getItem('user'));
+function Orders() {
   return (
-    <div>
-      {role === 'seller' ? <HeaderSeller /> : <HeaderPedidos />}
-      {role === 'seller' ? <SellerTable /> : <UserTable />}
-    </div>
+    <section>
+      <Header />
+      <OrderList />
+    </section>
   );
 }
 
-export default CustomerOrders;
+export default Orders;

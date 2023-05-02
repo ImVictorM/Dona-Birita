@@ -1,10 +1,11 @@
-import LoginForm from '../components/login-form/login';
+import LoginForm from '../components/login/loginForm';
+import Bubbles from '../components/bubbles/bubbles';
 
 function Login() {
   return (
-    <div>
+    <Bubbles>
       <LoginForm />
-    </div>
+    </Bubbles>
   );
 }
 

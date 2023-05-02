@@ -1,5 +1,5 @@
 const { Sequelize } = require('sequelize');
-const { Sale, SaleProduct, User } = require('../../database/models');
+const { Sale, SaleProduct, User, Product } = require('../../database/models');
 
 const { NODE_ENV } = process.env;
 
@@ -25,24 +25,44 @@ async function registerNewSale(saleFromReq) {
   return transaction;
 }
 
-async function allSaleService(id) {
-  const user = await User.findByPk(id);
+async function getSaleByID(id) {
+  const sale = await Sale.findOne({
+    where: { id },
+    include: [
+      {
+        model: Product,
+        as: 'products',
+        attributes: ['name', 'price'],
+        through: { model: SaleProduct },
+      },
+      {
+        model: User,
+        as: 'seller',
+        attributes: { exclude: ['password'] },
+      },
+    ],
+    attributes: { exclude: ['sellerId'] },
+  });
 
-  if (user.role === 'seller') {
-    return Sale.findAll(
-      { where: { sellerId: id } },
-    );
-  } 
-    return Sale.findAll({ 
-      where: { userId: id }, 
-      include: [
-        {
-          model: User,
-          as: 'user',
-          attributes: ['name'],
-        },
-      ],
+  return sale;
+}
+
+async function getUserSales(id, role) {
+  if (role === 'seller') {
+    return Sale.findAll({
+      where: { sellerId: id }, 
     });
+  } 
+  return Sale.findAll({ 
+    where: { userId: id }, 
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: ['name'],
+      },
+    ],
+  });
 }
 
 async function updateState(status, id) {
@@ -51,6 +71,7 @@ async function updateState(status, id) {
 
 module.exports = {
   registerNewSale,
-  allSaleService,
+  getUserSales,
+  getSaleByID,
   updateState,
 };

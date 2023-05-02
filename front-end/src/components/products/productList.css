@@ -1,0 +1,14 @@
+.container-card {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.container-products {
+  margin: auto;
+  max-width: 1200px;
+}

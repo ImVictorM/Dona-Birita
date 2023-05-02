@@ -48,8 +48,17 @@ async function validateUserAlreadyExists(userFromReq) {
 async function registerNewUser(userFromReq) {
   await validateUserAlreadyExists(userFromReq);
   const passwordHash = hashPassword(userFromReq.password);
-  const createdUser = await User.create({ ...userFromReq, password: passwordHash });
-  return createdUser;
+  await User.create({ ...userFromReq, password: passwordHash });
+
+  const userWithToken = await loginUser(userFromReq);
+  return userWithToken;
+}
+
+async function getUsersDifferentThanADM() {
+  const userList = await User.findAll({
+    where: { role: { [Op.not]: 'administrator' } },
+  });
+  return userList;
 }
 
 async function getAllUserByRole(role) {
@@ -60,14 +69,21 @@ async function getAllUserByRole(role) {
   return userList;
 }
 
-async function getUserById(id) {
-  const user = await User.findByPk(id);
-  return user;
+async function removeUser(id) {
+  await User.destroy({
+    where: {
+      [Op.and]: [
+        { id },
+        { role: { [Op.not]: 'administrator' } },
+      ],
+    },
+  });
 }
 
 module.exports = {
   loginUser,
   registerNewUser,
   getAllUserByRole,
-  getUserById,
+  getUsersDifferentThanADM,
+  removeUser,
 };

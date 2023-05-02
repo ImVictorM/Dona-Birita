@@ -1,12 +1,12 @@
-import CheckoutTable from '../components/checkout/checkoutTable';
+import CheckoutProducts from '../components/checkout/checkoutProducts';
 import CheckoutForm from '../components/checkout/checkoutForm';
-import HeaderPedidos from '../components/cliente-pedidos/header';
+import Header from '../components/header/header';
 
 function Checkout() {
   return (
     <div>
-      <HeaderPedidos />
-      <CheckoutTable />
+      <Header />
+      <CheckoutProducts />
       <CheckoutForm />
     </div>
   );
