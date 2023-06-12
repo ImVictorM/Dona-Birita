@@ -11,7 +11,8 @@ services:
       - "3000:3000"
     depends_on:
       - api
-
+    networks:
+      - app-net
   api:
     container_name: api-delivery
     working_dir: /back-end
@@ -26,11 +27,13 @@ services:
       - db
     environment:
       - NODE_ENV=development
-      - MYSQL_PORT=3002
+      - MYSQL_PORT=3306
       - MYSQL_HOST=db
       - MYSQL_USER=root
       - MYSQL_PASSWORD=password
       - API_PORT=3001
+    networks:
+      - app-net
   db:
     image: mysql:8.0.21
     platform: linux/x86_64
@@ -40,4 +43,9 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=password
     restart: 'always'
+    networks:
+      - app-net
+
+networks:
+  app-net:
 
