@@ -10,7 +10,12 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - api
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:3000"]
+      timeout: 10s
+      retries: 5
     networks:
       - app-net
   api:
@@ -24,7 +29,8 @@ services:
     ports:
       - "3001:3001"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       - NODE_ENV=development
       - MYSQL_PORT=3306
@@ -32,6 +38,10 @@ services:
       - MYSQL_USER=root
       - MYSQL_PASSWORD=password
       - API_PORT=3001
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:3001"]
+      timeout: 10s
+      retries: 5
     networks:
       - app-net
   db:
@@ -43,6 +53,10 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=password
     restart: 'always'
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"] # Deve aguardar o banco ficar operacional
+      timeout: 10s
+      retries: 5
     networks:
       - app-net
 
