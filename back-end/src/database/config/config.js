@@ -8,8 +8,9 @@ const suffix = {
   development: "-dev",
   test: "-test",
 };
+
 const options = {
-  host: process.env.HOSTNAME || process.env.MYSQL_HOST || 'localhost',
+  host: process.env.MYSQL_HOST || 'localhost',
   port: process.env.MYSQL_PORT || '3306',
   database:
     `${process.env.MYSQL_DB_NAME || 'delivery-app'}${suffix[environment] || suffix.test}`,
@@ -21,6 +22,7 @@ const options = {
   },
   logging: false,
 };
+
 module.exports = {
   development: {
     ...options,
