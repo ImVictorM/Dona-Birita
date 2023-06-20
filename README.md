@@ -3,30 +3,30 @@
 ## Project Context 💡
 Beverage delivery platform for the fictitious distributor Dona Birita.
 
-### Main functionalities of the application 🔧
-#### Customer flow:
-- Perform login;
-- Perform registration;
-- Choose to add items to cart
-- Place order
-- Monitor status of orders placed
-- Change order status to "Delivered"
-#### Sales person flow:
-- Perform login;
-- track orders
-- Change status of orders to "Prepare Orders" and "Out for Delivery"
-#### Admin person flow
-- Perform login;
-- View users;
-- Register new users;
-- Delete users;
-
 ### Contributors 👥
 - [Carolina Lima](https://github.com/cybersekh)
 - [Elivelton Machado](https://github.com/El1v)
 - [Rafael Silva](https://github.com/RafaMI6)
 - [Victor Mendes](https://github.com/ImVictorM)
 - [Wlisses Fernando](https://github.com/wlis13)
+
+### Main functionalities of the application 🔧
+#### Customer:
+- Perform login;
+- Perform registration;
+- Choose to add items to the cart;
+- Place order;
+- Monitor the status of orders placed;
+- Change order status to "Delivered";
+#### Salesperson:
+- Perform login;
+- track orders;
+- Change the status of orders to "Prepare Orders" and "Out for Delivery";
+#### Admin:
+- Perform login;
+- View users;
+- Register new users;
+- Delete users;
 
 ### Acquired Knowledge 📖
 
@@ -184,9 +184,53 @@ In this project, We were able to:
 </table>
 
 ## Running the application ⚙️
- > You must have node, docker, and docker-compose installed
 
 1. Clone the repository and enter it
 ```
 git clone git@github.com:ImVictorM/Dona-Birita.git && cd Dona-Birita
 ```
+<details>
+<summary><h4>🐋 Running with docker (recommended)</h4></summary>
+  
+2. Get the containers running
+```
+docker-compose up -d
+```
+3. Enter the api container
+```
+docker exec -it api-delivery sh
+```
+4. Create and populate the database
+```
+npm run db:reset
+```
+
+5. Access the page on your browser: http://localhost:3000/
+- Client default port: `3000` 
+- API default port: `3001`
+
+</details>
+
+<details>
+<summary><h4>🖥️ Running locally</h4></summary>
+
+ > You must have node and MySQL installed
+ 
+2. Install the dependencies (both back-end and front-end)
+```
+npm install
+```
+
+3. Rename the file `.env.example` to `.env` in both front-end and back-end directory (change it as you like)
+
+4. Create and populate the database
+```
+npm run db:reset
+```
+
+5. Start the server
+```
+npm run start
+```
+
+</details>
