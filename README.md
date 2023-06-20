@@ -1,4 +1,4 @@
-# Dona Birita ⚽
+# Dona Birita 🍺
 
 ## Project Context 💡
 Beverage delivery platform for the fictitious distributor Dona Birita.
