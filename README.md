@@ -233,4 +233,8 @@ npm run db:reset
 npm run start
 ```
 
+6. Access the page on your browser: http://localhost:3000/
+- Client default port: `3000` 
+- API default port: `3001`
+
 </details>
