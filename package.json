@@ -7,7 +7,9 @@
   },
   "scripts": {
     "start": "npm run --prefix ./back-end start && npm run --prefix ./front-end start",
-    "install": "cd ./back-end && npm install && cd ./front-end && npm install",
+    "install": "npm run install-backend && npm run install-frontend",
+    "install-backend": "cd ./back-end && npm install",
+    "install-frontend": "cd ./front-end && npm install",
     "dev": "npm run --prefix ./back-end dev && npm run --prefix ./front-end start",
     "db:reset": "npm run --prefix ./back-end db:reset"
   },
