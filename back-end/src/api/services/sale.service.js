@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 const { Sale, SaleProduct, User, Product } = require('../../database/models');
 
-const { NODE_ENV } = process.env;
+const { NODE_ENV = 'test' } = process.env;
 
 const config = require('../../database/config/config');
 
