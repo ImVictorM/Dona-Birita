@@ -57,6 +57,7 @@ async function registerNewUser(userFromReq) {
 async function getUsersDifferentThanADM() {
   const userList = await User.findAll({
     where: { role: { [Op.not]: 'administrator' } },
+    attributes: { exclude: ['password'] },
   });
   return userList;
 }

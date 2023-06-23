@@ -21,8 +21,8 @@ async function requestUserRegistration(req, res) {
 async function requestAllUserByRole(req, res) {
   const { role } = req.params;
 
-  const sellerList = await getAllUserByRole(role);
-  return res.status(200).json(sellerList);
+  const userList = await getAllUserByRole(role);
+  return res.status(200).json(userList);
 }
 
 async function requestUsersDifferentThanADM(_req, res) {
