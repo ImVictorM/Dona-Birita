@@ -21,11 +21,11 @@ const {
 describe('Testing admin routes', function () {
   after(resetDB);
 
-  describe('POST /admin/user/register', function () {
-    afterEach(function () {
-      sinon.restore();
-    });
+  afterEach(function () {
+    sinon.restore();
+  });
 
+  describe('POST /admin/user/register', function () {
     it('Can\'t register without adm authorization', async function () {
       sinon.stub(jwt, 'verify').returns({
         dataValues: { role: 'customer' },
