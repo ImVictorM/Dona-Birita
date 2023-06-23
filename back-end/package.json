@@ -14,7 +14,8 @@
     "db:reset:test": "NODE_ENV=test npm run db:create",
     "start": "node .",
     "dev": "nodemon .",
-    "test": "npm run db:reset:test && mocha src/tests/**/*$NAME*.test.js --exit",
+    "pretest": "npm run db:reset:test",
+    "test": "mocha src/tests/**/*$NAME*.test.js --exit",
     "test:coverage": "nyc --all npm run test",
     "test:coverage:json": "nyc --all --reporter=json-summary npm run test",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json ."

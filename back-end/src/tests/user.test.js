@@ -1,7 +1,8 @@
 const chaiHttp = require('chai-http');
 const chai = require('chai');
-const app = require('../api/app');
 
+const app = require('../api/app');
+const { resetDB } = require('./utils/resetDB');
 const {
   VALID_USER_TO_LOGIN, 
   VALID_USER_RESPONSE_FROM_DB,
@@ -27,6 +28,8 @@ const LOGIN_ENDPOINT = '/user/login';
 const REGISTER_ENDPOINT = '/user/register';
 
 describe('Testing user routes', function () {
+  after(resetDB);
+
   describe('GET /:role', function () {
     it('Can get all customers', async function () {
       chaiHttpResponse = await chai

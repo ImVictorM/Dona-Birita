@@ -1,17 +1,19 @@
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
-const DB_CREATE = 'npx sequelize-cli db:drop && npx sequelize-cli db:create';
-const DB_MIGRATE = 'npx sequelize-cli db:migrate';
-const DB_SEED = 'npx sequelize-cli db:seed:all';
+const DUMP_OUTPUT = '/dev/null 2>&1';
+const ENVIRONMENT = 'NODE_ENV=test';
 
-const RESET_DB_SCRIPT = `NODE_ENV=test ${DB_CREATE} && ${DB_MIGRATE} && ${DB_SEED}`;
+const DB_DROP = `${ENVIRONMENT} npx sequelize-cli db:drop > ${DUMP_OUTPUT}`;
+const DB_CREATE = `${ENVIRONMENT} npx sequelize-cli db:create > ${DUMP_OUTPUT}`;
+const DB_MIGRATE = `${ENVIRONMENT} npx sequelize-cli db:migrate > ${DUMP_OUTPUT}`;
+const DB_SEED = `${ENVIRONMENT} npx sequelize-cli db:seed:all > ${DUMP_OUTPUT}`;
+
+const RESET_DB_SCRIPT = `${DB_DROP} && ${DB_CREATE} && ${DB_MIGRATE} && ${DB_SEED}`;
 const DB_RESET_TIMEOUT = 10000;
 
 async function resetRace() {
-  const resetPromise = exec(RESET_DB_SCRIPT).then(({ stdout }) => {
-    console.log(`Database reset: ${stdout}`);
-  }).catch((error) => {
+  const resetPromise = exec(RESET_DB_SCRIPT).catch((error) => {
     console.error(`Error resetting database: ${error}`);
     throw error;
   });
