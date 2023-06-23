@@ -32,6 +32,7 @@
   "devDependencies": {
     "chai": "4.3.6",
     "chai-http": "4.3.0",
+    "child_process": "^1.0.2",
     "eslint-config-trybe-backend": "2.1.0",
     "mocha": "9.2.2",
     "nodemon": "2.0.15",
