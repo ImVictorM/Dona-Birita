@@ -48,24 +48,21 @@ async function getSaleByID(id) {
 }
 
 async function getUserSales(id, role) {
-  if (role === 'seller') {
-    return Sale.findAll({
-      where: { sellerId: id }, 
-    });
-  } 
-  return Sale.findAll({ 
-    where: { userId: id }, 
-    include: [
-      {
-        model: User,
-        as: 'user',
-        attributes: ['name'],
-      },
-    ],
-  });
+  switch (role) {
+    case 'seller':
+      return Sale.findAll({
+        where: { sellerId: id }, 
+      });
+    case 'customer':
+      return Sale.findAll({ 
+        where: { userId: id }, 
+      });
+    default:
+      return null;
+  }
 }
 
-async function updateState(status, id) {
+async function updateSaleStatus(status, id) {
   await Sale.update({ status }, { where: { id } });
 }
 
@@ -73,5 +70,5 @@ module.exports = {
   registerNewSale,
   getUserSales,
   getSaleByID,
-  updateState,
+  updateSaleStatus,
 };

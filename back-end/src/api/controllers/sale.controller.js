@@ -1,7 +1,7 @@
 const { 
   registerNewSale, 
   getUserSales,
-  updateState, 
+  updateSaleStatus, 
   getSaleByID,
 } = require('../services/sale.service');
 
@@ -17,11 +17,11 @@ async function requestUserSales(req, res) {
   return res.status(200).json(saleList);
 }
 
-async function updateSale(req, res) {
+async function requesToUpdateSaleStatus(req, res) {
   const { status } = req.body;
   const { id } = req.params;
-  await updateState(status, Number(id));
-  res.status(200).end();
+  await updateSaleStatus(status, id);
+  return res.status(204).end();
 }
 
 async function requestSaleByID(req, res) {
@@ -34,5 +34,5 @@ module.exports = {
   requestToRegisterNewSale,
   requestUserSales,
   requestSaleByID,
-  updateSale,
+  requesToUpdateSaleStatus,
 };
