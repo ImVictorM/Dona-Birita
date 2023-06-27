@@ -11,41 +11,84 @@ import {
   VALID_CUSTOMER_PASSWORD,
 } from './mocks/login.mock';
 
-jest.mock('../utils/requestWithCORS');
-
 const EMAIL_INPUT_TEST_ID = 'common_login__input-email';
 const PASSWORD_INPUT_TEST_ID = 'common_login__input-password';
 const LOGIN_BUTTON_TEST_ID = 'common_login__button-login';
+const ERROR_MESSAGE_TEST_ID = 'common_login__element-invalid-email';
+const REGISTER_BUTTON_TEST_ID = 'common_login__button-register';
+const LOGIN_ENDPOINT = '/login';
 
 describe('PATH: /login - Testing Login', () => {
-  afterEach(() => {
-    requestWithCORS.mockRestore();
+  beforeEach(() => {
+    requestWithCORS.mockClear();
+    window.localStorage.clear();
   });
 
-  it('Redirects to /login when the route is /', () => {
-    const { history } = renderWithRouter(<App />);
-    expect(history.location.pathname).toBe('/login');
-  });
+  describe('Redirects case', () => {
+    it('Redirects to /login when the route is /', () => {
+      const { history } = renderWithRouter(<App />);
+      expect(history.location.pathname).toBe(LOGIN_ENDPOINT);
+    });
 
-  it('Can login succesfully with correct information', async () => {
-    requestWithCORS.mockReturnValue(LOGIN_RESPONSE);
-
-    const { history } = renderWithRouter(<App />, '/login');
-
-    expect(history.location.pathname).toBe('/login');
-
-    const emailInput = screen.getByTestId(EMAIL_INPUT_TEST_ID);
-    const passwordInput = screen.getByTestId(PASSWORD_INPUT_TEST_ID);
-    const loginButton = screen.getByTestId(LOGIN_BUTTON_TEST_ID);
-
-    userEvent.type(emailInput, VALID_CUSTOMER_EMAIL);
-    userEvent.type(passwordInput, VALID_CUSTOMER_PASSWORD);
-
-    userEvent.click(loginButton);
-
-    await waitFor(() => {
-      expect(requestWithCORS).toHaveBeenCalled();
+    it('Redirects to /customer/products when user is already logged', () => {
+      localStorage.setItem('user', JSON.stringify(LOGIN_RESPONSE)); // defines if the user is logged
+      const { history } = renderWithRouter(<App />, LOGIN_ENDPOINT);
       expect(history.location.pathname).toBe('/customer/products');
+    });
+
+    it('Redirects to /register when clicking on the register button', () => {
+      const { history } = renderWithRouter(<App />, LOGIN_ENDPOINT);
+      const registerButton = screen.getByTestId(REGISTER_BUTTON_TEST_ID);
+
+      userEvent.click(registerButton);
+
+      expect(history.location.pathname).toBe('/register');
+    });
+  });
+
+  describe('Login attempts', () => {
+    it('Can login succesfully with correct information', async () => {
+      requestWithCORS.mockReturnValue(LOGIN_RESPONSE);
+
+      const { history } = renderWithRouter(<App />, LOGIN_ENDPOINT);
+
+      const emailInput = screen.getByTestId(EMAIL_INPUT_TEST_ID);
+      const passwordInput = screen.getByTestId(PASSWORD_INPUT_TEST_ID);
+      const loginButton = screen.getByTestId(LOGIN_BUTTON_TEST_ID);
+
+      userEvent.type(emailInput, VALID_CUSTOMER_EMAIL);
+      userEvent.type(passwordInput, VALID_CUSTOMER_PASSWORD);
+
+      userEvent.click(loginButton);
+
+      await waitFor(() => {
+        expect(requestWithCORS).toHaveBeenCalled();
+        expect(history.location.pathname).toBe('/customer/products');
+      });
+    });
+
+    it('Shows an error message when login data isn\'t valid', async () => {
+      requestWithCORS.mockImplementation(() => {
+        throw new Error();
+      });
+
+      const { history } = renderWithRouter(<App />, LOGIN_ENDPOINT);
+
+      const emailInput = screen.getByTestId(EMAIL_INPUT_TEST_ID);
+      const passwordInput = screen.getByTestId(PASSWORD_INPUT_TEST_ID);
+      const loginButton = screen.getByTestId(LOGIN_BUTTON_TEST_ID);
+
+      userEvent.type(emailInput, VALID_CUSTOMER_EMAIL);
+      userEvent.type(passwordInput, 'invalidpassword');
+
+      userEvent.click(loginButton);
+
+      await waitFor(() => {
+        expect(requestWithCORS).toHaveBeenCalled();
+        expect(history.location.pathname).toBe(LOGIN_ENDPOINT);
+        const errorMessage = screen.getByTestId(ERROR_MESSAGE_TEST_ID);
+        expect(errorMessage).toBeInTheDocument();
+      });
     });
   });
 });
