@@ -64,6 +64,8 @@ describe('PATH: /login - Testing Login', () => {
       await waitFor(() => {
         expect(requestWithCORS).toHaveBeenCalled();
         expect(history.location.pathname).toBe('/customer/products');
+        const loggedUser = JSON.parse(localStorage.getItem('user'));
+        expect(loggedUser).toEqual(LOGIN_RESPONSE);
       });
     });
 
