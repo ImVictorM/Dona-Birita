@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { renderWithRouter } from './utils/renderOptions';
-import { LOGGED_ADM, LOGGED_CUSTOMER, LOGGED_SELLER } from './mocks/header.mock';
+import { LOGGED_ADM, LOGGED_CUSTOMER, LOGGED_SELLER } from './mocks/userTypes.mock';
 import Header from '../components/header/header';
 
 describe('Header component', () => {
