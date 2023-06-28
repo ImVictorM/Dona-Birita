@@ -45,7 +45,7 @@ function Header() {
             data-testid="customer_products__element-navbar-link-logout"
             onClick={ () => {
               localStorage.clear();
-              history.push('/');
+              history.push('/login');
             } }
           >
             Sair

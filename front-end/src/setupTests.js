@@ -7,4 +7,4 @@ import LocalStorageMock from './tests/utils/LocalStorageMock';
 
 jest.mock('./utils/requestWithCORS', () => jest.fn());
 
-global.localStorage = new LocalStorageMock;
+global.localStorage = new LocalStorageMock();
