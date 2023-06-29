@@ -37,7 +37,7 @@ describe('Header component', () => {
       expect(screen.getByTestId(LOGOUT_BUTTON_TEST_ID)).toBeInTheDocument();
     });
 
-    it('Renders the correct elements for adm\'s', async () => {
+    it('Renders the correct elements for adm', async () => {
       localStorage.setItem('user', JSON.stringify(LOGGED_ADM));
       renderWithRouter(<Header />);
 
