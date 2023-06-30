@@ -20,6 +20,7 @@ function OrderList() {
             to={ `/${user.role}/orders/${order.id}` }
             key={ order.id }
             className="order-card"
+            data-testid={ `${user.role}_orders__element-order-link-${order.id}` }
           >
             <div>
               <span>Data</span>
