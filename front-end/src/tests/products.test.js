@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import requestWithCORS from '../utils/requestWithCORS';
 import { renderWithRouterAndProvider } from './utils/renderOptions';
 import App from '../App';
-import PRODUCT_LIST from './mocks/products.mock';
+import { PRODUCT_LIST, PRODUCTS_IN_CART } from './mocks/products.mock';
 
 import { LOGGED_CUSTOMER } from './mocks/userTypes.mock';
 
@@ -11,20 +11,20 @@ const PRODUCTS_ENDPOINT = '/customer/products';
 
 const CART_BTN_TEST_ID = 'customer_products__button-cart';
 const CART_TOTAL_TEST_ID = 'customer_products__checkout-bottom-value';
+const FIRST_PRODUCT_TEST_ID = 'customer_products__element-card-title-1';
 
 describe('PATH: /customer/products - Testing products', () => {
   beforeEach(async () => {
     requestWithCORS.mockReturnValue(PRODUCT_LIST);
     localStorage.setItem('user', JSON.stringify(LOGGED_CUSTOMER));
     localStorage.setItem('cart', JSON.stringify([]));
-
-    renderWithRouterAndProvider(<App />, PRODUCTS_ENDPOINT);
-    const FIRST_PRODUCTS_TEST_ID = 'customer_products__element-card-title-1';
-    await waitFor(() => screen.queryByTestId(FIRST_PRODUCTS_TEST_ID));
   });
 
   describe('Render', () => {
-    it('Renders all the products correctly', () => {
+    it('Renders all the products correctly', async () => {
+      renderWithRouterAndProvider(<App />, PRODUCTS_ENDPOINT);
+      await waitFor(() => screen.queryByTestId(FIRST_PRODUCT_TEST_ID));
+
       const PRODUCT_LIST_TEST_ID = 'customer_product_list';
       const products = screen.queryByTestId(PRODUCT_LIST_TEST_ID).children;
       expect(products.length).toBe(PRODUCT_LIST.length);
@@ -43,13 +43,58 @@ describe('PATH: /customer/products - Testing products', () => {
       }
     });
 
-    it('Renders the cart button correctly', () => {
+    it('Renders the cart button correctly', async () => {
+      renderWithRouterAndProvider(<App />, PRODUCTS_ENDPOINT);
+      await waitFor(() => screen.queryByTestId(FIRST_PRODUCT_TEST_ID));
+
       expect(screen.queryByTestId(CART_BTN_TEST_ID)).toBeDisabled();
       expect(screen.getByTestId(CART_TOTAL_TEST_ID).textContent).toBe('0,00');
+    });
+
+    it('Renders product with correct quantity when product already in cart', async () => {
+      localStorage.setItem('cart', JSON.stringify(PRODUCTS_IN_CART));
+      renderWithRouterAndProvider(<App />, PRODUCTS_ENDPOINT);
+      await waitFor(() => screen.queryByTestId(FIRST_PRODUCT_TEST_ID));
+
+      const PRODUCT_1_INPUT_TEST_ID = 'customer_products__input-card-quantity-1';
+      const PRODUCT_2_INPUT_TEST_ID = 'customer_products__input-card-quantity-2';
+      const PRODUCT_3_INPUT_TEST_ID = 'customer_products__input-card-quantity-3';
+
+      const productOneInput = screen.getByTestId(PRODUCT_1_INPUT_TEST_ID);
+      const productTwoInput = screen.getByTestId(PRODUCT_2_INPUT_TEST_ID);
+      const productThreeInput = screen.getByTestId(PRODUCT_3_INPUT_TEST_ID);
+
+      expect(productOneInput.value).toBe('2');
+      expect(productTwoInput.value).toBe('1');
+      expect(productThreeInput.value).toBe('0');
+    });
+  });
+
+  describe('Redirect', () => {
+    it('Redirects to the checkout page when clicking on the cart button', async () => {
+      const { history } = renderWithRouterAndProvider(<App />, PRODUCTS_ENDPOINT);
+      await waitFor(() => screen.queryByTestId(FIRST_PRODUCT_TEST_ID));
+
+      const ADD_1_TEST_ID = 'customer_products__button-card-add-item-1';
+      userEvent.click(screen.getByTestId(ADD_1_TEST_ID));
+
+      const cartButton = screen.getByTestId(CART_BTN_TEST_ID);
+      expect(cartButton).toBeEnabled();
+
+      userEvent.click(cartButton);
+
+      await waitFor(() => {
+        expect(history.location.pathname).toBe('/customer/checkout');
+      });
     });
   });
 
   describe('Functionalities', () => {
+    beforeEach(async () => {
+      renderWithRouterAndProvider(<App />, PRODUCTS_ENDPOINT);
+      await waitFor(() => screen.queryByTestId(FIRST_PRODUCT_TEST_ID));
+    });
+
     it('Is possible to add and remove products from the cart correctly', () => {
       const REMOVE_1_TEST_ID = 'customer_products__button-card-rm-item-1';
 
@@ -85,32 +130,6 @@ describe('PATH: /customer/products - Testing products', () => {
 
       expect(screen.getByTestId(CART_TOTAL_TEST_ID).textContent)
         .toBe(total.toFixed(2).replace('.', ','));
-    });
-  });
-});
-
-describe('Redirect', () => {
-  beforeEach(async () => {
-    requestWithCORS.mockReturnValue(PRODUCT_LIST);
-    localStorage.setItem('user', JSON.stringify(LOGGED_CUSTOMER));
-    localStorage.setItem('cart', JSON.stringify([]));
-  });
-
-  it('Redirects to the checkout page when clicking on the cart button', async () => {
-    const { history } = renderWithRouterAndProvider(<App />, PRODUCTS_ENDPOINT);
-    const FIRST_PRODUCTS_TEST_ID = 'customer_products__element-card-title-1';
-    await waitFor(() => screen.queryByTestId(FIRST_PRODUCTS_TEST_ID));
-
-    const ADD_1_TEST_ID = 'customer_products__button-card-add-item-1';
-    userEvent.click(screen.getByTestId(ADD_1_TEST_ID));
-
-    const cartButton = screen.getByTestId(CART_BTN_TEST_ID);
-    expect(cartButton).toBeEnabled();
-
-    userEvent.click(cartButton);
-
-    await waitFor(() => {
-      expect(history.location.pathname).toBe('/customer/checkout');
     });
   });
 });

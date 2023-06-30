@@ -1,4 +1,4 @@
-const PRODUCT_LIST = [
+export const PRODUCT_LIST = [
   {
     id: 1,
     name: 'Skol Lata 250ml',
@@ -19,4 +19,19 @@ const PRODUCT_LIST = [
   },
 ];
 
-export default PRODUCT_LIST;
+export const PRODUCTS_IN_CART = [
+  {
+    productId: 1,
+    name: 'Skol Lata 250ml',
+    unitPrice: '2.20',
+    quantity: 2,
+    subTotal: 4.4,
+  },
+  {
+    productId: 2,
+    name: 'Heineken 600ml',
+    unitPrice: '7.50',
+    quantity: 1,
+    subTotal: 7.5,
+  },
+];
