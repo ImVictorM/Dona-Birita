@@ -1,4 +1,4 @@
-export const PENDING_CUSTOMER_ORDER = {
+export const PENDING_ORDER = {
   deliveryAddress: 'rua jorgin',
   deliveryNumber: '222',
   id: 6,
@@ -34,12 +34,17 @@ export const PENDING_CUSTOMER_ORDER = {
   userId: 3,
 };
 
-export const IN_TRANSIT_CUSTOMER_ORDER = {
-  ...PENDING_CUSTOMER_ORDER,
+export const PREPARING_ORDER = {
+  ...PENDING_ORDER,
+  status: 'Preparando',
+};
+
+export const IN_TRANSIT_ORDER = {
+  ...PENDING_ORDER,
   status: 'Em Trânsito',
 };
 
-export const DELIVERED_CUSTOMER_ORDER = {
-  ...IN_TRANSIT_CUSTOMER_ORDER,
+export const DELIVERED_ORDER = {
+  ...IN_TRANSIT_ORDER,
   status: 'Entregue',
 };
