@@ -5,6 +5,7 @@ import requestWithCORS from '../utils/requestWithCORS';
 import ORDER_LIST from './mocks/orders.mock';
 import { LOGGED_CUSTOMER, LOGGED_SELLER } from './mocks/userTypes.mock';
 import { renderWithRouterAndProvider } from './utils/renderOptions';
+import toBrazilDate from './utils/toBrazilDate';
 
 const SELLER_ORDERS_ENDPOINT = '/seller/orders';
 const CUSTOMER_ORDERS_ENDPOINT = '/customer/orders';
@@ -45,12 +46,7 @@ describe('Testing orders by user', () => {
         expect(orderAddress).toBeInTheDocument();
 
         const currentOrder = ORDER_LIST[index];
-        const onlyDateIndex = 10;
-        const dateExpected = currentOrder.saleDate
-          .toLocaleString()
-          .substring(0, onlyDateIndex)
-          .split('-').reverse()
-          .join('/');
+        const dateExpected = toBrazilDate(currentOrder.saleDate);
 
         expect(orderDate.textContent).toBe(dateExpected);
         expect(orderIndex.textContent).toBe(String(currentOrder.id));
@@ -103,12 +99,8 @@ describe('Testing orders by user', () => {
         expect(orderAddress).not.toBeInTheDocument();
 
         const currentOrder = ORDER_LIST[index];
-        const onlyDateIndex = 10;
-        const dateExpected = currentOrder.saleDate
-          .toLocaleString()
-          .substring(0, onlyDateIndex)
-          .split('-').reverse()
-          .join('/');
+
+        const dateExpected = toBrazilDate(currentOrder.saleDate);
 
         expect(orderDate.textContent).toBe(dateExpected);
         expect(orderIndex.textContent).toBe(String(currentOrder.id));
