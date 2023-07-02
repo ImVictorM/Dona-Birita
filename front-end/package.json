@@ -62,8 +62,8 @@
       "index.js",
       "serviceWorker.js",
       "reportWebVitals.js",
-      "./services/renderWithRouter",
-      "./services/history"
+      "src/tests",
+      "utils/requestWithCORS.js"
     ],
     "moduleNameMapper": {
       "^axios$": "axios/dist/axios.js"
