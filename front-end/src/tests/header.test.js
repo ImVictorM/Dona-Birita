@@ -5,13 +5,14 @@ import { renderWithRouter } from './utils/renderOptions';
 import { LOGGED_ADM, LOGGED_CUSTOMER, LOGGED_SELLER } from './mocks/userTypes.mock';
 import Header from '../components/header/header';
 
-describe('Header component', () => {
-  const PRODUCTS_LINK_TEST_ID = 'customer_products__element-navbar-link-products';
-  const ORDERS_LINK_TEST_ID = 'customer_products__element-navbar-link-orders';
-  const USER_NAME_TEST_ID = 'customer_products__element-navbar-link-orders';
-  const LOGOUT_BUTTON_TEST_ID = 'customer_products__element-navbar-link-logout';
-  const ADM_NAME_TEST_ID = 'customer_products__element-navbar-user-full-name';
+const TEST_PREFIX = 'customer_products__';
+const PRODUCTS_LINK_TEST_ID = `${TEST_PREFIX}element-navbar-link-products`;
+const ORDERS_LINK_TEST_ID = `${TEST_PREFIX}element-navbar-link-orders`;
+const USER_NAME_TEST_ID = `${TEST_PREFIX}element-navbar-link-orders`;
+const LOGOUT_BUTTON_TEST_ID = `${TEST_PREFIX}element-navbar-link-logout`;
+const ADM_NAME_TEST_ID = `${TEST_PREFIX}element-navbar-user-full-name`;
 
+describe('Header component', () => {
   describe('Render', () => {
     afterEach(() => {
       localStorage.clear();
@@ -56,7 +57,7 @@ describe('Header component', () => {
       localStorage.setItem('user', JSON.stringify(LOGGED_CUSTOMER));
     });
 
-    it('Navigate to /customer/orders when click the order button', async () => {
+    it('Navigate to /customer/orders when clicking the order button', async () => {
       const { history } = renderWithRouter(<Header />);
 
       const ORDER_ENDPOINT = '/customer/orders';
@@ -66,7 +67,7 @@ describe('Header component', () => {
       expect(history.location.pathname).toBe(ORDER_ENDPOINT);
     });
 
-    it('Navigate to /customer/products when click the products button', async () => {
+    it('Navigate to /customer/products when clicking the products button', async () => {
       const { history } = renderWithRouter(<Header />);
       const PRODUCTS_ENDPOINT = '/customer/products';
       const productsLink = screen.getByTestId(PRODUCTS_LINK_TEST_ID);
@@ -75,7 +76,7 @@ describe('Header component', () => {
       expect(history.location.pathname).toBe(PRODUCTS_ENDPOINT);
     });
 
-    it('Logout and navigate to /login when click the logout button', () => {
+    it('Logout and navigate to /login when clicking the logout button', () => {
       const { history } = renderWithRouter(<Header />);
 
       const logoutButton = screen.getByTestId(LOGOUT_BUTTON_TEST_ID);

@@ -15,23 +15,23 @@ describe('Testing orders by user', () => {
     requestWithCORS.mockReturnValue(ORDER_LIST);
   });
 
-  describe('PATH: /seller/orders - Testing seller orders', () => {
-    const FIRST_ORDER_TEST_ID = 'seller_orders__element-order-link-1';
-
+  describe(`PATH: ${SELLER_ORDERS_ENDPOINT} - Testing seller orders`, () => {
     beforeEach(async () => {
       localStorage.setItem('user', JSON.stringify(LOGGED_SELLER));
     });
 
+    const TEST_PREFIX = 'seller_orders__';
+
     it('Renders all customer orders correctly', async () => {
       renderWithRouterAndProvider(<App />, SELLER_ORDERS_ENDPOINT);
-      await waitFor(() => screen.getByTestId(FIRST_ORDER_TEST_ID));
+      await waitFor(() => expect(requestWithCORS).toBeCalledTimes(1));
 
       for (let index = 0; index < ORDER_LIST.length; index += 1) {
-        const DATE_TEST_ID = `seller_orders__element-order-date-${index + 1}`;
-        const INDEX_TEST_ID = `seller_orders__element-order-id-${index + 1}`;
-        const STATUS_TEST_ID = `seller_orders__element-delivery-status-${index + 1}`;
-        const TOTAL_TEST_ID = `seller_orders__element-card-price-${index + 1}`;
-        const ADDRESS_TEST_ID = `seller_orders__element-card-address${index + 1}`;
+        const DATE_TEST_ID = `${TEST_PREFIX}element-order-date-${index + 1}`;
+        const INDEX_TEST_ID = `${TEST_PREFIX}element-order-id-${index + 1}`;
+        const STATUS_TEST_ID = `${TEST_PREFIX}element-delivery-status-${index + 1}`;
+        const TOTAL_TEST_ID = `${TEST_PREFIX}element-card-price-${index + 1}`;
+        const ADDRESS_TEST_ID = `${TEST_PREFIX}element-card-address${index + 1}`;
 
         const orderDate = screen.queryByTestId(DATE_TEST_ID);
         const orderIndex = screen.queryByTestId(INDEX_TEST_ID);
@@ -60,31 +60,31 @@ describe('Testing orders by user', () => {
     // eslint-disable-next-line max-len
     it('Redirects to the order details page when clicking one order (seller)', async () => {
       const { history } = renderWithRouterAndProvider(<App />, SELLER_ORDERS_ENDPOINT);
-      await waitFor(() => screen.getByTestId(FIRST_ORDER_TEST_ID));
+      await waitFor(() => expect(requestWithCORS).toBeCalledTimes(1));
 
+      const FIRST_ORDER_TEST_ID = `${TEST_PREFIX}element-order-link-1`;
       userEvent.click(screen.getByTestId(FIRST_ORDER_TEST_ID));
 
       expect(history.location.pathname).toBe('/seller/orders/1');
     });
   });
 
-  describe('PATH: /customer/orders - Testing customer orders', () => {
-    const FIRST_ORDER_TEST_ID = 'customer_orders__element-order-link-1';
-
+  describe(`PATH: ${CUSTOMER_ORDERS_ENDPOINT} - Testing customer orders`, () => {
     beforeEach(async () => {
       localStorage.setItem('user', JSON.stringify(LOGGED_CUSTOMER));
     });
+    const TEST_PREFIX = 'customer_orders__';
 
     it('Renders all customer orders correctly', async () => {
       renderWithRouterAndProvider(<App />, CUSTOMER_ORDERS_ENDPOINT);
-      await waitFor(() => screen.getByTestId(FIRST_ORDER_TEST_ID));
+      await waitFor(() => expect(requestWithCORS).toBeCalledTimes(1));
 
       for (let index = 0; index < ORDER_LIST.length; index += 1) {
-        const DATE_TEST_ID = `customer_orders__element-order-date-${index + 1}`;
-        const INDEX_TEST_ID = `customer_orders__element-order-id-${index + 1}`;
-        const STATUS_TEST_ID = `customer_orders__element-delivery-status-${index + 1}`;
-        const TOTAL_TEST_ID = `customer_orders__element-card-price-${index + 1}`;
-        const ADDRESS_TEST_ID = `customer_orders__element-card-address${index + 1}`;
+        const DATE_TEST_ID = `${TEST_PREFIX}element-order-date-${index + 1}`;
+        const INDEX_TEST_ID = `${TEST_PREFIX}element-order-id-${index + 1}`;
+        const STATUS_TEST_ID = `${TEST_PREFIX}element-delivery-status-${index + 1}`;
+        const TOTAL_TEST_ID = `${TEST_PREFIX}element-card-price-${index + 1}`;
+        const ADDRESS_TEST_ID = `${TEST_PREFIX}element-card-address${index + 1}`;
 
         const orderDate = screen.queryByTestId(DATE_TEST_ID);
         const orderIndex = screen.queryByTestId(INDEX_TEST_ID);
@@ -112,8 +112,9 @@ describe('Testing orders by user', () => {
     // eslint-disable-next-line max-len
     it('Redirects to the order details page when clicking one order (customer)', async () => {
       const { history } = renderWithRouterAndProvider(<App />, CUSTOMER_ORDERS_ENDPOINT);
-      await waitFor(() => screen.getByTestId(FIRST_ORDER_TEST_ID));
+      await waitFor(() => expect(requestWithCORS).toBeCalledTimes(1));
 
+      const FIRST_ORDER_TEST_ID = `${TEST_PREFIX}element-order-link-1`;
       userEvent.click(screen.getByTestId(FIRST_ORDER_TEST_ID));
 
       expect(history.location.pathname).toBe('/customer/orders/1');

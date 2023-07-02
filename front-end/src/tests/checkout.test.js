@@ -13,18 +13,19 @@ import {
 
 const CHECKOUT_ENDPOINT = '/customer/checkout';
 
-describe('PATH: /customer/checkout - Testing checkout process', () => {
+// Checkout form test id
+const TEST_PREFIX = 'customer_checkout__';
+const SELECT_SELLER_TEST_ID = `${TEST_PREFIX}select-seller`;
+const ADDRESS_INPUT_TEST_ID = `${TEST_PREFIX}input-address`;
+const ADDR_NUMBER_TEST_ID = `${TEST_PREFIX}input-address-number`;
+const FINISH_ORDER_BTN_TEST_ID = `${TEST_PREFIX}button-submit-order`;
+
+describe(`PATH: ${CHECKOUT_ENDPOINT} - Testing checkout process`, () => {
   beforeEach(() => {
     localStorage.setItem('user', JSON.stringify(LOGGED_CUSTOMER));
     localStorage.setItem('cart', JSON.stringify(CART));
     requestWithCORS.mockReturnValueOnce(SELLER_LIST);
   });
-
-  // Checkout form test id
-  const SELECT_SELLER_TEST_ID = 'customer_checkout__select-seller';
-  const ADDRESS_INPUT_TEST_ID = 'customer_checkout__input-address';
-  const ADDR_NUMBER_TEST_ID = 'customer_checkout__input-address-number';
-  const FINISH_ORDER_BTN_TEST_ID = 'customer_checkout__button-submit-order';
 
   describe('Render', () => {
     beforeEach(async () => {
@@ -34,13 +35,12 @@ describe('PATH: /customer/checkout - Testing checkout process', () => {
 
     it('Renders the cart information and total on the screen', () => {
       for (let index = 0; index < CART.length; index += 1) {
-        const TEST_PREFIX = 'customer_checkout__element';
-        const INDEX_TEST_ID = `${TEST_PREFIX}-order-table-item-number-${index}`;
-        const DESC_TEST_ID = `${TEST_PREFIX}-order-table-name-${index}`;
-        const QUANTITY_TEST_ID = `${TEST_PREFIX}-order-table-quantity-${index}`;
-        const UNIT_PRICE_TEST_ID = `${TEST_PREFIX}-order-table-unit-price-${index}`;
-        const ITEM_TOTAL_TEST_ID = `${TEST_PREFIX}-order-table-sub-total-${index}`;
-        const REMOVE_BTN_TEST_ID = `${TEST_PREFIX}-order-table-remove-${index}`;
+        const INDEX_TEST_ID = `${TEST_PREFIX}element-order-table-item-number-${index}`;
+        const DESC_TEST_ID = `${TEST_PREFIX}element-order-table-name-${index}`;
+        const QUANTITY_TEST_ID = `${TEST_PREFIX}element-order-table-quantity-${index}`;
+        const PRICE_TEST_ID = `${TEST_PREFIX}element-order-table-unit-price-${index}`;
+        const ITEM_TOTAL_TEST_ID = `${TEST_PREFIX}element-order-table-sub-total-${index}`;
+        const REMOVE_BTN_TEST_ID = `${TEST_PREFIX}element-order-table-remove-${index}`;
 
         const currentItem = CART[index];
 
@@ -53,7 +53,7 @@ describe('PATH: /customer/checkout - Testing checkout process', () => {
         expect(screen.getByTestId(QUANTITY_TEST_ID).textContent)
           .toBe(String(currentItem.quantity));
 
-        expect(screen.getByTestId(UNIT_PRICE_TEST_ID).textContent)
+        expect(screen.getByTestId(PRICE_TEST_ID).textContent)
           .toBe(Number(currentItem.unitPrice).toFixed(2).replace('.', ','));
 
         expect(screen.getByTestId(ITEM_TOTAL_TEST_ID).textContent)
@@ -61,9 +61,11 @@ describe('PATH: /customer/checkout - Testing checkout process', () => {
 
         expect(screen.getByTestId(REMOVE_BTN_TEST_ID)).toBeInTheDocument();
       }
-      const CART_TOTAL_TEST_ID = 'customer_checkout__element-order-total-price';
+
+      const CART_TOTAL_TEST_ID = `${TEST_PREFIX}element-order-total-price`;
       const cartTotal = screen.getByTestId(CART_TOTAL_TEST_ID).textContent;
       const expectedTotal = CART.reduce((acc, curr) => acc + curr.subTotal, 0);
+
       expect(cartTotal).toBe(expectedTotal.toFixed(2).replace('.', ','));
     });
 
@@ -86,14 +88,13 @@ describe('PATH: /customer/checkout - Testing checkout process', () => {
     it('Can remove an item from cart', async () => {
       renderWithRouterAndProvider(<App />, CHECKOUT_ENDPOINT);
       await waitFor(() => expect(requestWithCORS).toHaveBeenCalledTimes(1));
-      const TEST_PREFIX = 'customer_checkout__element';
 
-      const INDEX_TEST_ID = `${TEST_PREFIX}-order-table-item-number-0`;
-      const DESC_TEST_ID = `${TEST_PREFIX}-order-table-name-0`;
-      const QUANTITY_TEST_ID = `${TEST_PREFIX}-order-table-quantity-0`;
-      const UNIT_PRICE_TEST_ID = `${TEST_PREFIX}-order-table-unit-price-0`;
-      const ITEM_TOTAL_TEST_ID = `${TEST_PREFIX}-order-table-sub-total-0`;
-      const REMOVE_BTN_TEST_ID = `${TEST_PREFIX}-order-table-remove-0`;
+      const INDEX_TEST_ID = `${TEST_PREFIX}element-order-table-item-number-0`;
+      const DESC_TEST_ID = `${TEST_PREFIX}element-order-table-name-0`;
+      const QUANTITY_TEST_ID = `${TEST_PREFIX}element-order-table-quantity-0`;
+      const UNIT_PRICE_TEST_ID = `${TEST_PREFIX}element-order-table-unit-price-0`;
+      const ITEM_TOTAL_TEST_ID = `${TEST_PREFIX}element-order-table-sub-total-0`;
+      const REMOVE_BTN_TEST_ID = `${TEST_PREFIX}element-order-table-remove-0`;
 
       const index = screen.queryByTestId(INDEX_TEST_ID);
       const desc = screen.queryByTestId(DESC_TEST_ID);

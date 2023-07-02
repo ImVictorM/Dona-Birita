@@ -17,22 +17,22 @@ import {
 
 const ADMIN_ENDPOINT = '/admin/manage';
 
-describe('PATH: /admin/manage', () => {
+const TEST_PREFIX = 'admin_manage__';
+const NAME_INPUT_TEST_ID = `${TEST_PREFIX}input-name`;
+const EMAIL_INPUT_TEST_ID = `${TEST_PREFIX}input-email`;
+const PASSWORD_INPUT_TEST_ID = `${TEST_PREFIX}input-password`;
+const ROLE_SELECT_TEST_ID = `${TEST_PREFIX}select-role`;
+const REGISTER_BUTTON_TEST_ID = `${TEST_PREFIX}button-register`;
+const ERROR_MESSAGE_TEST_ID = `${TEST_PREFIX}element-invalid-register`;
+
+describe(`PATH: ${ADMIN_ENDPOINT} - Testing admin page`, () => {
   beforeEach(async () => {
     localStorage.setItem('user', JSON.stringify(LOGGED_ADM));
     requestWithCORS.mockReturnValueOnce(USERS_DIFFERENT_THAN_ADM);
 
     renderWithRouterAndProvider(<App />, ADMIN_ENDPOINT);
-    const FIRST_USER_ID_TEST_ID = 'admin_manage__element-user-table-item-number-0';
-    await waitFor(() => screen.getByTestId(FIRST_USER_ID_TEST_ID));
+    await waitFor(() => expect(requestWithCORS).toBeCalledTimes(1));
   });
-
-  const NAME_INPUT_TEST_ID = 'admin_manage__input-name';
-  const EMAIL_INPUT_TEST_ID = 'admin_manage__input-email';
-  const PASSWORD_INPUT_TEST_ID = 'admin_manage__input-password';
-  const ROLE_SELECT_TEST_ID = 'admin_manage__select-role';
-  const REGISTER_BUTTON_TEST_ID = 'admin_manage__button-register';
-  const ERROR_MESSAGE_TEST_ID = 'admin_manage__element-invalid-register';
 
   describe('Render', () => {
     it('Can render a form to register a user', () => {
@@ -66,11 +66,11 @@ describe('PATH: /admin/manage', () => {
       };
 
       for (let index = 0; index < usersTable.children.length; index += 1) {
-        const ROW_INDEX_TEST_ID = `admin_manage__element-user-table-item-number-${index}`;
-        const ROW_NAME_TEST_ID = `admin_manage__element-user-table-name-${index}`;
-        const ROW_EMAIL_TEST_ID = `admin_manage__element-user-table-email-${index}`;
-        const ROW_ROLE_TEST_ID = `admin_manage__element-user-table-role-${index}`;
-        const ROW_DELETE_BTN_TEST_ID = `admin_manage__element-user-table-remove-${index}`;
+        const ROW_INDEX_TEST_ID = `${TEST_PREFIX}element-user-table-item-number-${index}`;
+        const ROW_NAME_TEST_ID = `${TEST_PREFIX}element-user-table-name-${index}`;
+        const ROW_EMAIL_TEST_ID = `${TEST_PREFIX}element-user-table-email-${index}`;
+        const ROW_ROLE_TEST_ID = `${TEST_PREFIX}element-user-table-role-${index}`;
+        const ROW_DELETE_BTN_TEST_ID = `${TEST_PREFIX}element-user-table-remove-${index}`;
 
         expect(Number(screen.getByTestId(ROW_INDEX_TEST_ID).textContent)).toBe(index + 1);
         expect(screen.getByTestId(ROW_DELETE_BTN_TEST_ID)).toBeInTheDocument();
@@ -191,11 +191,11 @@ describe('PATH: /admin/manage', () => {
       requestWithCORS.mockReturnValueOnce(undefined);
       requestWithCORS.mockReturnValueOnce([USERS_DIFFERENT_THAN_ADM[1]]);
 
-      const FIRST_INDEX_TEST_ID = 'admin_manage__element-user-table-item-number-0';
-      const FIRST_NAME_TEST_ID = 'admin_manage__element-user-table-name-0';
-      const FIRST_EMAIL_TEST_ID = 'admin_manage__element-user-table-email-0';
-      const FIRST_ROLE_TEST_ID = 'admin_manage__element-user-table-role-0';
-      const FIRST_DELETE_BTN_TEST_ID = 'admin_manage__element-user-table-remove-0';
+      const FIRST_INDEX_TEST_ID = `${TEST_PREFIX}element-user-table-item-number-0`;
+      const FIRST_NAME_TEST_ID = `${TEST_PREFIX}element-user-table-name-0`;
+      const FIRST_EMAIL_TEST_ID = `${TEST_PREFIX}element-user-table-email-0`;
+      const FIRST_ROLE_TEST_ID = `${TEST_PREFIX}element-user-table-role-0`;
+      const FIRST_DELETE_BTN_TEST_ID = `${TEST_PREFIX}element-user-table-remove-0`;
 
       const firstUserIndex = screen.queryByTestId(FIRST_INDEX_TEST_ID);
       const firstUserName = screen.queryByTestId(FIRST_NAME_TEST_ID);

@@ -9,17 +9,18 @@ import {
   VALID_CUSTOMER_TO_REGISTER,
 } from './mocks/register.mock';
 
-const NAME_INPUT_TEST_ID = 'common_register__input-name';
-const EMAIL_INPUT_TEST_ID = 'common_register__input-email';
-const PASSWORD_INPUT_TEST_ID = 'common_register__input-password';
-const REGISTER_BUTTON_TEST_ID = 'common_register__button-register';
-const ERROR_MESSAGE_TEST_ID = 'common_register__element-invalid_register';
-const GO_BACK_BUTTON_TEST_ID = 'common_register__button-go-back';
 const REGISTER_ENDPOINT = '/register';
 
-describe('PATH: /register - Testing register', () => {
+const TEST_PREFIX = 'common_register__';
+const NAME_INPUT_TEST_ID = `${TEST_PREFIX}input-name`;
+const EMAIL_INPUT_TEST_ID = `${TEST_PREFIX}input-email`;
+const PASSWORD_INPUT_TEST_ID = `${TEST_PREFIX}input-password`;
+const REGISTER_BUTTON_TEST_ID = `${TEST_PREFIX}button-register`;
+const ERROR_MESSAGE_TEST_ID = `${TEST_PREFIX}element-invalid_register`;
+const GO_BACK_BUTTON_TEST_ID = `${TEST_PREFIX}button-go-back`;
+
+describe(`PATH: ${REGISTER_ENDPOINT} - Testing register`, () => {
   beforeEach(() => {
-    requestWithCORS.mockClear();
     window.localStorage.clear();
   });
 

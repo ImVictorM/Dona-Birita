@@ -9,11 +9,15 @@ import { LOGGED_CUSTOMER } from './mocks/userTypes.mock';
 
 const PRODUCTS_ENDPOINT = '/customer/products';
 
-const CART_BTN_TEST_ID = 'customer_products__button-cart';
-const CART_TOTAL_TEST_ID = 'customer_products__checkout-bottom-value';
-const FIRST_PRODUCT_TEST_ID = 'customer_products__element-card-title-1';
+const TEST_PREFIX = 'customer_products__';
+const CART_BTN_TEST_ID = `${TEST_PREFIX}button-cart`;
+const CART_TOTAL_TEST_ID = `${TEST_PREFIX}checkout-bottom-value`;
+const FIRST_PRODUCT_TEST_ID = `${TEST_PREFIX}element-card-title-1`;
+const PRODUCT_1_INPUT_TEST_ID = `${TEST_PREFIX}input-card-quantity-1`;
+const PRODUCT_2_INPUT_TEST_ID = `${TEST_PREFIX}input-card-quantity-2`;
+const PRODUCT_3_INPUT_TEST_ID = `${TEST_PREFIX}input-card-quantity-3`;
 
-describe('PATH: /customer/products - Testing products', () => {
+describe(`PATH: ${PRODUCTS_ENDPOINT} - Testing products`, () => {
   beforeEach(async () => {
     requestWithCORS.mockReturnValue(PRODUCT_LIST);
     localStorage.setItem('user', JSON.stringify(LOGGED_CUSTOMER));
@@ -30,9 +34,9 @@ describe('PATH: /customer/products - Testing products', () => {
       expect(products.length).toBe(PRODUCT_LIST.length);
 
       for (let index = 0; index < products.length; index += 1) {
-        const TITLE_TEST_ID = `customer_products__element-card-title-${index + 1}`;
-        const IMAGE_TEST_ID = `customer_products__img-card-bg-image-${index + 1}`;
-        const PRICE_TEST_ID = `customer_products__element-card-price-${index + 1}`;
+        const TITLE_TEST_ID = `${TEST_PREFIX}element-card-title-${index + 1}`;
+        const IMAGE_TEST_ID = `${TEST_PREFIX}img-card-bg-image-${index + 1}`;
+        const PRICE_TEST_ID = `${TEST_PREFIX}element-card-price-${index + 1}`;
 
         expect(screen.queryByTestId(TITLE_TEST_ID).textContent)
           .toBe(PRODUCT_LIST[index].name);
@@ -56,10 +60,6 @@ describe('PATH: /customer/products - Testing products', () => {
       renderWithRouterAndProvider(<App />, PRODUCTS_ENDPOINT);
       await waitFor(() => screen.queryByTestId(FIRST_PRODUCT_TEST_ID));
 
-      const PRODUCT_1_INPUT_TEST_ID = 'customer_products__input-card-quantity-1';
-      const PRODUCT_2_INPUT_TEST_ID = 'customer_products__input-card-quantity-2';
-      const PRODUCT_3_INPUT_TEST_ID = 'customer_products__input-card-quantity-3';
-
       const productOneInput = screen.getByTestId(PRODUCT_1_INPUT_TEST_ID);
       const productTwoInput = screen.getByTestId(PRODUCT_2_INPUT_TEST_ID);
       const productThreeInput = screen.getByTestId(PRODUCT_3_INPUT_TEST_ID);
@@ -75,7 +75,7 @@ describe('PATH: /customer/products - Testing products', () => {
       const { history } = renderWithRouterAndProvider(<App />, PRODUCTS_ENDPOINT);
       await waitFor(() => screen.queryByTestId(FIRST_PRODUCT_TEST_ID));
 
-      const ADD_1_TEST_ID = 'customer_products__button-card-add-item-1';
+      const ADD_1_TEST_ID = `${TEST_PREFIX}button-card-add-item-1`;
       userEvent.click(screen.getByTestId(ADD_1_TEST_ID));
 
       const cartButton = screen.getByTestId(CART_BTN_TEST_ID);
@@ -96,11 +96,11 @@ describe('PATH: /customer/products - Testing products', () => {
     });
 
     it('Is possible to add and remove products from the cart correctly', () => {
-      const REMOVE_1_TEST_ID = 'customer_products__button-card-rm-item-1';
+      const REMOVE_1_TEST_ID = `${TEST_PREFIX}button-card-rm-item-1`;
 
-      const ADD_1_TEST_ID = 'customer_products__button-card-add-item-1';
-      const ADD_2_TEST_ID = 'customer_products__button-card-add-item-2';
-      const ADD_3_TEST_ID = 'customer_products__button-card-add-item-3';
+      const ADD_1_TEST_ID = `${TEST_PREFIX}button-card-add-item-1`;
+      const ADD_2_TEST_ID = `${TEST_PREFIX}button-card-add-item-2`;
+      const ADD_3_TEST_ID = `${TEST_PREFIX}button-card-add-item-3`;
 
       userEvent.click(screen.getByTestId(ADD_1_TEST_ID));
       userEvent.click(screen.getByTestId(ADD_2_TEST_ID));
@@ -122,14 +122,39 @@ describe('PATH: /customer/products - Testing products', () => {
     });
 
     it('Is possible to change the product quantity manually', () => {
-      const P1_QUANTITY_INPUT_TEST_ID = 'customer_products__input-card-quantity-1';
-      const quantityInput = screen.getByTestId(P1_QUANTITY_INPUT_TEST_ID);
+      const quantityInput = screen.getByTestId(PRODUCT_1_INPUT_TEST_ID);
       const DESIRED_QUANTITY = 3;
+
+      userEvent.clear(quantityInput);
       userEvent.type(quantityInput, String(DESIRED_QUANTITY));
+      userEvent.click(document.body); // activate onBlur
+
+      expect(quantityInput.value).toBe(String(DESIRED_QUANTITY));
+
       const total = Number(PRODUCT_LIST[0].price) * DESIRED_QUANTITY;
 
       expect(screen.getByTestId(CART_TOTAL_TEST_ID).textContent)
         .toBe(total.toFixed(2).replace('.', ','));
+    });
+
+    it('Is not possible to add a negative quantity to the cart', () => {
+      const P1_MINUS_BTN_TEST_ID = `${TEST_PREFIX}button-card-rm-item-1`;
+      const CART_EMPTY_TOTAL = '0,00';
+
+      const minusBtn = screen.getByTestId(P1_MINUS_BTN_TEST_ID);
+      const quantityInput = screen.getByTestId(PRODUCT_1_INPUT_TEST_ID);
+
+      userEvent.clear(quantityInput);
+      expect(screen.getByTestId(CART_TOTAL_TEST_ID).textContent).toBe(CART_EMPTY_TOTAL);
+
+      userEvent.type(quantityInput, '-4');
+      expect(screen.getByTestId(CART_TOTAL_TEST_ID).textContent).toBe(CART_EMPTY_TOTAL);
+
+      userEvent.click(minusBtn);
+      userEvent.click(minusBtn);
+      userEvent.click(minusBtn);
+
+      expect(screen.getByTestId(CART_TOTAL_TEST_ID).textContent).toBe(CART_EMPTY_TOTAL);
     });
   });
 });

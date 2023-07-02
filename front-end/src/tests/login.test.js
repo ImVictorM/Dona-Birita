@@ -11,20 +11,21 @@ import {
   VALID_CUSTOMER_PASSWORD,
 } from './mocks/login.mock';
 
-const EMAIL_INPUT_TEST_ID = 'common_login__input-email';
-const PASSWORD_INPUT_TEST_ID = 'common_login__input-password';
-const LOGIN_BUTTON_TEST_ID = 'common_login__button-login';
-const ERROR_MESSAGE_TEST_ID = 'common_login__element-invalid-email';
-const REGISTER_BUTTON_TEST_ID = 'common_login__button-register';
 const LOGIN_ENDPOINT = '/login';
 
-describe('PATH: /login - Testing Login', () => {
+const TEST_PREFIX = 'common_login__';
+const EMAIL_INPUT_TEST_ID = `${TEST_PREFIX}input-email`;
+const PASSWORD_INPUT_TEST_ID = `${TEST_PREFIX}input-password`;
+const LOGIN_BUTTON_TEST_ID = `${TEST_PREFIX}button-login`;
+const ERROR_MESSAGE_TEST_ID = `${TEST_PREFIX}element-invalid-email`;
+const REGISTER_BUTTON_TEST_ID = `${TEST_PREFIX}button-register`;
+
+describe(`PATH: ${LOGIN_ENDPOINT} - Testing Login`, () => {
   beforeEach(() => {
-    requestWithCORS.mockClear();
     window.localStorage.clear();
   });
 
-  describe('Redirects case', () => {
+  describe('Redirect', () => {
     it('Redirects to /login when the route is /', () => {
       const { history } = renderWithRouter(<App />);
       expect(history.location.pathname).toBe(LOGIN_ENDPOINT);
@@ -46,7 +47,7 @@ describe('PATH: /login - Testing Login', () => {
     });
   });
 
-  describe('Login attempts', () => {
+  describe('Login attempt', () => {
     it('Can login succesfully with correct information', async () => {
       requestWithCORS.mockReturnValue(LOGIN_RESPONSE);
 

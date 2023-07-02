@@ -18,7 +18,7 @@ const CUSTOMER_ORDER_DETAILS_ENDPOINT = `/customer/orders/${PENDING_ORDER.id}`;
 const SELLER_ORDER_DETAILS_ENDPOINT = `/seller/orders/${PENDING_ORDER.id}`;
 
 describe(`PATH: ${CUSTOMER_ORDER_DETAILS_ENDPOINT} - Customer order details`, () => {
-  // Test ids customer
+  // Test id customer
   const TEST_PREFIX = 'customer_order_details__';
   const DELIVERED_BTN_TEST_ID = `${TEST_PREFIX}button-delivery-check`;
   const ORDER_ID_TEST_ID = `${TEST_PREFIX}element-order-details-label-order-id`;
@@ -80,7 +80,7 @@ describe(`PATH: ${CUSTOMER_ORDER_DETAILS_ENDPOINT} - Customer order details`, ()
 });
 
 describe(`PATH: ${SELLER_ORDER_DETAILS_ENDPOINT} - Seller order details`, () => {
-  // Test ids seller
+  // Test id seller
   const TEST_PREFIX = 'seller_order_details__';
   const ORDER_ID_TEST_ID = `${TEST_PREFIX}element-order-details-label-order-id`;
   const SELLER_NAME_TEST_ID = `${TEST_PREFIX}element-order-details-label-seller-name`;
