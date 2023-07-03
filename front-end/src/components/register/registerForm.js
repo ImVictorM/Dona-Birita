@@ -86,7 +86,11 @@ function RegisterForm() {
           >
             Registrar
           </button>
-          <button type="button" onClick={ () => history.push('/') }>
+          <button
+            data-testid="common_register__button-go-back"
+            type="button"
+            onClick={ () => history.push('/login') }
+          >
             Voltar
           </button>
         </div>

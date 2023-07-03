@@ -5,13 +5,13 @@ const router = express.Router();
 const {
   requestToRegisterNewSale,
   requestUserSales,
-  updateSale,
+  requesToUpdateSaleStatus,
   requestSaleByID,
 } = require('../controllers/sale.controller');
 
 router.get('/:id', requestSaleByID);
 router.post('/', requestToRegisterNewSale);
 router.get('/:role/:id', requestUserSales);
-router.patch('/:id', updateSale);
+router.patch('/:id', requesToUpdateSaleStatus);
 
 module.exports = router;

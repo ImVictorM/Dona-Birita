@@ -7,9 +7,17 @@
   },
   "scripts": {
     "start": "npm run --prefix ./back-end start && npm run --prefix ./front-end start",
-    "install": "cd ./back-end && npm install && cd ./front-end && npm install",
+    "install": "npm run install-backend && npm run install-frontend",
+    "install-backend": "cd ./back-end && npm install",
+    "install-frontend": "cd ./front-end && npm install",
     "dev": "npm run --prefix ./back-end dev && npm run --prefix ./front-end start",
-    "db:reset": "npm run --prefix ./back-end db:reset"
+    "db:reset": "npm run --prefix ./back-end db:reset:dev",
+    "test:backend": "npm run --prefix ./back-end test",
+    "test:frontend": "npm run --prefix ./front-end test",
+    "test:backend:coverage": "npm run --prefix ./back-end test:coverage",
+    "test:frontend:coverage": "npm run --prefix ./front-end test:coverage",
+    "test": "npm run test:backend && npm run test:frontend",
+    "test:coverage": "npm run test:backend:coverage && npm run test:frontend:coverage"
   },
   "repository": {
     "type": "git",

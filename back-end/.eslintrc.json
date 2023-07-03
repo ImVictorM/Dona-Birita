@@ -1,4 +1,10 @@
 {
   "root": true,
-  "extends": ["trybe-backend"]
+  "extends": ["trybe-backend"],
+  "ignorePatterns": [
+    "/src/database/",
+    "seeders",
+    "jest.config.js",
+    "/src/coverage"
+  ]
 }

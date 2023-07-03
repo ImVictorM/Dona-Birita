@@ -17,7 +17,7 @@ function ProductList() {
 
   return (
     <div className="container-products">
-      <ul className="container-card">
+      <ul className="container-card" data-testid="customer_product_list">
         {
           products.map((product) => (
             <Card

@@ -9,9 +9,12 @@
   "engineStrict": true,
   "private": true,
   "scripts": {
-    "db:reset": "NODE_ENV=development npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "db:create": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "db:reset:dev": "NODE_ENV=development npm run db:create",
+    "db:reset:test": "NODE_ENV=test npm run db:create",
     "start": "node .",
     "dev": "nodemon .",
+    "pretest": "npm run db:reset:test",
     "test": "mocha src/tests/**/*$NAME*.test.js --exit",
     "test:coverage": "nyc --all npm run test",
     "test:coverage:json": "nyc --all --reporter=json-summary npm run test",
@@ -30,6 +33,7 @@
   "devDependencies": {
     "chai": "4.3.6",
     "chai-http": "4.3.0",
+    "child_process": "^1.0.2",
     "eslint-config-trybe-backend": "2.1.0",
     "mocha": "9.2.2",
     "nodemon": "2.0.15",

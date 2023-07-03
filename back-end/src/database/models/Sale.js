@@ -12,9 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     status: { type: DataTypes.STRING }
   },
   {
-  timestamps: false,
-  tableName: 'sales',
-  underscored: true,
+    timestamps: false,
+    tableName: 'sales',
+    underscored: true,
   });
 
   Sale.associate = (models) => {

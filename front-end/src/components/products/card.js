@@ -27,9 +27,16 @@ function Card({ id, name, imag, price }) {
   }
 
   function handleChangeQuantity({ target: { value } }) {
-    if (value > 0) {
-      setQuantity(Number(value));
-      updateCart({ id, name, price, quantity: value });
+    const newValue = value <= 0 ? '' : Number(value);
+
+    setQuantity(newValue);
+    updateCart({ id, name, price, quantity: newValue });
+  }
+
+  function handleBlur({ target: { value } }) {
+    if (value === '') {
+      setQuantity(0);
+      updateCart({ id, name, price, quantity: 0 });
     }
   }
 
@@ -64,6 +71,7 @@ function Card({ id, name, imag, price }) {
           name="quantidade"
           value={ quantity }
           onChange={ handleChangeQuantity }
+          onBlur={ handleBlur }
 
         />
         <button

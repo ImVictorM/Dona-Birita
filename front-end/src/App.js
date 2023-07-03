@@ -11,9 +11,6 @@ import OrderDetails from './pages/orderDetails';
 function App() {
   return (
     <Switch>
-      <Route exact path="/">
-        <Redirect to="/login" />
-      </Route>
       <Route path="/login" component={ Login } />
       <Route path="/register" component={ Register } />
       <Route path="/admin/manage" component={ Admin } />
@@ -23,6 +20,9 @@ function App() {
       <Route path="/customer/checkout/" component={ Checkout } />
       <Route path="/seller/orders/:id" component={ OrderDetails } />
       <Route path="/seller/orders/" component={ Orders } />
+      <Route exact path="/">
+        <Redirect to="/login" />
+      </Route>
     </Switch>
   );
 }

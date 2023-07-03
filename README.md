@@ -182,8 +182,78 @@ In this project, We were able to:
         </tr>
     </tbody>
 </table>
+<table>
+    <caption align="center"><h3>Testing</h3></caption>
+    <thead>
+        <tr>
+            <th>Jest</th>
+            <th>RTL</th>
+            <th>Mocha</th>
+            <th>Chai</th>
+            <th>Sinon</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr> 
+            <td align="center">
+                <a href="https://jestjs.io" target="_blank" rel="noreferrer"> 
+                    <img 
+                        src="https://www.vectorlogo.zone/logos/jestjsio/jestjsio-icon.svg" 
+                        alt="jest" 
+                        width="40" 
+                        height="40"
+                    /> 
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://testing-library.com/docs/" target="_blank" rel="noreferrer">
+                    <img 
+                        src="https://testing-library.com/img/octopus-128x128.png"
+                        alt="rtl"
+                        width="40"
+                        height="40"
+                    />
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://mochajs.org/" target="_blank" rel"noreferrer">
+                    <img
+                        src="https://avatars.githubusercontent.com/u/8770005?s=200&v=4"
+                        alt="mocha-js"
+                        width="40"
+                        height="40"
+                    />
+                </a>
+            </td>
+             <td align="center">
+                <a href="https://www.chaijs.com/" target="_blank" rel="noreferrer"> 
+                    <img src="https://raw.githubusercontent.com/gist/keithamus/3d8cfbaeddf8bdf5f7cd94a3bdae0934/raw/63ca295f3aa7e1b94b598d84dfe0330383497a8c/Chai%20Logo%20(C).svg"
+                        alt="chai-js" 
+                        width="40" 
+                        height="40"
+                    /> 
+                </a>
+            </td>
+             <td align="center">
+                <a href="https://sinonjs.org/" target="_blank" rel="noreferrer"> 
+                    <img 
+                        src="https://sinonjs.org/assets/images/logo.png" 
+                        alt="sinon-js" 
+                        width="40" 
+                        height="40"
+                    /> 
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 
 ## Running the application ⚙️
+
+- Client default port: `3000` 
+- API default port: `3001`
+- Database default port: `3002`
 
 1. Clone the repository and enter it
 ```
@@ -196,18 +266,11 @@ git clone git@github.com:ImVictorM/Dona-Birita.git && cd Dona-Birita
 ```
 docker-compose up -d
 ```
-3. Enter the api container
-```
-docker exec -it api-delivery sh
-```
-4. Create and populate the database
+3. Create and populate the database
 ```
 npm run db:reset
 ```
-
-5. Access the page on your browser: http://localhost:3000/
-- Client default port: `3000` 
-- API default port: `3001`
+4. Access the page on your browser: http://localhost:3000/
 
 </details>
 
@@ -234,7 +297,37 @@ npm run start
 ```
 
 6. Access the page on your browser: http://localhost:3000/
-- Client default port: `3000` 
-- API default port: `3001`
 
 </details>
+
+## Testing 🛠️
+
+Running all test files:
+```
+npm test
+```
+
+Running back-end test files:
+```
+npm run test:backend
+```
+
+Running front-end test files:
+```
+npm run test:frontend
+```
+
+Application test coverage:
+```
+npm run test:coverage
+```
+
+Back-end test coverage:
+```
+npm run test:backend:coverage
+```
+
+Front-end test coverage:
+```
+npm run test:frontend:coverage
+```

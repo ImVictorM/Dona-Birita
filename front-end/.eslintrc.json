@@ -1,4 +1,13 @@
 {
   "root": true,
-  "extends": ["trybe-frontend"]
+  "extends": ["trybe-frontend"],
+  "ignorePatterns": [
+    "coverage",
+    "serviceWorker.js",
+    "reportWebVitals.js",
+    "setupTests.js",
+    ".gitattributes",
+    "src/index.js",
+    "build/*"
+  ]
 }

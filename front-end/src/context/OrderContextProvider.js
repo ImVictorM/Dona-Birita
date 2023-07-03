@@ -33,9 +33,8 @@ function OrderContextProvider({ children }) {
       method: 'PATCH',
     };
     await requestWithCORS(options, { status });
-    fetchUserOrders();
     fetchOrderByID(id);
-  }, [fetchOrderByID, fetchUserOrders]);
+  }, [fetchOrderByID]);
 
   const value = useMemo(() => ({
     orders,
