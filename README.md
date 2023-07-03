@@ -266,11 +266,15 @@ git clone git@github.com:ImVictorM/Dona-Birita.git && cd Dona-Birita
 ```
 docker-compose up -d
 ```
-3. Create and populate the database
+3. Enter the api container to create the database
+```
+docker exec -it api-delivery sh
+```
+4. Create and populate the database
 ```
 npm run db:reset
 ```
-4. Access the page on your browser: http://localhost:3000/
+5. Access the page on your browser: http://localhost:3000/
 
 </details>
 
