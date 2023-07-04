@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import requestWithCORS from '../../utils/requestWithCORS';
 import { POST_USER_LOGIN } from '../../utils/backendEndpoints';
+import logo from '../../images/donabiritaLogo.png';
 import './loginForm.css';
 
 function LoginForm() {
@@ -50,8 +51,8 @@ function LoginForm() {
 
   return (
     <form className="login-register-form">
+      <img src={ logo } alt="dona birita logo" />
       <div className="inputs-container">
-        <h1>Login 🍺</h1>
         <label htmlFor="email">
           E-mail
           <input
@@ -81,15 +82,14 @@ function LoginForm() {
             data-testid="common_login__button-login"
             onClick={ handleLogin }
           >
-            Login
+            Entrar
           </button>
-          <button
-            type="button"
+          <Link
             data-testid="common_login__button-register"
-            onClick={ () => history.push('/register') }
+            to="/register"
           >
             Cadastrar
-          </button>
+          </Link>
         </div>
         {
           showError && (

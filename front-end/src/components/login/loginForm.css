@@ -1,22 +1,26 @@
 .login-register-form {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  min-height: 100vh;
+  left: 50%;
+  position: relative;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.donabirita {
-  background-color: #003f7d;
+.login-register-form img {
+  left: 50%;
+  position: absolute;
+  top: 0%;
+  transform: translate(-50%, -50%);
+  width: 200px;
 }
 
 .inputs-container {
   align-items: center;
   background-color: #ff8e00;
   border-radius: 20px;
-  box-shadow: 1px 2px 5px black;
+  box-shadow: 0 0 3px black;
   display: flex;
   flex-direction: column;
-  height: 600px;
+  height: 550px;
   justify-content: center;
   margin: auto;
   width: 400px;
@@ -29,48 +33,84 @@
 
 .inputs-container input {
   border: none;
-  border-radius: 15px;
-  box-shadow: inset 0 0 3px #ff5003;
-  margin-top: 10px;
-  padding: 15px;
+  border-bottom: 2px solid rgb(146, 146, 146);
+  font-size: 15px;
+  height: 40px;
+  margin-top: 2px;
   text-align: center;
+  width: 100%;
+}
+
+.inputs-container input:focus {
+  border-bottom: 2px solid black;
+  outline: none;
 }
 
 .inputs-container label {
   color: white;
   display: flex;
   flex-direction: column;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 900;
   letter-spacing: -1px;
-  margin-bottom: 30px;
-  text-align: center;
-  text-shadow: 1px 1px #661f00;
+  margin-bottom: 8px;
+  text-align: start;
+  text-shadow: 2px 2px 2px black;
+  width: 85%;
 }
 
-.inputs-container button {
+.login-buttons {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+  font-weight: 900;
+  margin-top: 35px;
+  text-align: center;
+  width: 50%;
+}
+
+.login-buttons button {
   background-color: #003f7d;
-  border-radius: 7px;
+  border-radius: 3px;
   border-style: none;
-  box-shadow: 1px 1px 2px black;
-  color: white;
-  font-family: -apple-system , Ubuntu , Open Sans , Helvetica Neue , sans-serif;
   font-weight: 600;
-  margin: 25px 5px;
-  padding: 15px 25px;
+  height: 40px;
+  letter-spacing: 0.1rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  width: 100%;
 }
 
 .inputs-container button:hover {
-  background-color: #002347;
+  background-color: #013263;
   cursor: pointer;
   transition: 100ms;
 }
 
+
 .inputs-container button:disabled {
   background-color: #ffcc70;
   cursor: not-allowed;
-  transition: 1s;
+  transition: 400ms;
 }
 
 .inputs-container button:enabled {
-  transition: 1s;
+  box-shadow: 0 0 3px black;
+  color: white;
+  transition: 400ms;
+}
+
+.login-buttons a {
+  bottom: 40px;
+  font-size: 16px;
+  left: 50%;
+  position: absolute;
+  text-decoration: none;
+  transform: translate(-50%, -50%);
+}
+
+.login-buttons a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
