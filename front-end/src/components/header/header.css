@@ -4,20 +4,26 @@
   display: flex;
   height: 100px;
   margin-bottom: 30px;
-  width: 100%;
 }
 
 .main-header nav {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  margin: 0 10px;
+  padding: 0 10px;
   width: 100%;
 }
 
 
 .main-header nav div span {
   color: #ff8e00;
+  display: inline-block;
+  height: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   text-transform: none;
+  white-space: nowrap;
+  width: 160px;
 }
 
 .main-header nav div > * {
@@ -49,3 +55,28 @@
 .main-header nav div button:enabled:hover {
   background-color: rgb(0, 44, 88);
 }
+
+@media screen and ( max-width : 531px ) {
+
+  .main-header nav div {
+    align-items: center;
+    display: flex;
+    width: 100%;
+  }
+
+
+  .main-header nav div:nth-child( 1 ) {
+    order: 2;
+  }
+
+  .main-header nav div:nth-child( 2 ) {
+    justify-content: flex-end;
+    order: 1;
+    overflow: hidden;
+  }
+
+  .main-header nav {
+    padding: 3px;
+  }
+}
+

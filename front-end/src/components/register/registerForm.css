@@ -9,3 +9,7 @@
   max-height: 600px;
 }
 
+.register-error {
+  bottom: 30%;
+  position: absolute;
+}

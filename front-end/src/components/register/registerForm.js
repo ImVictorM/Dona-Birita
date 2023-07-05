@@ -56,7 +56,7 @@ function RegisterForm() {
             type="text"
             data-testid="common_register__input-name"
             id="name"
-            placeholder="Insira seu nome completo"
+            placeholder="Insira seu nome"
           />
         </label>
         <label htmlFor="email">
@@ -85,7 +85,7 @@ function RegisterForm() {
           showError && (
             <p
               data-testid="common_register__element-invalid_register"
-              className="error"
+              className="error register-error"
             >
               Email ou Nome já existem!
             </p>

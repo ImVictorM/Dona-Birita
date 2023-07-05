@@ -105,10 +105,11 @@
 
 
 .login-buttons div {
-  bottom: 20px;
+  bottom: 0;
   left: 50%;
   position: absolute;
   transform: translate(-50%, -50%);
+  width: 100%;
 }
 
 .login-buttons div p {
@@ -125,4 +126,9 @@
 .login-buttons a:hover {
   text-decoration: underline;
   text-underline-offset: 4px;
+}
+
+.login-error {
+  bottom: 40%;
+  position: absolute;
 }

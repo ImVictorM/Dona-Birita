@@ -75,6 +75,7 @@ function LoginForm() {
             placeholder="Digite sua senha"
           />
         </label>
+
         <div className="login-buttons">
           <button
             disabled={ loginIsDisabled }
@@ -96,7 +97,10 @@ function LoginForm() {
         </div>
         {
           showError && (
-            <p data-testid="common_login__element-invalid-email">
+            <p
+              data-testid="common_login__element-invalid-email"
+              className="error login-error"
+            >
               Email ou senha incorreta!
             </p>
           )
