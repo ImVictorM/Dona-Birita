@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import '../login/loginForm.css';
+import './registerForm.css';
 import requestWithCORS from '../../utils/requestWithCORS';
 import { POST_USER_REGISTER } from '../../utils/backendEndpoints';
 
@@ -45,8 +46,8 @@ function RegisterForm() {
 
   return (
     <form className="login-register-form">
-      <div className="inputs-container">
-        <h1>Cadastre-se:</h1>
+      <div className="inputs-container register">
+        <h1 className="register-title">Cadastre-se</h1>
         <label htmlFor="name">
           Nome:
           <input
@@ -55,28 +56,41 @@ function RegisterForm() {
             type="text"
             data-testid="common_register__input-name"
             id="name"
+            placeholder="Insira seu nome completo"
           />
         </label>
         <label htmlFor="email">
-          E-mail
+          E-mail:
           <input
             onChange={ (event) => setEmail(event.target.value) }
             value={ email }
             type="email"
             data-testid="common_register__input-email"
             id="email"
+            placeholder="Ex: email@exemplo.com"
           />
         </label>
         <label htmlFor="password">
-          Senha
+          Senha:
           <input
             onChange={ (event) => setPassword(event.target.value) }
             value={ password }
             type="password"
             data-testid="common_register__input-password"
             id="password"
+            placeholder="Minimo 6 caracteres"
           />
         </label>
+        {
+          showError && (
+            <p
+              data-testid="common_register__element-invalid_register"
+              className="error"
+            >
+              Email ou Nome já existem!
+            </p>
+          )
+        }
         <div className="login-buttons">
           <button
             type="button"
@@ -86,23 +100,18 @@ function RegisterForm() {
           >
             Registrar
           </button>
-          <button
-            data-testid="common_register__button-go-back"
-            type="button"
-            onClick={ () => history.push('/login') }
-          >
-            Voltar
-          </button>
-        </div>
-        {
-          showError && (
-            <p
-              data-testid="common_register__element-invalid_register"
+
+          <div>
+            <p>Já possui uma conta?</p>
+            <Link
+              data-testid="common_register__button-go-back"
+              to="/login"
             >
-              Email ou Nome já existem!
-            </p>
-          )
-        }
+              Fazer login
+            </Link>
+          </div>
+        </div>
+
       </div>
     </form>
   );

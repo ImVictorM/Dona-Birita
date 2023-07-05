@@ -1,0 +1,11 @@
+.register-title {
+  padding: 0;
+  text-align: start;
+  text-shadow: 1.5px 2px 3.5px rgba(0, 0, 0, 0.575);
+}
+
+.register {
+  height: 80vh;
+  max-height: 600px;
+}
+

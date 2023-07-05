@@ -71,3 +71,14 @@ code {
   font-size: 18px;
   font-weight: 900;
 }
+
+.error {
+  color: rgb(185, 3, 3);
+  display: inline;
+  margin: 0;
+}
+
+:root {
+
+  --black-font: rgb(48, 48, 48);
+}

@@ -84,12 +84,15 @@ function LoginForm() {
           >
             Entrar
           </button>
-          <Link
-            data-testid="common_login__button-register"
-            to="/register"
-          >
-            Cadastrar
-          </Link>
+          <div>
+            <p>Não tem uma conta?</p>
+            <Link
+              data-testid="common_login__button-register"
+              to="/register"
+            >
+              Cadastrar
+            </Link>
+          </div>
         </div>
         {
           showError && (

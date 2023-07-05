@@ -20,10 +20,12 @@
   box-shadow: 0 0 3px black;
   display: flex;
   flex-direction: column;
-  height: 550px;
+  height: 69vh;
   justify-content: center;
   margin: auto;
-  width: 400px;
+  max-height: 550px;
+  max-width: 400px;
+  width: 90%;
 }
 
 .inputs-container a {
@@ -42,7 +44,7 @@
 }
 
 .inputs-container input:focus {
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid rgb(48, 48, 48);
   outline: none;
 }
 
@@ -55,7 +57,7 @@
   letter-spacing: -1px;
   margin-bottom: 8px;
   text-align: start;
-  text-shadow: 2px 2px 2px black;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.575);
   width: 85%;
 }
 
@@ -101,13 +103,23 @@
   transition: 400ms;
 }
 
-.login-buttons a {
-  bottom: 40px;
-  font-size: 16px;
+
+.login-buttons div {
+  bottom: 20px;
   left: 50%;
   position: absolute;
-  text-decoration: none;
   transform: translate(-50%, -50%);
+}
+
+.login-buttons div p {
+  color: var(--black-font);
+  margin: 0;
+  margin-bottom: 7px;
+}
+
+.login-buttons a {
+  font-size: 18px;
+  text-decoration: none;
 }
 
 .login-buttons a:hover {
