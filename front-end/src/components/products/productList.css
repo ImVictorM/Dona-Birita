@@ -13,5 +13,6 @@
   .container-card {
     justify-content: center;
     padding: 2px 20px;
+    padding-bottom: 100px;
   }
 }
