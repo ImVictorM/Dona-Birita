@@ -81,4 +81,10 @@ code {
 :root {
 
   --black-font: rgb(48, 48, 48);
+
+  --blue-font: #002347;
+
+  --almost-white: rgb(252, 252, 252);
+
+  --blue-button: #036;
 }

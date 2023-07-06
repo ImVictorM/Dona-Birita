@@ -43,7 +43,7 @@
 }
 
 .main-header nav div button {
-  background-color: #036;
+  background-color: var(--blue-button);
   border: none;
   border-radius: 20px;
   color: white;

@@ -6,7 +6,8 @@ function CheckoutProducts() {
   const { cartTotal, cart, removeFromCart } = useContext(CartContext);
 
   return (
-    <section>
+    <section className="checkout-products">
+      <h2>Produtos</h2>
       <table className="cart-table">
         <thead>
           <tr>
