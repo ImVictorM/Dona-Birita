@@ -1,36 +1,16 @@
-html {
-  height: 100%;
-  width: 100%;
+@use '.' as *;
+
+@import './reset';
+
+html, body, #root {
+  min-height: 100vh;
 }
 
 body {
-  background-attachment: fixed;
-  background-color: #ff5003;
-  background-image: linear-gradient(43deg, #ff5003 0%, #ffa300 46%, #ffcc70 100%);
+  background-color: $primary-color;
   font-family: Verdana , Geneva , Tahoma , sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  justify-content: center;
-  margin: 0;
-  padding: 0;
-}
-
-h1 {
-  color: white;
-  font-size: 40px;
-  letter-spacing: -2px;
-  margin-top: -10px;
-  padding: 20px 0 0;
-  text-shadow: 1px 2px #661f00;
-}
-
-p {
-  color: white;
-  font-weight: 600;
-}
-
-code {
-  font-family: source-code-pro , Menlo , Monaco , Consolas , Courier New , monospace;
 }
 
 .order-container {

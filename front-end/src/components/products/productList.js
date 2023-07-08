@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Card from './card';
-import './productList.css';
+import './productList.scss';
 import { GET_ALL_PRODUCTS } from '../../utils/backendEndpoints';
 import requestWithCORS from '../../utils/requestWithCORS';
 
