@@ -1,19 +1,17 @@
-.login-register-form {
-  left: 50%;
-  position: relative;
-  top: 50%;
-  transform: translate(-50%, -50%);
+@use '../../styles' as *;
+
+.login {
+  @include centerBlock;
+  &__logo {
+    left: 50%;
+    position: absolute;
+    top: 0%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+  }
 }
 
-.login-register-form img {
-  left: 50%;
-  position: absolute;
-  top: 0%;
-  transform: translate(-50%, -50%);
-  width: 200px;
-}
-
-.inputs-container {
+.inputs_container {
   align-items: center;
   background-color: #ff8e00;
   border-radius: 20px;
@@ -28,12 +26,12 @@
   width: 90%;
 }
 
-.inputs-container a {
+.inputs_container a {
   color: white;
   text-decoration: none;
 }
 
-.inputs-container input {
+.inputs_container input {
   border: none;
   border-bottom: 2px solid rgb(146, 146, 146);
   font-size: 15px;
@@ -43,12 +41,12 @@
   width: 100%;
 }
 
-.inputs-container input:focus {
+.inputs_container input:focus {
   border-bottom: 2px solid rgb(48, 48, 48);
   outline: none;
 }
 
-.inputs-container label {
+.inputs_container label {
   color: white;
   display: flex;
   flex-direction: column;
@@ -61,7 +59,7 @@
   width: 85%;
 }
 
-.login-buttons {
+.login_buttons {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -72,7 +70,7 @@
   width: 50%;
 }
 
-.login-buttons button {
+.login_buttons button {
   background-color: #003f7d;
   border-radius: 3px;
   border-style: none;
@@ -84,27 +82,27 @@
   width: 100%;
 }
 
-.inputs-container button:hover {
+.inputs_container button:hover {
   background-color: #013263;
   cursor: pointer;
   transition: 100ms;
 }
 
 
-.inputs-container button:disabled {
+.inputs_container button:disabled {
   background-color: #ffcc70;
   cursor: not-allowed;
   transition: 400ms;
 }
 
-.inputs-container button:enabled {
+.inputs_container button:enabled {
   box-shadow: 0 0 3px black;
   color: white;
   transition: 400ms;
 }
 
 
-.login-buttons div {
+.login_buttons div {
   bottom: 0;
   left: 50%;
   position: absolute;
@@ -112,23 +110,23 @@
   width: 100%;
 }
 
-.login-buttons div p {
+.login_buttons div p {
   color: var(--black-font);
   margin: 0;
   margin-bottom: 7px;
 }
 
-.login-buttons a {
+.login_buttons a {
   font-size: 18px;
   text-decoration: none;
 }
 
-.login-buttons a:hover {
+.login_buttons a:hover {
   text-decoration: underline;
   text-underline-offset: 4px;
 }
 
-.login-error {
+.login_error {
   bottom: 40%;
   position: absolute;
 }

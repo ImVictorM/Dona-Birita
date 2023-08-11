@@ -3,7 +3,7 @@ import { useHistory, Link } from 'react-router-dom';
 import requestWithCORS from '../../utils/requestWithCORS';
 import { POST_USER_LOGIN } from '../../utils/backendEndpoints';
 import logo from '../../images/donabiritaLogo.png';
-import './loginForm.css';
+import styles from './loginForm.module.scss';
 
 function LoginForm() {
   const history = useHistory();
@@ -50,9 +50,13 @@ function LoginForm() {
   }
 
   return (
-    <form className="login-register-form">
-      <img src={ logo } alt="dona birita logo" />
-      <div className="inputs-container">
+    <form className={ styles.login }>
+      <img
+        src={ logo }
+        className={ styles.login__logo }
+        alt="dona birita logo"
+      />
+      <div className={ styles.inputs_container }>
         <label htmlFor="email">
           E-mail
           <input
@@ -76,7 +80,7 @@ function LoginForm() {
           />
         </label>
 
-        <div className="login-buttons">
+        <div className={ styles.login_buttons }>
           <button
             disabled={ loginIsDisabled }
             type="button"
@@ -99,7 +103,7 @@ function LoginForm() {
           showError && (
             <p
               data-testid="common_login__element-invalid-email"
-              className="error login-error"
+              className={ `error ${styles.login_error}` }
             >
               Email ou senha incorreta!
             </p>

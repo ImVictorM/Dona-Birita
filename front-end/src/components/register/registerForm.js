@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import '../login/loginForm.css';
-import './registerForm.css';
+import styles from './registerForm.module.scss';
 import requestWithCORS from '../../utils/requestWithCORS';
 import { POST_USER_REGISTER } from '../../utils/backendEndpoints';
 
@@ -47,7 +46,7 @@ function RegisterForm() {
   return (
     <form className="login-register-form">
       <div className="inputs-container register">
-        <h1 className="register-title">Cadastre-se</h1>
+        <h1 className={ styles.register_title }>Cadastre-se</h1>
         <label htmlFor="name">
           Nome:
           <input

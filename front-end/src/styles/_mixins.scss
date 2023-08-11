@@ -1,0 +1,8 @@
+@mixin centerBlock {
+  display: block;
+  left: 50%;
+  position: relative;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
