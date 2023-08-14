@@ -1,15 +1,61 @@
-.register_title {
-  padding: 0;
-  text-align: start;
-  text-shadow: 1.5px 2px 3.5px rgba(0, 0, 0, 0.575);
-}
+@use '../../styles/' as *;
 
 .register {
-  height: 80vh;
-  max-height: 600px;
+  @include center-block;
 }
 
-.register-error {
-  bottom: 30%;
+.register__title {
+  color: set-font-color($primary-color);
+  font-size: 2.2rem;
+  margin-top: 20px
+}
+
+.register__container {
+  @include base-orange-box;
+  height: 600px;
+}
+
+.register__container__link, 
+.register__inputs,
+.register__title {
+  margin-top: auto;
+}
+
+.register__label {
+  @include label-text-above;
+}
+
+.register__inputs {
+  width: 90%;
+  input {
+    @include underline-input;
+  }
+}
+
+.register__button {
+  @include base-button;
+  width: 50%;
+  margin-top: 20px;
+  margin-bottom: 30px
+}
+
+.register__container__link {
+  @include center-flex(column);
+  margin-bottom: 20px;
+
+  p {
+    font-weight: 900;
+    font-size: 15px;
+    color: $black-font;
+    margin-bottom: 7px;
+  }
+
+  a {
+    @include base-link($white-font);
+  }
+}
+
+.register__error {
+  bottom: 17%;
   position: absolute;
 }

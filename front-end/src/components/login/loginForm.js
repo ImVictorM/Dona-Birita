@@ -56,54 +56,56 @@ function LoginForm() {
         className={ styles.login__logo }
         alt="dona birita logo"
       />
-      <div className={ styles.inputs_container }>
-        <label htmlFor="email">
-          E-mail
-          <input
-            onChange={ (event) => setEmail(event.target.value) }
-            value={ email }
-            type="text"
-            data-testid="common_login__input-email"
-            id="email"
-            placeholder="Digite seu e-mail"
-          />
-        </label>
-        <label htmlFor="password">
-          Senha
-          <input
-            onChange={ (event) => setPassword(event.target.value) }
-            value={ password }
-            type="password"
-            data-testid="common_login__input-password"
-            id="password"
-            placeholder="Digite sua senha"
-          />
-        </label>
+      <div className={ styles.login__container }>
+        <div className={ styles.login__inputs }>
+          <label htmlFor="email" className={ styles.login__label }>
+            E-mail
+            <input
+              onChange={ (event) => setEmail(event.target.value) }
+              value={ email }
+              type="text"
+              data-testid="common_login__input-email"
+              id="email"
+              placeholder="Digite seu e-mail"
+            />
+          </label>
+          <label htmlFor="password" className={ styles.login__label }>
+            Senha
+            <input
+              onChange={ (event) => setPassword(event.target.value) }
+              value={ password }
+              type="password"
+              data-testid="common_login__input-password"
+              id="password"
+              placeholder="Digite sua senha"
+            />
+          </label>
+        </div>
 
-        <div className={ styles.login_buttons }>
-          <button
-            disabled={ loginIsDisabled }
-            type="button"
-            data-testid="common_login__button-login"
-            onClick={ handleLogin }
+        <button
+          disabled={ loginIsDisabled }
+          type="button"
+          data-testid="common_login__button-login"
+          onClick={ handleLogin }
+          className={ styles.login__container__button }
+        >
+          Entrar
+        </button>
+
+        <div className={ styles.login__container__link }>
+          <p>Não tem uma conta?</p>
+          <Link
+            data-testid="common_login__button-register"
+            to="/register"
           >
-            Entrar
-          </button>
-          <div>
-            <p>Não tem uma conta?</p>
-            <Link
-              data-testid="common_login__button-register"
-              to="/register"
-            >
-              Cadastrar
-            </Link>
-          </div>
+            Cadastrar
+          </Link>
         </div>
         {
           showError && (
             <p
               data-testid="common_login__element-invalid-email"
-              className={ `error ${styles.login_error}` }
+              className={ `error ${styles.login__error}` }
             >
               Email ou senha incorreta!
             </p>

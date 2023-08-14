@@ -1,7 +1,7 @@
 @use '../../styles' as *;
 
 .login {
-  @include centerBlock;
+  @include center-block;
   &__logo {
     left: 50%;
     position: absolute;
@@ -11,122 +11,56 @@
   }
 }
 
-.inputs_container {
-  align-items: center;
-  background-color: #ff8e00;
-  border-radius: 20px;
-  box-shadow: 0 0 3px black;
-  display: flex;
-  flex-direction: column;
-  height: 69vh;
-  justify-content: center;
-  margin: auto;
-  max-height: 550px;
-  max-width: 400px;
-  width: 90%;
+.login__container {
+  @include base-orange-box;
+
+  &__link {
+    margin-top: auto;
+  }
 }
 
-.inputs_container a {
-  color: white;
-  text-decoration: none;
-}
-
-.inputs_container input {
-  border: none;
-  border-bottom: 2px solid rgb(146, 146, 146);
-  font-size: 15px;
-  height: 40px;
-  margin-top: 2px;
-  text-align: center;
+.login__inputs {
+  @include center-flex(column);
+  margin-top: 150px;
+  margin-bottom: 30px;
   width: 100%;
+
+  input {
+    @include underline-input;
+    text-align: center;
+  }
 }
 
-.inputs_container input:focus {
-  border-bottom: 2px solid rgb(48, 48, 48);
-  outline: none;
-}
-
-.inputs_container label {
-  color: white;
-  display: flex;
-  flex-direction: column;
-  font-size: 18px;
-  font-weight: 900;
-  letter-spacing: -1px;
-  margin-bottom: 8px;
-  text-align: start;
+.login__label {
+  @include label-text-above;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.575);
   width: 85%;
 }
 
-.login_buttons {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 15px;
-  font-weight: 900;
-  margin-top: 35px;
-  text-align: center;
+
+.login__container__button {
+  @include base-button;
+  text-transform: uppercase;
   width: 50%;
 }
 
-.login_buttons button {
-  background-color: #003f7d;
-  border-radius: 3px;
-  border-style: none;
-  font-weight: 600;
-  height: 40px;
-  letter-spacing: 0.1rem;
+.login__container__link {
+  @include center-flex(column);
   margin-bottom: 20px;
-  text-transform: uppercase;
-  width: 100%;
+
+  p {
+    font-weight: 900;
+    font-size: 15px;
+    color: $black-font;
+    margin-bottom: 7px;
+  }
+
+  a {
+    @include base-link($white-font)
+  }
 }
 
-.inputs_container button:hover {
-  background-color: #013263;
-  cursor: pointer;
-  transition: 100ms;
-}
-
-
-.inputs_container button:disabled {
-  background-color: #ffcc70;
-  cursor: not-allowed;
-  transition: 400ms;
-}
-
-.inputs_container button:enabled {
-  box-shadow: 0 0 3px black;
-  color: white;
-  transition: 400ms;
-}
-
-
-.login_buttons div {
-  bottom: 0;
-  left: 50%;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  width: 100%;
-}
-
-.login_buttons div p {
-  color: var(--black-font);
-  margin: 0;
-  margin-bottom: 7px;
-}
-
-.login_buttons a {
-  font-size: 18px;
-  text-decoration: none;
-}
-
-.login_buttons a:hover {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-.login_error {
-  bottom: 40%;
+.login__error {
+  bottom: 25%;
   position: absolute;
 }

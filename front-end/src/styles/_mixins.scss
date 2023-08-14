@@ -1,8 +1,94 @@
-@mixin centerBlock {
+@use './colors' as *;
+
+@mixin center-block {
   display: block;
   left: 50%;
   position: relative;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+@mixin center-flex($direction) {
+  display: flex;
+  align-items: center;
+  flex-direction: $direction;
+  justify-content: center;
+}
+
+@mixin underline-input {
+  border: none;
+  border-bottom: 2px solid rgb(146, 146, 146);
+  font-size: 15px;
+  height: 40px;
+  margin-top: 2px;
+  padding: 2px 8px;
+
+  &:focus {
+    border-bottom: 2px solid rgb(48, 48, 48);
+    outline: none;
+  }
+}
+
+@mixin base-link ($color){
+  color: $color;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 900;
+    
+  &:hover {
+    text-decoration: underline;
+    text-decoration-color: $color;
+    text-underline-offset: 4px;
+  }
+}
+
+@mixin label-text-above {
+  color: set-font-color($primary-color);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+  text-align: start;
+  font-size: 18px;
+  font-weight: 900;
+  width: 100%;
+}
+
+@mixin base-orange-box {
+  @include center-flex(column);
+  background-color: $primary-color;
+  border-radius: 20px;
+  box-shadow: 0 0 3px black;
+  margin: auto;
+  height: 550px;
+  max-width: 400px;
+  width: 90%;
+}
+
+@mixin base-button {
+  background-color: #003f7d;
+  border-radius: 3px;
+  border-style: none;
+  font-weight: 600;
+  letter-spacing: 0.1rem;
+  height: 40px;
+  width: 100%;
+
+  &:hover {
+    background-color: #013263;
+    cursor: pointer;
+    transition: 100ms;
+  }
+
+  &:disabled {
+    background-color: #ffcc70;
+    cursor: not-allowed;
+    transition: 400ms;
+  }
+
+  &:enabled {
+    box-shadow: 0 0 3px black;
+    color: white;
+    transition: 400ms;
+  }
 }
 

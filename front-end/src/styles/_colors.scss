@@ -1,2 +1,15 @@
 $primary-color: #ff8e00;
 $secondary-color: #036;
+
+// font colors
+$black-font: rgb(48, 48, 48);
+$white-font: white;
+
+
+@function set-font-color($background) {
+  @if (lightness($background) > 50%) {
+    @return $black-font;
+  } @else {
+    @return $white-font;
+  }
+}
