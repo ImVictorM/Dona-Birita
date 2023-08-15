@@ -65,7 +65,7 @@
 }
 
 @mixin base-button {
-  background-color: #003f7d;
+  background-color: $lighter-secondary-color;
   border-radius: 3px;
   border-style: none;
   font-weight: 600;
@@ -74,9 +74,10 @@
   width: 100%;
 
   &:hover {
-    background-color: #013263;
+    background-color: $secondary-color;
     cursor: pointer;
     transition: 100ms;
+    box-shadow: 0 0 2px black;
   }
 
   &:disabled {
@@ -86,7 +87,6 @@
   }
 
   &:enabled {
-    box-shadow: 0 0 3px black;
     color: white;
     transition: 400ms;
   }
