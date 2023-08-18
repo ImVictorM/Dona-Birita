@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Card from './card';
-import './productList.scss';
+import styles from './productList.module.scss';
 import { GET_ALL_PRODUCTS } from '../../utils/backendEndpoints';
 import requestWithCORS from '../../utils/requestWithCORS';
 
@@ -16,7 +16,7 @@ function ProductList() {
   }, []);
 
   return (
-    <ul className="container-card" data-testid="customer_product_list">
+    <ul className={ styles.products } data-testid="customer_product_list">
       {
         products.map((product) => (
           <Card
