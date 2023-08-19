@@ -21,7 +21,7 @@
   }
 }
 
-@include screen-size('xs') {
+@include screen-size('xs', 'sm') {
   .products__cartbtn {
     bottom: 10px;
     left: 50%;

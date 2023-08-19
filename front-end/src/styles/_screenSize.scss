@@ -6,18 +6,18 @@ $breakpoint: (
   'xl': 1200px,
 );
 
-@mixin screen-size($key) {
-  @if ($key == 'xl') {
-    @media (min-width: map-get($breakpoint, $key)) {
+@mixin screen-size($min: 0, $max: 0) {
+  @if ($max == 0) {
+    @media (
+      min-width: map-get($breakpoint, $min)
+    ) {
       @content;
     }
   } @else {
-    $min-value: map-get($breakpoint, $key);
-    $breakpoint-list: map-values($breakpoint);
-    $max-index:  index($breakpoint-list, map-get($breakpoint, $key));
-    $max-value: nth($breakpoint-list, $max-index + 1);
-  
-    @media (min-width: $min-value) and (max-width: $max-value) {
+    @media (
+      (min-width: map-get($breakpoint, $min)) and 
+      (max-width: map-get($breakpoint, $max)) 
+    ) {
       @content;
     }
   }

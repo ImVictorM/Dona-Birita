@@ -12,7 +12,7 @@
   justify-content: center;
 }
 
-@include screen-size('xs') {
+@include screen-size('xs', 'sm') {
   .products {
     margin: 0 20px;
     padding: 0 7px;
