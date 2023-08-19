@@ -44,7 +44,6 @@
 .products__item__quantity input::-webkit-inner-spin-button,
 .products__item__quantity input::-webkit-outer-spin-button {
   appearance: none;
-  margin: 0;
 }
 
 .products__item__quantity button {
@@ -52,6 +51,5 @@
   border-radius: 60px;
   font-size: 25px;
   height: 45px;
-  padding: 0;
   width: 45px;
 }
