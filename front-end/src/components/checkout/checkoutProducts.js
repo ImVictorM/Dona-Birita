@@ -6,9 +6,9 @@ function CheckoutProducts() {
   const { cartTotal, cart, removeFromCart } = useContext(CartContext);
 
   return (
-    <section className={ styles.checkout }>
-      <table className={ styles.checkout__products }>
-        <caption className={ styles.checkout__products__title }>Produtos</caption>
+    <section className={ styles.checkout__products }>
+      <table className={ styles.checkout__products__table }>
+        <caption className={ styles.checkout__products__table__title }>Produtos</caption>
         <thead>
           <tr>
             <th>Item</th>
@@ -86,7 +86,7 @@ function CheckoutProducts() {
           }
         </tbody>
       </table>
-      <div className={ styles.checkout__total }>
+      <div className={ styles.checkout__products__total }>
         <span>Total: R$ </span>
         <span
           data-testid="customer_checkout__element-order-total-price"

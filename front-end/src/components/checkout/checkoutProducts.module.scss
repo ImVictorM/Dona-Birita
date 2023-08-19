@@ -1,43 +1,43 @@
 @use '../../styles/' as *;
 
-.checkout {
+.checkout__products {
   background-color: $neutral-white;
   padding: 40px 0;
   border-bottom: 1px solid rgb(216, 216, 216);
 }
 
-.checkout__products {
+.checkout__products__table {
   border-collapse: collapse;
   margin: auto;
   max-width: 1100px;
   width: 90%;
 }
 
-.checkout__products__title {
+.checkout__products__table__title {
   color: $secondary-color;
   text-align: start;
   font-size: 32px;
   font-weight: 900;
 }
 
-.checkout__products tbody tr:hover {
+.checkout__products__table tbody tr:hover {
   background-color: #f0f0f0;
 }
 
-.checkout__products th {
+.checkout__products__table th {
   color: $secondary-color;
   padding: 8px;
   padding-top: 12px;
   text-align: left;
 }
 
-.checkout__products td {
+.checkout__products__table td {
   border: 1px solid #dbdbdb;
   padding: 8px;
   text-align: center;
 }
 
-.checkout__products td button {
+.checkout__products__table td button {
   @include base-button;
   border-radius: 7px;
   font-weight: 900;
@@ -48,7 +48,7 @@
 }
 
 
-.checkout__total {
+.checkout__products__total {
   color: $secondary-color;
   font-size: 27px;
   font-weight: 900;
@@ -59,40 +59,40 @@
 }
 
 @include screen-size('xs', 'md') {
-  .checkout {
+  .checkout__products {
     padding-bottom: 20px;
   }
-  .checkout__products th {
+  .checkout__products__table th {
     display: none;
   }
 
-  .checkout__products td {
+  .checkout__products__table td {
     display: block;
-    text-align: start;
+    align-items: center;
     padding: 8px 0;
     display: flex;
     border: none;
     justify-content: space-between;
   }
 
-  .checkout__products td:first-child {
+  .checkout__products__table td:first-child {
     padding-top: 15px;
   }
 
-  .checkout__products td:last-child {
+  .checkout__products__table td:last-child {
     padding-bottom: 15px;
   }
 
 
-  .checkout__products tbody tr {
+  .checkout__products__table tbody tr {
     border-top: 2px solid #dbdbdb;
   }
 
-  .checkout__products tbody tr:last-child {
+  .checkout__products__table tbody tr:last-child {
     border-bottom: 2px solid #dbdbdb;
   }
 
-  .checkout__products td::before {
+  .checkout__products__table td::before {
     content: attr(data-cell) ": ";
     font-weight: 700;
     text-transform: capitalize;

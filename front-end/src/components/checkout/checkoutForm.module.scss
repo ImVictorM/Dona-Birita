@@ -1,0 +1,45 @@
+@use '../../styles/' as *;
+
+.checkout__order {
+  @include center-flex(column);
+  background-color: $neutral-white;
+  padding: 25px 0;
+  margin-bottom: 30px;
+}
+
+.checkout__order__title {
+  color: $secondary-color;
+  font-size: 32px;
+  max-width: 962px;
+  width: 90%;
+  margin-bottom: 10px
+}
+
+.checkout__order__form {
+  @include center-flex(column);
+  max-width: 962px;
+  width: 90%;
+}
+
+.checkout__order__form label {
+  @include label-text-above;
+  color: set-font-color($neutral-white);
+  margin: 7px 0;
+}
+
+.checkout__order__form select, .checkout__order__form input {
+  border: 2px solid rgb(204, 204, 204);
+  border-radius: 5px;
+  font-size: 16px;
+  height: 40px;
+  padding: 2px 10px;
+}
+
+.checkout__order__form__submit {
+  @include base-button;
+  align-self: flex-end;
+  border-radius: 6px;
+  font-size: 17px;
+  margin: 20px 0;
+  max-width: 200px;
+}

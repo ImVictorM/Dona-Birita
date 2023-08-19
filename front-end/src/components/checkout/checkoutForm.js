@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { CartContext } from '../../context/Context';
 import requestWithCORS from '../../utils/requestWithCORS';
 import { GET_SELLER_LIST, POST_SALE_REGISTER } from '../../utils/backendEndpoints';
-import './checkoutForm.css';
+import styles from './checkoutForm.module.scss';
 
 function CheckoutForm() {
   const history = useHistory();
@@ -61,9 +61,9 @@ function CheckoutForm() {
   }
 
   return (
-    <section className="checkout-form-container">
-      <h2>Concluir pedido</h2>
-      <form className="checkout-form">
+    <section className={ styles.checkout__order }>
+      <h2 className={ styles.checkout__order__title }>Concluir pedido</h2>
+      <form className={ styles.checkout__order__form }>
         <label htmlFor="seller">
           <p>P. Vendedora Responsável:</p>
           <select
@@ -109,7 +109,7 @@ function CheckoutForm() {
           type="button"
           data-testid="customer_checkout__button-submit-order"
           onClick={ registerSale }
-          className="finish-sale-btn"
+          className={ styles.checkout__order__form__submit }
         >
           Finalizar Pedido
         </button>
