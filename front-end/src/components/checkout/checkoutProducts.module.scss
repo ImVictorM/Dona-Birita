@@ -7,46 +7,10 @@
 }
 
 .checkout__products__table {
-  border-collapse: collapse;
-  margin: auto;
-  max-width: 1100px;
+  @include base-products-table;
   width: 90%;
+  margin: auto;
 }
-
-.checkout__products__table__title {
-  color: $secondary-color;
-  text-align: start;
-  font-size: 32px;
-  font-weight: 900;
-}
-
-.checkout__products__table tbody tr:hover {
-  background-color: #f0f0f0;
-}
-
-.checkout__products__table th {
-  color: $secondary-color;
-  padding: 8px;
-  padding-top: 12px;
-  text-align: left;
-}
-
-.checkout__products__table td {
-  border: 1px solid #dbdbdb;
-  padding: 8px;
-  text-align: center;
-}
-
-.checkout__products__table td button {
-  @include base-button;
-  border-radius: 7px;
-  font-weight: 900;
-  height: 30px;
-  padding: 5px;
-  width: 80px;
-  font-size: 12px;
-}
-
 
 .checkout__products__total {
   color: $secondary-color;
@@ -61,40 +25,5 @@
 @include screen-size('xs', 'md') {
   .checkout__products {
     padding-bottom: 20px;
-  }
-  .checkout__products__table th {
-    display: none;
-  }
-
-  .checkout__products__table td {
-    display: block;
-    align-items: center;
-    padding: 8px 0;
-    display: flex;
-    border: none;
-    justify-content: space-between;
-  }
-
-  .checkout__products__table td:first-child {
-    padding-top: 15px;
-  }
-
-  .checkout__products__table td:last-child {
-    padding-bottom: 15px;
-  }
-
-
-  .checkout__products__table tbody tr {
-    border-top: 2px solid #dbdbdb;
-  }
-
-  .checkout__products__table tbody tr:last-child {
-    border-bottom: 2px solid #dbdbdb;
-  }
-
-  .checkout__products__table td::before {
-    content: attr(data-cell) ": ";
-    font-weight: 700;
-    text-transform: capitalize;
   }
 }
