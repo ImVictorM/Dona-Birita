@@ -1,0 +1,40 @@
+@use '../../styles/' as *;
+
+.order {
+  background-color: $neutral-white;
+  // 131.5px -> header height, 30px -> margin bottom
+  min-height: calc(100vh - 131.5px - 30px);
+  margin-bottom: 30px;
+}
+
+.order__details {
+  padding: 30px 10px 0;
+}
+
+.order__details__title {
+  color: $secondary-color;
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.order__details__datarow {
+  margin: 4px 0;
+  font-size: 18px;
+
+  >:first-child {
+    font-weight: 900;
+  }
+}
+
+.order__details__total {
+  color: $accent-font;
+  margin-top: 20px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+@include screen-size('lg') {
+  .order {
+    padding: 0 10vw;
+  }
+}

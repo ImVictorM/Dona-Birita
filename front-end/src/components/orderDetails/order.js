@@ -4,6 +4,7 @@ import OrderProducts from './orderProducts';
 import SellerControllers from './sellerControllers';
 import CustomerControllers from './customerControllers';
 import { OrderContext } from '../../context/Context';
+import styles from './order.module.scss';
 
 function Order() {
   const { id: ID_FROM_URL } = useParams();
@@ -23,66 +24,82 @@ function Order() {
   const TEST_PREFIX = `${user.role}_order_details__element-order-details-`;
 
   return (
-    <div>
-      <h1>Detalhes do produto</h1>
+    <section className={ styles.order }>
       {
         !isLoading ? (
-          <section key={ selectedOrder.id }>
-            <p
-              data-testid={ `${TEST_PREFIX}label-order-id` }
-            >
-              { selectedOrder.id }
-            </p>
-            {
-              user.role === 'customer' && (
-                <p
-                  data-testid={ `${TEST_PREFIX}label-seller-name` }
+          <>
+            <section className={ styles.order__details }>
+              <h1 className={ styles.order__details__title }>Detalhes do Pedido</h1>
+              <p className={ styles.order__details__datarow }>
+                <span>Nº Pedido: </span>
+                <span
+                  data-testid={ `${TEST_PREFIX}label-order-id` }
                 >
-                  { selectedOrder.seller.name }
-                </p>
-              )
-            }
-            <p
-              data-testid={ `${TEST_PREFIX}label-order-date` }
-            >
+                  { selectedOrder.id }
+                </span>
+              </p>
               {
-                selectedOrder.saleDate
-                  .substring(0, SLICE_DATE_AT_INDEX)
-                  .split('-')
-                  .reverse()
-                  .join('/')
+                user.role === 'customer' && (
+                  <p className={ styles.order__details__datarow }>
+                    <span>Vendedor: </span>
+                    <span
+                      data-testid={ `${TEST_PREFIX}label-seller-name` }
+                    >
+                      { selectedOrder.seller.name }
+                    </span>
+                  </p>
+                )
               }
-            </p>
-            <p
-              data-testid={ `${TEST_PREFIX}label-delivery-status` }
-            >
-              { selectedOrder.status }
-            </p>
+              <p className={ styles.order__details__datarow }>
+                <span>Data: </span>
+                <span
+                  data-testid={ `${TEST_PREFIX}label-order-date` }
+                >
+                  {
+                    selectedOrder.saleDate
+                      .substring(0, SLICE_DATE_AT_INDEX)
+                      .split('-')
+                      .reverse()
+                      .join('/')
+                  }
+                </span>
+              </p>
+              <p className={ styles.order__details__datarow }>
+                <span>Status: </span>
+                <span
+                  data-testid={ `${TEST_PREFIX}label-delivery-status` }
+                >
+                  { selectedOrder.status }
+                </span>
+              </p>
 
-            {
-              user.role === 'customer'
-                ? <CustomerControllers />
-                : <SellerControllers />
-            }
+              {
+                user.role === 'customer'
+                  ? <CustomerControllers />
+                  : <SellerControllers />
+              }
 
-            <div>
-              <span>Total: R$ </span>
-              <span
-                data-testid={
-                  `${user.role}_order_details__element-order-total-price`
-                }
-              >
-                {`${selectedOrder.totalPrice.replace('.', ',')}`}
+              <p className={ styles.order__details__total }>
+                <span>Total: R$ </span>
+                <span
+                  data-testid={
+                    `${user.role}_order_details__element-order-total-price`
+                  }
+                >
+                  {`${selectedOrder.totalPrice.replace('.', ',')}`}
 
-              </span>
-            </div>
+                </span>
+              </p>
 
+            </section>
             <OrderProducts products={ selectedOrder.products } />
-          </section>
-        ) : <p>Loading...</p>
+          </>
+        ) : (
+          <p>Loading...</p>
+        )
       }
 
-    </div>
+    </section>
   );
 }
 
