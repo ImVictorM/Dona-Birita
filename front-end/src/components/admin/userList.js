@@ -1,5 +1,6 @@
 import { useEffect, useContext } from 'react';
 import { UserContext } from '../../context/Context';
+import styles from './userList.module.scss';
 
 function UserList() {
   const { users, getUsersDifferentThanADM, deleteUser } = useContext(UserContext);
@@ -9,8 +10,8 @@ function UserList() {
   }, [getUsersDifferentThanADM]);
 
   return (
-    <section>
-      <table>
+    <section className={ styles.adm__users }>
+      <table className={ styles.adm__users__table }>
         <thead>
           <tr>
             <th>Índice</th>
@@ -29,19 +30,41 @@ function UserList() {
                 <tr key={ id }>
                   <td
                     data-testid={ `${TEST_PREFIX}item-number-${index}` }
+                    data-cell="Índice"
                   >
                     { index + 1 }
 
                   </td>
-                  <td data-testid={ `${TEST_PREFIX}name-${index}` }>{name}</td>
-                  <td data-testid={ `${TEST_PREFIX}email-${index}` }>{email}</td>
-                  <td data-testid={ `${TEST_PREFIX}role-${index}` }>{role}</td>
-                  <td data-testid={ `${TEST_PREFIX}remove-${index}` }>
+                  <td
+                    data-cell="Nome"
+                    data-testid={ `${TEST_PREFIX}name-${index}` }
+                  >
+                    {name}
+
+                  </td>
+                  <td
+                    data-cell="E-mail"
+                    data-testid={ `${TEST_PREFIX}email-${index}` }
+                  >
+                    {email}
+
+                  </td>
+                  <td
+                    data-cell="Tipo"
+                    data-testid={ `${TEST_PREFIX}role-${index}` }
+                  >
+                    {role}
+
+                  </td>
+                  <td
+                    data-cell="Excluir"
+                    data-testid={ `${TEST_PREFIX}remove-${index}` }
+                  >
                     <button
                       onClick={ () => deleteUser(id) }
                       type="button"
                     >
-                      Exclui
+                      Excluir
                     </button>
                   </td>
                 </tr>

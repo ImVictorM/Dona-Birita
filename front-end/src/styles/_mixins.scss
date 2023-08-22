@@ -30,6 +30,14 @@
   }
 }
 
+@mixin base-input {
+  border: 2px solid rgb(204, 204, 204);
+  border-radius: 5px;
+  font-size: 16px;
+  height: 40px;
+  padding: 2px 10px;
+}
+
 @mixin base-link ($color){
   color: $color;
   text-decoration: none;
@@ -43,8 +51,8 @@
   }
 }
 
-@mixin label-text-above {
-  color: set-font-color($primary-color);
+@mixin label-text-above($bg-color: $primary-color) {
+  color: set-font-color($bg-color);
   display: flex;
   flex-direction: column;
   margin-bottom: 8px;
@@ -93,7 +101,7 @@
   }
 }
 
-@mixin base-products-table {
+@mixin base-table {
   background-color: $neutral-white;
   border-collapse: collapse;
   max-width: 1100px;

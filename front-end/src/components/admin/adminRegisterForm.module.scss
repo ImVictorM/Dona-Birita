@@ -1,0 +1,57 @@
+@use '../../styles/' as *;
+
+.adm__register {
+  align-items: center;
+  background-color: $neutral-white;
+  border-radius: 10px;
+  box-shadow: 0 0 2px  black;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  max-width: 1200px;
+  padding: 15px;
+  width: 90%;
+}
+
+.adm__register__inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 300px);
+  width: 100%;
+  justify-content: center;
+  gap: 0 7px;
+}
+
+.adm__register__inputs__label {
+  @include label-text-above($neutral-white);
+}
+
+.adm__register__inputs__input {
+  @include base-input;
+}
+
+.adm__register__submit {
+  @include base-button;
+  font-size: 17px;
+  max-width: 300px;
+  width: 100%;
+  margin-top: 15px;
+
+  &:disabled {
+    background-color: $secondary-color;
+    color: set-font-color($secondary-color);
+    opacity: 0.3;
+  }
+}
+
+@include screen-size('xs', 'md') {
+  .adm__register {
+    border-radius: 10px 10px 0 0;
+    width: 95%;
+    padding: 15px 10px;
+  }
+
+  .adm__register__inputs {
+    grid-template-columns: repeat(auto-fill, 100%);
+  }
+}
+

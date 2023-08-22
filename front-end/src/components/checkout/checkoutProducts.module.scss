@@ -7,7 +7,7 @@
 }
 
 .checkout__products__table {
-  @include base-products-table;
+  @include base-table;
   width: 90%;
   margin: auto;
 }

@@ -28,11 +28,7 @@
 }
 
 .checkout__order__form select, .checkout__order__form input {
-  border: 2px solid rgb(204, 204, 204);
-  border-radius: 5px;
-  font-size: 16px;
-  height: 40px;
-  padding: 2px 10px;
+  @include base-input;
 }
 
 .checkout__order__form__submit {

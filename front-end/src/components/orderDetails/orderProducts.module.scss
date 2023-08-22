@@ -6,7 +6,7 @@
 }
 
 .order__products__table {
-  @include base-products-table;
+  @include base-table;
 
   &__title {
     font-size: 24px;

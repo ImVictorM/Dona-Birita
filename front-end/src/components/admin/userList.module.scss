@@ -1,0 +1,27 @@
+@use '../../styles/' as *;
+
+.adm__users {
+  background-color: $neutral-white;
+  width: 80%;
+  max-width: 1100px;
+  margin: 0 auto 30px;
+  border-radius: 0 0 10px 10px;
+  padding: 20px;
+  box-shadow: -2px 0 2px -2px black, 2px 0 2px -2px black, 0 2px 2px -2px black; // left, right and bottom
+}
+
+.adm__users__table {
+  @include base-table;
+}
+
+@include screen-size('xs', 'md') {
+  .adm__users {
+    width: 95%;
+  }
+}
+
+@include screen-size('xs', 'sm') {
+  .adm__users {
+    padding: 20px 0px;
+  }
+}

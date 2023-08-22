@@ -32,7 +32,7 @@ function Header() {
               </Link>
 
             ) : (
-              <p>Gerenciar Usuários</p>
+              <span className={ styles.header__nav__adm }>Gerenciar Usuários</span>
             )
           }
 
