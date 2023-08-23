@@ -3,10 +3,12 @@ import OrderList from '../components/orders/orderList';
 
 function Orders() {
   return (
-    <section>
+    <>
       <Header />
-      <OrderList />
-    </section>
+      <main>
+        <OrderList />
+      </main>
+    </>
   );
 }
 

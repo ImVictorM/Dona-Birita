@@ -4,10 +4,12 @@ import Order from '../components/orderDetails/order';
 
 function OrderDetails() {
   return (
-    <div>
+    <>
       <Header />
-      <Order />
-    </div>
+      <main>
+        <Order />
+      </main>
+    </>
   );
 }
 

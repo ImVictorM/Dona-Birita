@@ -4,11 +4,13 @@ import TotalButton from '../components/products/totalButton';
 
 function Product() {
   return (
-    <section>
+    <>
       <Header />
-      <ProductList />
-      <TotalButton />
-    </section>
+      <main>
+        <ProductList />
+        <TotalButton />
+      </main>
+    </>
   );
 }
 

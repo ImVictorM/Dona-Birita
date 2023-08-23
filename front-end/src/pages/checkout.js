@@ -4,11 +4,13 @@ import Header from '../components/header/header';
 
 function Checkout() {
   return (
-    <div>
+    <>
       <Header />
-      <CheckoutProducts />
-      <CheckoutForm />
-    </div>
+      <main>
+        <CheckoutProducts />
+        <CheckoutForm />
+      </main>
+    </>
   );
 }
 
