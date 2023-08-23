@@ -82,6 +82,17 @@ function LoginForm() {
           </label>
         </div>
 
+        {
+          showError && (
+            <span
+              data-testid="common_login__element-invalid-email"
+              className={ styles.login__error }
+            >
+              Email ou senha incorreta!
+            </span>
+          )
+        }
+
         <button
           disabled={ loginIsDisabled }
           type="button"
@@ -101,16 +112,6 @@ function LoginForm() {
             Cadastrar
           </Link>
         </div>
-        {
-          showError && (
-            <p
-              data-testid="common_login__element-invalid-email"
-              className={ `error ${styles.login__error}` }
-            >
-              Email ou senha incorreta!
-            </p>
-          )
-        }
       </div>
     </form>
   );

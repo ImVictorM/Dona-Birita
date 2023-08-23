@@ -16,6 +16,17 @@
   justify-content: center;
 }
 
+@mixin label-text-above($bg-color: $primary-color) {
+  color: set-font-color($bg-color);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+  text-align: start;
+  font-size: 18px;
+  font-weight: 900;
+  width: 100%;
+}
+
 @mixin underline-input {
   border: none;
   border-bottom: 2px solid rgb(146, 146, 146);
@@ -49,17 +60,6 @@
     text-decoration-color: $color;
     text-underline-offset: 4px;
   }
-}
-
-@mixin label-text-above($bg-color: $primary-color) {
-  color: set-font-color($bg-color);
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 8px;
-  text-align: start;
-  font-size: 18px;
-  font-weight: 900;
-  width: 100%;
 }
 
 @mixin base-orange-box {
@@ -180,3 +180,9 @@
   }
 }
 
+@mixin base-error {
+  color: rgb(185, 3, 3);
+  display: inline;
+  margin: 0;
+  font-weight: 600;
+}

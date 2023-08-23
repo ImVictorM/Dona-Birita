@@ -105,9 +105,12 @@ function AdminRegisterForm() {
 
       {
         showError && (
-          <p className="error" data-testid="admin_manage__element-invalid-register">
+          <span
+            className={ styles.adm__register__error }
+            data-testid="admin_manage__element-invalid-register"
+          >
             Nome ou e-mail já cadastrado!
-          </p>
+          </span>
         )
       }
     </form>

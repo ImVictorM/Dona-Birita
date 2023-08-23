@@ -85,12 +85,12 @@ function RegisterForm() {
 
         {
           showError && (
-            <p
+            <span
               data-testid="common_register__element-invalid_register"
-              className={ `error ${styles.register__error}` }
+              className={ styles.register__error }
             >
               Email ou Nome já existem!
-            </p>
+            </span>
           )
         }
 

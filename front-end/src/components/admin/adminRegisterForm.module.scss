@@ -19,6 +19,11 @@
   font-size: 30px;
 }
 
+.adm__register__error {
+  @include base-error;
+  margin-top: 9px;
+}
+
 .adm__register__inputs {
   display: grid;
   grid-template-columns: repeat(auto-fit, 300px);
