@@ -12,6 +12,7 @@ function UserList() {
   return (
     <section className={ styles.adm__users }>
       <table className={ styles.adm__users__table }>
+        <caption className={ styles.adm__users__table__title }>Usuários</caption>
         <thead>
           <tr>
             <th>Índice</th>
@@ -32,28 +33,28 @@ function UserList() {
                     data-testid={ `${TEST_PREFIX}item-number-${index}` }
                     data-cell="Índice"
                   >
-                    { index + 1 }
+                    <span>{ index + 1 }</span>
 
                   </td>
                   <td
                     data-cell="Nome"
                     data-testid={ `${TEST_PREFIX}name-${index}` }
                   >
-                    {name}
+                    <span>{name}</span>
 
                   </td>
                   <td
                     data-cell="E-mail"
                     data-testid={ `${TEST_PREFIX}email-${index}` }
                   >
-                    {email}
+                    <span>{email}</span>
 
                   </td>
                   <td
                     data-cell="Tipo"
                     data-testid={ `${TEST_PREFIX}role-${index}` }
                   >
-                    {role}
+                    <span>{role}</span>
 
                   </td>
                   <td

@@ -9,8 +9,14 @@
   flex-direction: column;
   margin: auto;
   max-width: 1200px;
-  padding: 15px;
+  padding: 15px 0 25px;
   width: 90%;
+}
+
+.adm__register__title {
+  margin-bottom: 22px;
+  color: $secondary-color;
+  font-size: 30px;
 }
 
 .adm__register__inputs {

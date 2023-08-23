@@ -38,6 +38,8 @@ function AdminRegisterForm() {
 
   return (
     <form className={ styles.adm__register }>
+      <h2 className={ styles.adm__register__title }>Cadastrar novo usuário</h2>
+      <hr />
       <div className={ styles.adm__register__inputs }>
         <label htmlFor="name" className={ styles.adm__register__inputs__label }>
           Nome Completo:
