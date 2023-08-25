@@ -1,0 +1,6 @@
+@use '../../styles/' as *;
+
+.loading {
+  @include center-block;
+  position: absolute;
+}

@@ -1,7 +1,6 @@
 import { createContext } from 'react';
 
-const OrderContext = createContext();
-const CartContext = createContext();
-const UserContext = createContext();
-
-export { OrderContext, CartContext, UserContext };
+export const OrderContext = createContext();
+export const CartContext = createContext();
+export const UserContext = createContext();
+export const LoadingContext = createContext();

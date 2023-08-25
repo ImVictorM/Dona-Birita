@@ -1,13 +1,16 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { OrderContext } from './Context';
+import { LoadingContext, OrderContext } from './Context';
 import requestWithCORS from '../utils/requestWithCORS';
 
 function OrderContextProvider({ children }) {
   const [selectedOrder, setSelectedOrder] = useState({});
   const [orders, setOrders] = useState([]);
+  const { stopLoading, startLoading } = useContext(LoadingContext);
 
   const fetchOrderByID = useCallback(async (id) => {
+    startLoading();
+
     const options = {
       endpoint: `http://localhost:3001/sale/${id}`,
       method: 'GET',
@@ -15,7 +18,9 @@ function OrderContextProvider({ children }) {
 
     const orderFromDB = await requestWithCORS(options);
     setSelectedOrder(orderFromDB);
-  }, []);
+
+    stopLoading();
+  }, [startLoading, stopLoading]);
 
   const fetchUserOrders = useCallback(async () => {
     const user = JSON.parse(localStorage.getItem('user'));

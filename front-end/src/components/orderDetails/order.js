@@ -1,24 +1,26 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import OrderProducts from './orderProducts';
 import SellerControllers from './sellerControllers';
 import CustomerControllers from './customerControllers';
-import { OrderContext } from '../../context/Context';
+import { LoadingContext, OrderContext } from '../../context/Context';
 import styles from './order.module.scss';
+import Loading from '../loading/loading';
 
 function Order() {
   const { id: ID_FROM_URL } = useParams();
   const user = JSON.parse(localStorage.getItem('user'));
-  const [isLoading, setIsLoading] = useState(true);
   const { fetchOrderByID, selectedOrder } = useContext(OrderContext);
+  const { isLoading } = useContext(LoadingContext);
 
   useEffect(() => {
-    setIsLoading(Object.keys(selectedOrder).length === 0);
-  }, [selectedOrder]);
+    const hasNotSelectedOrder = Object.keys(selectedOrder).length === 0;
+    const isDifferentOrder = Number(selectedOrder.id) !== Number(ID_FROM_URL);
 
-  useEffect(() => {
-    fetchOrderByID(ID_FROM_URL);
-  }, [ID_FROM_URL, fetchOrderByID]);
+    if (hasNotSelectedOrder || isDifferentOrder) {
+      fetchOrderByID(ID_FROM_URL);
+    }
+  }, [ID_FROM_URL, fetchOrderByID, selectedOrder]);
 
   const SLICE_DATE_AT_INDEX = 10;
   const TEST_PREFIX = `${user.role}_order_details__element-order-details-`;
@@ -26,7 +28,7 @@ function Order() {
   return (
     <section className={ styles.order }>
       {
-        !isLoading ? (
+        !isLoading && Number(selectedOrder.id) === Number(ID_FROM_URL) ? (
           <>
             <section className={ styles.order__details }>
               <h1 className={ styles.order__details__title }>Detalhes do Pedido</h1>
@@ -95,7 +97,7 @@ function Order() {
             <OrderProducts products={ selectedOrder.products } />
           </>
         ) : (
-          <p>Loading...</p>
+          <Loading />
         )
       }
 
