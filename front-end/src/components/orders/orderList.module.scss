@@ -2,9 +2,15 @@
 
 .orders {
   @include center-flex(row);
-  margin: 0 auto;
-  width: 90%;
+  width: 100%;
   flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: start;
+  background-color: $neutral-white;
+  // 131.5px -> header height, 30px -> margin bottom
+  min-height: calc(100vh - 131.5px - 30px);
+  margin-bottom: 30px;
+  padding: 25px 10%;
 }
 
 .orders__card  {
@@ -55,5 +61,12 @@
         text-align: end;
       }
     }
+  }
+}
+
+@include screen-size('xs', 'md') {
+  .orders {
+    padding: 25px 0;
+    justify-content: center;
   }
 }

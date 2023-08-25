@@ -10,7 +10,7 @@ function LoadingContextProvider({ children }) {
   }, []);
 
   const stopLoading = useCallback(() => {
-    const TIMEOUT_TIME = 1000;
+    const TIMEOUT_TIME = 700;
 
     setTimeout(() => setIsLoading(false), TIMEOUT_TIME);
   }, []);

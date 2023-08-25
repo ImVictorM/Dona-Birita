@@ -23,6 +23,8 @@ function OrderContextProvider({ children }) {
   }, [startLoading, stopLoading]);
 
   const fetchUserOrders = useCallback(async () => {
+    startLoading();
+
     const user = JSON.parse(localStorage.getItem('user'));
     const options = {
       endpoint: `http://localhost:3001/sale/${user.role}/${user.id}`,
@@ -30,7 +32,9 @@ function OrderContextProvider({ children }) {
     };
     const ordersFromDB = await requestWithCORS(options);
     setOrders(ordersFromDB);
-  }, []);
+
+    stopLoading();
+  }, [startLoading, stopLoading]);
 
   const updateOrderStatus = useCallback(async (status, id) => {
     const options = {
@@ -38,8 +42,18 @@ function OrderContextProvider({ children }) {
       method: 'PATCH',
     };
     await requestWithCORS(options, { status });
-    fetchOrderByID(id);
-  }, [fetchOrderByID]);
+
+    await fetchOrderByID(id);
+    await fetchUserOrders();
+  }, [fetchOrderByID, fetchUserOrders]);
+
+  const clearSelectOrder = useCallback(() => {
+    setSelectedOrder({});
+  }, []);
+
+  const clearOrders = useCallback(() => {
+    setOrders([]);
+  }, []);
 
   const value = useMemo(() => ({
     orders,
@@ -47,7 +61,17 @@ function OrderContextProvider({ children }) {
     fetchOrderByID,
     updateOrderStatus,
     fetchUserOrders,
-  }), [fetchOrderByID, fetchUserOrders, orders, selectedOrder, updateOrderStatus]);
+    clearOrders,
+    clearSelectOrder,
+  }), [
+    clearOrders,
+    clearSelectOrder,
+    fetchOrderByID,
+    fetchUserOrders,
+    orders,
+    selectedOrder,
+    updateOrderStatus,
+  ]);
 
   return (
     <OrderContext.Provider value={ value }>

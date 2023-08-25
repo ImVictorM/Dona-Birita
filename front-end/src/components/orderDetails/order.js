@@ -10,17 +10,17 @@ import Loading from '../loading/loading';
 function Order() {
   const { id: ID_FROM_URL } = useParams();
   const user = JSON.parse(localStorage.getItem('user'));
-  const { fetchOrderByID, selectedOrder } = useContext(OrderContext);
+  const { fetchOrderByID, selectedOrder, clearSelectOrder } = useContext(OrderContext);
   const { isLoading } = useContext(LoadingContext);
 
   useEffect(() => {
-    const hasNotSelectedOrder = Object.keys(selectedOrder).length === 0;
-    const isDifferentOrder = Number(selectedOrder.id) !== Number(ID_FROM_URL);
+    fetchOrderByID(ID_FROM_URL);
+  }, [ID_FROM_URL, fetchOrderByID]);
 
-    if (hasNotSelectedOrder || isDifferentOrder) {
-      fetchOrderByID(ID_FROM_URL);
-    }
-  }, [ID_FROM_URL, fetchOrderByID, selectedOrder]);
+  useEffect(() => () => {
+    // unmount
+    clearSelectOrder();
+  }, [clearSelectOrder]);
 
   const SLICE_DATE_AT_INDEX = 10;
   const TEST_PREFIX = `${user.role}_order_details__element-order-details-`;
@@ -28,7 +28,7 @@ function Order() {
   return (
     <section className={ styles.order }>
       {
-        !isLoading && Number(selectedOrder.id) === Number(ID_FROM_URL) ? (
+        !isLoading && Object.keys(selectedOrder).length !== 0 ? (
           <>
             <section className={ styles.order__details }>
               <h1 className={ styles.order__details__title }>Detalhes do Pedido</h1>
