@@ -2,14 +2,10 @@
 
 .orders {
   @include center-flex(row);
-  width: 100%;
+  @include white-background;
   flex-wrap: wrap;
   align-content: flex-start;
   justify-content: start;
-  background-color: $neutral-white;
-  // 131.5px -> header height, 30px -> margin bottom
-  min-height: calc(100vh - 131.5px - 30px);
-  margin-bottom: 30px;
   padding: 25px 10%;
 }
 

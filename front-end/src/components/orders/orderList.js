@@ -1,16 +1,19 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { LoadingContext, OrderContext } from '../../context/Context';
 import styles from './orderList.module.scss';
 import Loading from '../loading/loading';
+import EmptyOrders from './emptyOrders';
 
 function OrderList() {
   const user = JSON.parse(localStorage.getItem('user'));
   const { orders, fetchUserOrders, clearOrders } = useContext(OrderContext);
   const { isLoading } = useContext(LoadingContext);
+  const [fetchOnce, setFetchOnce] = useState(false);
 
   useEffect(() => {
     fetchUserOrders();
+    setFetchOnce(true);
   }, [fetchUserOrders]);
 
   useEffect(() => () => {
@@ -25,6 +28,9 @@ function OrderList() {
       {
         !isLoading ? (
           <>
+            {
+              (orders.length === 0 && fetchOnce) && (<EmptyOrders />)
+            }
             {
               orders.map((order) => (
                 <Link

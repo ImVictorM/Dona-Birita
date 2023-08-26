@@ -6,7 +6,6 @@ function Loading() {
   return (
     <div className={ styles.loading }>
       <img
-        className={ styles.loading__image }
         src={ loading }
         alt="animated loading"
       />

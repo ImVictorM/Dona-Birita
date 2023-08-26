@@ -6,13 +6,13 @@ function LoadingContextProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
 
   const startLoading = useCallback(() => {
-    setIsLoading(true);
+    setIsLoading(() => true);
   }, []);
 
   const stopLoading = useCallback(() => {
     const TIMEOUT_TIME = 700;
 
-    setTimeout(() => setIsLoading(false), TIMEOUT_TIME);
+    setTimeout(() => setIsLoading(() => false), TIMEOUT_TIME);
   }, []);
 
   const value = useMemo(() => ({

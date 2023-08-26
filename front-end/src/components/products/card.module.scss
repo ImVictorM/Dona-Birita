@@ -5,6 +5,8 @@
   background-color: $neutral-white;
   border-radius: 5px;
   justify-content: space-between;
+  border: 1px solid rgba(128, 128, 128, 0.712);
+  box-shadow: 0 0 3px rgba(128, 128, 128, 0.712);
 }
 
 .products__item__name {

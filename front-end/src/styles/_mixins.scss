@@ -16,6 +16,14 @@
   justify-content: center;
 }
 
+@mixin white-background {
+  background-color: $neutral-white;
+  // 131.5px -> header height, 30px -> margin bottom
+  min-height: calc(100vh - 131.5px - 30px);
+  margin-bottom: 30px;
+  width: 100%;
+}
+
 @mixin label-text-above($bg-color: $primary-color) {
   color: set-font-color($bg-color);
   display: flex;

@@ -1,10 +1,7 @@
 @use '../../styles/' as *;
 
 .order {
-  background-color: $neutral-white;
-  // 131.5px -> header height, 30px -> margin bottom
-  min-height: calc(100vh - 131.5px - 30px);
-  margin-bottom: 30px;
+  @include white-background;
 }
 
 .order__details {
