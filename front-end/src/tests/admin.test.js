@@ -1,5 +1,10 @@
 /* eslint-disable react-func/max-lines-per-function */
-import { screen, waitFor, within } from '@testing-library/react';
+import {
+  screen,
+  waitFor,
+  within,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouterAndProvider } from './utils/renderOptions';
 import App from '../App';
@@ -25,12 +30,15 @@ const ROLE_SELECT_TEST_ID = `${TEST_PREFIX}select-role`;
 const REGISTER_BUTTON_TEST_ID = `${TEST_PREFIX}button-register`;
 const ERROR_MESSAGE_TEST_ID = `${TEST_PREFIX}element-invalid-register`;
 
+const LOADING_TEST_ID = 'loading-img';
+
 describe(`PATH: ${ADMIN_ENDPOINT} - Testing admin page`, () => {
   beforeEach(async () => {
     localStorage.setItem('user', JSON.stringify(LOGGED_ADM));
     requestWithCORS.mockReturnValueOnce(USERS_DIFFERENT_THAN_ADM);
 
     renderWithRouterAndProvider(<App />, ADMIN_ENDPOINT);
+    await waitForElementToBeRemoved(() => screen.getByTestId(LOADING_TEST_ID));
     await waitFor(() => expect(requestWithCORS).toBeCalledTimes(1));
   });
 
@@ -58,14 +66,15 @@ describe(`PATH: ${ADMIN_ENDPOINT} - Testing admin page`, () => {
 
     it('Can list all users different than administrator', () => {
       const usersTable = screen.getByRole('table');
-      expect(usersTable.children.length).toBe(2);
+      const rows = usersTable.querySelectorAll('tbody > tr');
+      expect(rows.length).toBe(2);
 
       const USERS_IN_TABLE = {
         0: USERS_DIFFERENT_THAN_ADM[0],
         1: USERS_DIFFERENT_THAN_ADM[1],
       };
 
-      for (let index = 0; index < usersTable.children.length; index += 1) {
+      for (let index = 0; index < rows.length; index += 1) {
         const ROW_INDEX_TEST_ID = `${TEST_PREFIX}element-user-table-item-number-${index}`;
         const ROW_NAME_TEST_ID = `${TEST_PREFIX}element-user-table-name-${index}`;
         const ROW_EMAIL_TEST_ID = `${TEST_PREFIX}element-user-table-email-${index}`;
