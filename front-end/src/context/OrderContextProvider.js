@@ -1,30 +1,23 @@
-import React, { useMemo, useState, useCallback, useContext } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { LoadingContext, OrderContext } from './Context';
+import { OrderContext } from './Context';
 import requestWithCORS from '../utils/requestWithCORS';
 
 function OrderContextProvider({ children }) {
   const [selectedOrder, setSelectedOrder] = useState({});
   const [orders, setOrders] = useState([]);
-  const { stopLoading, startLoading } = useContext(LoadingContext);
 
   const fetchOrderByID = useCallback(async (id) => {
-    startLoading();
-
     const options = {
       endpoint: `http://localhost:3001/sale/${id}`,
       method: 'GET',
     };
 
     const orderFromDB = await requestWithCORS(options);
-    setSelectedOrder(orderFromDB);
-
-    stopLoading();
-  }, [startLoading, stopLoading]);
+    setSelectedOrder(() => orderFromDB);
+  }, []);
 
   const fetchUserOrders = useCallback(async () => {
-    startLoading();
-
     const user = JSON.parse(localStorage.getItem('user'));
     const options = {
       endpoint: `http://localhost:3001/sale/${user.role}/${user.id}`,
@@ -32,9 +25,7 @@ function OrderContextProvider({ children }) {
     };
     const ordersFromDB = await requestWithCORS(options);
     setOrders(ordersFromDB);
-
-    stopLoading();
-  }, [startLoading, stopLoading]);
+  }, []);
 
   const updateOrderStatus = useCallback(async (status, id) => {
     const options = {
@@ -44,8 +35,7 @@ function OrderContextProvider({ children }) {
     await requestWithCORS(options, { status });
 
     await fetchOrderByID(id);
-    await fetchUserOrders();
-  }, [fetchOrderByID, fetchUserOrders]);
+  }, [fetchOrderByID]);
 
   const clearSelectOrder = useCallback(() => {
     setSelectedOrder({});

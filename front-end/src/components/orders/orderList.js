@@ -8,13 +8,19 @@ import EmptyOrders from './emptyOrders';
 function OrderList() {
   const user = JSON.parse(localStorage.getItem('user'));
   const { orders, fetchUserOrders, clearOrders } = useContext(OrderContext);
-  const { isLoading } = useContext(LoadingContext);
+  const { isLoading, startLoading, stopLoading } = useContext(LoadingContext);
   const [fetchOnce, setFetchOnce] = useState(false);
 
   useEffect(() => {
-    fetchUserOrders();
-    setFetchOnce(true);
-  }, [fetchUserOrders]);
+    async function fetchWithLoading() {
+      await fetchUserOrders();
+      setFetchOnce(() => true);
+      stopLoading();
+    }
+
+    startLoading();
+    fetchWithLoading();
+  }, [fetchUserOrders, startLoading, stopLoading]);
 
   useEffect(() => () => {
     // unmount

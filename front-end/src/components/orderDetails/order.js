@@ -11,11 +11,17 @@ function Order() {
   const { id: ID_FROM_URL } = useParams();
   const user = JSON.parse(localStorage.getItem('user'));
   const { fetchOrderByID, selectedOrder, clearSelectOrder } = useContext(OrderContext);
-  const { isLoading } = useContext(LoadingContext);
+  const { isLoading, startLoading, stopLoading } = useContext(LoadingContext);
 
   useEffect(() => {
-    fetchOrderByID(ID_FROM_URL);
-  }, [ID_FROM_URL, fetchOrderByID]);
+    async function fetchWithLoading() {
+      await fetchOrderByID(ID_FROM_URL);
+      stopLoading();
+    }
+
+    startLoading();
+    fetchWithLoading();
+  }, [ID_FROM_URL, fetchOrderByID, startLoading, stopLoading]);
 
   useEffect(() => () => {
     // unmount

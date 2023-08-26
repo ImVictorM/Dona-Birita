@@ -8,6 +8,7 @@ function Loading() {
       <img
         src={ loading }
         alt="animated loading"
+        data-testid="loading-img"
       />
     </div>
   );
