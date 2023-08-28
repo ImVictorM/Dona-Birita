@@ -10,7 +10,7 @@ Beverage delivery platform for the fictitious distributor Dona Birita.
 - [Victor Mendes](https://github.com/ImVictorM)
 - [Wlisses Fernando](https://github.com/wlis13)
 
-### Main functionalities of the application 🔧
+### Main functionalities by user 🔧
 #### Customer:
 - Perform login;
 - Perform registration;
@@ -135,6 +135,7 @@ In this project, We were able to:
             <th>HTML5</th>
             <th>CSS3</th>
             <th>React</th>
+            <th>SASS</th>
         </tr>
     </thead>
     <tbody>
@@ -177,6 +178,16 @@ In this project, We were able to:
                         width="40" 
                         height="40"
                     /> 
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://sass-lang.com/">
+                    <img
+                        src="https://cdn.iconscout.com/icon/free/png-256/sass-3521691-2945135.png"
+                        alt="sass"
+                        width="40"
+                        height="40"
+                    />
                 </a>
             </td>
         </tr>
@@ -250,10 +261,9 @@ In this project, We were able to:
 
 
 ## Running the application ⚙️
-
-- Client default port: `3000` 
-- API default port: `3001`
-- Database default port: `3002`
+Client default port: `3000` <br/>
+API default port: `3001` <br/>
+Database default port: `3002` <br/>
 
 1. Clone the repository and enter it
 ```
