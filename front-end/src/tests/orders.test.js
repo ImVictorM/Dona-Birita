@@ -71,6 +71,19 @@ describe('Testing orders by user', () => {
 
       expect(history.location.pathname).toBe('/seller/orders/1');
     });
+
+    it('Renders the correct elements when seller doesn\'t have orders', async () => {
+      requestWithCORS.mockReturnValue([]);
+      renderWithRouterAndProvider(<App />, SELLER_ORDERS_ENDPOINT);
+      await waitForElementToBeRemoved(() => screen.getByTestId(LOADING_TEST_ID));
+      await waitFor(() => expect(requestWithCORS).toBeCalledTimes(1));
+
+      const img = screen.getByTestId('empty-orders-img');
+      const link = screen.queryByTestId('empty-orders-link');
+
+      expect(img).toBeInTheDocument();
+      expect(link).not.toBeInTheDocument();
+    });
   });
 
   describe(`PATH: ${CUSTOMER_ORDERS_ENDPOINT} - Testing customer orders`, () => {
@@ -124,6 +137,23 @@ describe('Testing orders by user', () => {
       userEvent.click(screen.getByTestId(FIRST_ORDER_TEST_ID));
 
       expect(history.location.pathname).toBe('/customer/orders/1');
+    });
+
+    it('Renders the correct elements when customer doesn\'t have orders', async () => {
+      requestWithCORS.mockReturnValue([]);
+      const { history } = renderWithRouterAndProvider(<App />, CUSTOMER_ORDERS_ENDPOINT);
+      await waitForElementToBeRemoved(() => screen.getByTestId(LOADING_TEST_ID));
+      await waitFor(() => expect(requestWithCORS).toBeCalledTimes(1));
+
+      const img = screen.getByTestId('empty-orders-img');
+      const link = screen.getByTestId('empty-orders-link');
+
+      expect(img).toBeInTheDocument();
+      expect(link).toBeInTheDocument();
+
+      userEvent.click(link);
+
+      expect(history.location.pathname).toBe('/customer/products');
     });
   });
 });
