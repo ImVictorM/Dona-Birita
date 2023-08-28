@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import requestWithCORS from '../utils/requestWithCORS';
@@ -9,6 +9,8 @@ import toBrazilDate from './utils/toBrazilDate';
 
 const SELLER_ORDERS_ENDPOINT = '/seller/orders';
 const CUSTOMER_ORDERS_ENDPOINT = '/customer/orders';
+
+const LOADING_TEST_ID = 'loading-img';
 
 describe('Testing orders by user', () => {
   beforeEach(() => {
@@ -24,6 +26,7 @@ describe('Testing orders by user', () => {
 
     it('Renders all customer orders correctly', async () => {
       renderWithRouterAndProvider(<App />, SELLER_ORDERS_ENDPOINT);
+      await waitForElementToBeRemoved(() => screen.getByTestId(LOADING_TEST_ID));
       await waitFor(() => expect(requestWithCORS).toBeCalledTimes(1));
 
       for (let index = 0; index < ORDER_LIST.length; index += 1) {
@@ -60,12 +63,26 @@ describe('Testing orders by user', () => {
     // eslint-disable-next-line max-len
     it('Redirects to the order details page when clicking one order (seller)', async () => {
       const { history } = renderWithRouterAndProvider(<App />, SELLER_ORDERS_ENDPOINT);
+      await waitForElementToBeRemoved(() => screen.getByTestId(LOADING_TEST_ID));
       await waitFor(() => expect(requestWithCORS).toBeCalledTimes(1));
 
       const FIRST_ORDER_TEST_ID = `${TEST_PREFIX}element-order-link-1`;
       userEvent.click(screen.getByTestId(FIRST_ORDER_TEST_ID));
 
       expect(history.location.pathname).toBe('/seller/orders/1');
+    });
+
+    it('Renders the correct elements when seller doesn\'t have orders', async () => {
+      requestWithCORS.mockReturnValue([]);
+      renderWithRouterAndProvider(<App />, SELLER_ORDERS_ENDPOINT);
+      await waitForElementToBeRemoved(() => screen.getByTestId(LOADING_TEST_ID));
+      await waitFor(() => expect(requestWithCORS).toBeCalledTimes(1));
+
+      const img = screen.getByTestId('empty-orders-img');
+      const link = screen.queryByTestId('empty-orders-link');
+
+      expect(img).toBeInTheDocument();
+      expect(link).not.toBeInTheDocument();
     });
   });
 
@@ -77,6 +94,7 @@ describe('Testing orders by user', () => {
 
     it('Renders all customer orders correctly', async () => {
       renderWithRouterAndProvider(<App />, CUSTOMER_ORDERS_ENDPOINT);
+      await waitForElementToBeRemoved(() => screen.getByTestId(LOADING_TEST_ID));
       await waitFor(() => expect(requestWithCORS).toBeCalledTimes(1));
 
       for (let index = 0; index < ORDER_LIST.length; index += 1) {
@@ -112,12 +130,30 @@ describe('Testing orders by user', () => {
     // eslint-disable-next-line max-len
     it('Redirects to the order details page when clicking one order (customer)', async () => {
       const { history } = renderWithRouterAndProvider(<App />, CUSTOMER_ORDERS_ENDPOINT);
+      await waitForElementToBeRemoved(() => screen.getByTestId(LOADING_TEST_ID));
       await waitFor(() => expect(requestWithCORS).toBeCalledTimes(1));
 
       const FIRST_ORDER_TEST_ID = `${TEST_PREFIX}element-order-link-1`;
       userEvent.click(screen.getByTestId(FIRST_ORDER_TEST_ID));
 
       expect(history.location.pathname).toBe('/customer/orders/1');
+    });
+
+    it('Renders the correct elements when customer doesn\'t have orders', async () => {
+      requestWithCORS.mockReturnValue([]);
+      const { history } = renderWithRouterAndProvider(<App />, CUSTOMER_ORDERS_ENDPOINT);
+      await waitForElementToBeRemoved(() => screen.getByTestId(LOADING_TEST_ID));
+      await waitFor(() => expect(requestWithCORS).toBeCalledTimes(1));
+
+      const img = screen.getByTestId('empty-orders-img');
+      const link = screen.getByTestId('empty-orders-link');
+
+      expect(img).toBeInTheDocument();
+      expect(link).toBeInTheDocument();
+
+      userEvent.click(link);
+
+      expect(history.location.pathname).toBe('/customer/products');
     });
   });
 });

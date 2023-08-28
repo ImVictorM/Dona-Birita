@@ -1,0 +1,29 @@
+@use '../../styles/' as *;
+
+.checkout__products {
+  background-color: $neutral-white;
+  padding: 40px 0;
+  border-bottom: 1px solid rgb(216, 216, 216);
+}
+
+.checkout__products__table {
+  @include base-table;
+  width: 90%;
+  margin: auto;
+}
+
+.checkout__products__total {
+  color: $secondary-color;
+  font-size: 27px;
+  font-weight: 900;
+  margin: 20px auto 0;
+  max-width: 1100px;
+  text-align: end;
+  width: 90%;
+}
+
+@include screen-size('xs', 'md') {
+  .checkout__products {
+    padding-bottom: 20px;
+  }
+}

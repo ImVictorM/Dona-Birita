@@ -1,0 +1,14 @@
+@use '.' as *;
+
+@import './reset';
+
+html, body, #root {
+  min-height: 100vh;
+}
+
+body {
+  background-color: $primary-color;
+  font-family: Verdana , Geneva , Tahoma , sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

@@ -1,13 +1,14 @@
 import { useContext } from 'react';
 import { CartContext } from '../../context/Context';
-import './checkoutProducts.css';
+import styles from './checkoutProducts.module.scss';
 
 function CheckoutProducts() {
   const { cartTotal, cart, removeFromCart } = useContext(CartContext);
 
   return (
-    <section>
-      <table className="cart-table">
+    <section className={ styles.checkout__products }>
+      <table className={ styles.checkout__products__table }>
+        <caption className={ styles.checkout__products__table__title }>Produtos</caption>
         <thead>
           <tr>
             <th>Item</th>
@@ -27,44 +28,48 @@ function CheckoutProducts() {
 
               return (
                 <tr key={ productId }>
-                  <td>
+                  <td data-cell="Item">
                     <span
                       data-testid={ `${TEST_PREFIX}item-number-${index}` }
                     >
                       { index + 1 }
                     </span>
                   </td>
-                  <td>
+                  <td data-cell="Descrição">
                     <span
                       data-testid={ `${TEST_PREFIX}name-${index}` }
                     >
                       {name}
                     </span>
                   </td>
-                  <td>
+                  <td data-cell="Quantidade">
                     <span
                       data-testid={ `${TEST_PREFIX}quantity-${index}` }
                     >
                       {quantity}
                     </span>
                   </td>
-                  <td>
-                    <span>R$: </span>
-                    <span
-                      data-testid={ `${TEST_PREFIX}unit-price-${index}` }
-                    >
-                      {Number(unitPrice).toFixed(2).replace('.', ',')}
-                    </span>
+                  <td data-cell="Valor unitário">
+                    <div>
+                      <span>R$:</span>
+                      <span
+                        data-testid={ `${TEST_PREFIX}unit-price-${index}` }
+                      >
+                        {Number(unitPrice).toFixed(2).replace('.', ',')}
+                      </span>
+                    </div>
                   </td>
-                  <td>
-                    <span>R$: </span>
-                    <span
-                      data-testid={ `${TEST_PREFIX}sub-total-${index}` }
-                    >
-                      {Number(subTotal).toFixed(2).replace('.', ',')}
-                    </span>
+                  <td data-cell="Sub-total">
+                    <div>
+                      <span>R$: </span>
+                      <span
+                        data-testid={ `${TEST_PREFIX}sub-total-${index}` }
+                      >
+                        {Number(subTotal).toFixed(2).replace('.', ',')}
+                      </span>
+                    </div>
                   </td>
-                  <td>
+                  <td data-cell="Remover item">
                     <button
                       data-testid={ `${TEST_PREFIX}remove-${index}` }
                       type="button"
@@ -81,7 +86,7 @@ function CheckoutProducts() {
           }
         </tbody>
       </table>
-      <div className="total-cart">
+      <div className={ styles.checkout__products__total }>
         <span>Total: R$ </span>
         <span
           data-testid="customer_checkout__element-order-total-price"

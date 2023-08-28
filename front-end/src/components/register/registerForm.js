@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import '../login/loginForm.css';
+import { useHistory, Link } from 'react-router-dom';
+import styles from './registerForm.module.scss';
 import requestWithCORS from '../../utils/requestWithCORS';
 import { POST_USER_REGISTER } from '../../utils/backendEndpoints';
 
@@ -44,65 +44,75 @@ function RegisterForm() {
   }
 
   return (
-    <form className="login-register-form">
-      <div className="inputs-container">
-        <h1>Cadastre-se:</h1>
-        <label htmlFor="name">
-          Nome:
-          <input
-            onChange={ (event) => setName(event.target.value) }
-            value={ name }
-            type="text"
-            data-testid="common_register__input-name"
-            id="name"
-          />
-        </label>
-        <label htmlFor="email">
-          E-mail
-          <input
-            onChange={ (event) => setEmail(event.target.value) }
-            value={ email }
-            type="email"
-            data-testid="common_register__input-email"
-            id="email"
-          />
-        </label>
-        <label htmlFor="password">
-          Senha
-          <input
-            onChange={ (event) => setPassword(event.target.value) }
-            value={ password }
-            type="password"
-            data-testid="common_register__input-password"
-            id="password"
-          />
-        </label>
-        <div className="login-buttons">
-          <button
-            type="button"
-            data-testid="common_register__button-register"
-            disabled={ !allowedToRegister }
-            onClick={ handleUserRegistration }
-          >
-            Registrar
-          </button>
-          <button
-            data-testid="common_register__button-go-back"
-            type="button"
-            onClick={ () => history.push('/login') }
-          >
-            Voltar
-          </button>
+    <form className={ styles.register }>
+      <div className={ styles.register__container }>
+        <h1 className={ styles.register__title }>Cadastre-se</h1>
+        <div className={ styles.register__inputs }>
+          <label htmlFor="name" className={ styles.register__label }>
+            Nome:
+            <input
+              onChange={ (event) => setName(event.target.value) }
+              value={ name }
+              type="text"
+              data-testid="common_register__input-name"
+              id="name"
+              placeholder="Insira seu nome"
+            />
+          </label>
+          <label htmlFor="email" className={ styles.register__label }>
+            E-mail:
+            <input
+              onChange={ (event) => setEmail(event.target.value) }
+              value={ email }
+              type="email"
+              data-testid="common_register__input-email"
+              id="email"
+              placeholder="Ex: email@exemplo.com"
+            />
+          </label>
+          <label htmlFor="password" className={ styles.register__label }>
+            Senha:
+            <input
+              onChange={ (event) => setPassword(event.target.value) }
+              value={ password }
+              type="password"
+              data-testid="common_register__input-password"
+              id="password"
+              placeholder="Minimo 6 caracteres"
+            />
+          </label>
         </div>
+
         {
           showError && (
-            <p
+            <span
               data-testid="common_register__element-invalid_register"
+              className={ styles.register__error }
             >
               Email ou Nome já existem!
-            </p>
+            </span>
           )
         }
+
+        <button
+          type="button"
+          data-testid="common_register__button-register"
+          disabled={ !allowedToRegister }
+          onClick={ handleUserRegistration }
+          className={ styles.register__button }
+        >
+          Registrar
+        </button>
+
+        <div className={ styles.register__container__link }>
+          <p>Já possui uma conta?</p>
+          <Link
+            data-testid="common_register__button-go-back"
+            to="/login"
+          >
+            Fazer login
+          </Link>
+        </div>
       </div>
     </form>
   );

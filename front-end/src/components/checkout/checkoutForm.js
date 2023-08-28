@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { CartContext } from '../../context/Context';
 import requestWithCORS from '../../utils/requestWithCORS';
 import { GET_SELLER_LIST, POST_SALE_REGISTER } from '../../utils/backendEndpoints';
-import './checkoutForm.css';
+import styles from './checkoutForm.module.scss';
 
 function CheckoutForm() {
   const history = useHistory();
@@ -61,57 +61,60 @@ function CheckoutForm() {
   }
 
   return (
-    <form className="checkout-form">
-      <label htmlFor="seller">
-        <p>P. Vendedora Responsável:</p>
-        <select
-          onChange={ handleChange }
-          data-testid="customer_checkout__select-seller"
-          id="seller"
-          name="sellerId"
-          value={ form.sellerId }
+    <section className={ styles.checkout__order }>
+      <h2 className={ styles.checkout__order__title }>Concluir pedido</h2>
+      <form className={ styles.checkout__order__form }>
+        <label htmlFor="seller">
+          <p>P. Vendedora Responsável:</p>
+          <select
+            onChange={ handleChange }
+            data-testid="customer_checkout__select-seller"
+            id="seller"
+            name="sellerId"
+            value={ form.sellerId }
+          >
+            {
+              sellerList.map((seller) => {
+                const { id, name } = seller;
+                return (
+                  <option key={ id } value={ id }>{name}</option>
+                );
+              })
+            }
+          </select>
+        </label>
+        <label htmlFor="address">
+          <p>Endereço</p>
+          <input
+            data-testid="customer_checkout__input-address"
+            type="text"
+            id="address"
+            name="address"
+            value={ form.address }
+            onChange={ handleChange }
+          />
+        </label>
+        <label htmlFor="number">
+          <p>Número</p>
+          <input
+            type="number"
+            id="number"
+            name="number"
+            data-testid="customer_checkout__input-address-number"
+            value={ form.number }
+            onChange={ handleChange }
+          />
+        </label>
+        <button
+          type="button"
+          data-testid="customer_checkout__button-submit-order"
+          onClick={ registerSale }
+          className={ styles.checkout__order__form__submit }
         >
-          {
-            sellerList.map((seller) => {
-              const { id, name } = seller;
-              return (
-                <option key={ id } value={ id }>{name}</option>
-              );
-            })
-          }
-        </select>
-      </label>
-      <label htmlFor="address">
-        <p>Endereço</p>
-        <input
-          data-testid="customer_checkout__input-address"
-          type="text"
-          id="address"
-          name="address"
-          value={ form.address }
-          onChange={ handleChange }
-        />
-      </label>
-      <label htmlFor="number">
-        <p>Número</p>
-        <input
-          type="number"
-          id="number"
-          name="number"
-          data-testid="customer_checkout__input-address-number"
-          value={ form.number }
-          onChange={ handleChange }
-        />
-      </label>
-      <button
-        type="button"
-        data-testid="customer_checkout__button-submit-order"
-        onClick={ registerSale }
-        className="finish-sale-btn"
-      >
-        Finalizar Pedido
-      </button>
-    </form>
+          Finalizar Pedido
+        </button>
+      </form>
+    </section>
   );
 }
 

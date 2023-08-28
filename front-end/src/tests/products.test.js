@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import requestWithCORS from '../utils/requestWithCORS';
 import { renderWithRouterAndProvider } from './utils/renderOptions';
@@ -17,6 +17,8 @@ const PRODUCT_1_INPUT_TEST_ID = `${TEST_PREFIX}input-card-quantity-1`;
 const PRODUCT_2_INPUT_TEST_ID = `${TEST_PREFIX}input-card-quantity-2`;
 const PRODUCT_3_INPUT_TEST_ID = `${TEST_PREFIX}input-card-quantity-3`;
 
+const LOADING_TEST_ID = 'loading-img';
+
 describe(`PATH: ${PRODUCTS_ENDPOINT} - Testing products`, () => {
   beforeEach(async () => {
     requestWithCORS.mockReturnValue(PRODUCT_LIST);
@@ -27,6 +29,7 @@ describe(`PATH: ${PRODUCTS_ENDPOINT} - Testing products`, () => {
   describe('Render', () => {
     it('Renders all the products correctly', async () => {
       renderWithRouterAndProvider(<App />, PRODUCTS_ENDPOINT);
+      await waitForElementToBeRemoved(() => screen.getByTestId(LOADING_TEST_ID));
       await waitFor(() => screen.queryByTestId(FIRST_PRODUCT_TEST_ID));
 
       const PRODUCT_LIST_TEST_ID = 'customer_product_list';
@@ -49,6 +52,7 @@ describe(`PATH: ${PRODUCTS_ENDPOINT} - Testing products`, () => {
 
     it('Renders the cart button correctly', async () => {
       renderWithRouterAndProvider(<App />, PRODUCTS_ENDPOINT);
+      await waitForElementToBeRemoved(() => screen.getByTestId(LOADING_TEST_ID));
       await waitFor(() => screen.queryByTestId(FIRST_PRODUCT_TEST_ID));
 
       expect(screen.queryByTestId(CART_BTN_TEST_ID)).toBeDisabled();
@@ -58,6 +62,7 @@ describe(`PATH: ${PRODUCTS_ENDPOINT} - Testing products`, () => {
     it('Renders product with correct quantity when product already in cart', async () => {
       localStorage.setItem('cart', JSON.stringify(PRODUCTS_IN_CART));
       renderWithRouterAndProvider(<App />, PRODUCTS_ENDPOINT);
+      await waitForElementToBeRemoved(() => screen.getByTestId(LOADING_TEST_ID));
       await waitFor(() => screen.queryByTestId(FIRST_PRODUCT_TEST_ID));
 
       const productOneInput = screen.getByTestId(PRODUCT_1_INPUT_TEST_ID);
@@ -73,6 +78,7 @@ describe(`PATH: ${PRODUCTS_ENDPOINT} - Testing products`, () => {
   describe('Redirect', () => {
     it('Redirects to the checkout page when clicking on the cart button', async () => {
       const { history } = renderWithRouterAndProvider(<App />, PRODUCTS_ENDPOINT);
+      await waitForElementToBeRemoved(() => screen.getByTestId(LOADING_TEST_ID));
       await waitFor(() => screen.queryByTestId(FIRST_PRODUCT_TEST_ID));
 
       const ADD_1_TEST_ID = `${TEST_PREFIX}button-card-add-item-1`;
@@ -92,6 +98,7 @@ describe(`PATH: ${PRODUCTS_ENDPOINT} - Testing products`, () => {
   describe('Functionalities', () => {
     beforeEach(async () => {
       renderWithRouterAndProvider(<App />, PRODUCTS_ENDPOINT);
+      await waitForElementToBeRemoved(() => screen.getByTestId(LOADING_TEST_ID));
       await waitFor(() => screen.queryByTestId(FIRST_PRODUCT_TEST_ID));
     });
 

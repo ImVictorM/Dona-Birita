@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { CartContext } from '../../context/Context';
-import './totalButton.css';
+import styles from './totalButton.module.scss';
 
 function TotalButton() {
   const history = useHistory();
@@ -12,7 +12,7 @@ function TotalButton() {
       type="button"
       disabled={ cartTotal === '0.00' }
       onClick={ () => history.push('/customer/checkout') }
-      className="cart-button"
+      className={ styles.products__cartbtn }
     >
       <span>🛒 Total - R$: </span>
       <span data-testid="customer_products__checkout-bottom-value">

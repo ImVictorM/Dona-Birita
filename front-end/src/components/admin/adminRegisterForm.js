@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import './adminRegisterForm.css';
+import styles from './adminRegisterForm.module.scss';
 import { UserContext } from '../../context/Context';
 
 function AdminRegisterForm() {
@@ -37,9 +37,11 @@ function AdminRegisterForm() {
   }
 
   return (
-    <form className="adm-register-form">
-      <div className="adm-register-form-inputs">
-        <label htmlFor="name">
+    <form className={ styles.adm__register }>
+      <h2 className={ styles.adm__register__title }>Cadastrar novo usuário</h2>
+      <hr />
+      <div className={ styles.adm__register__inputs }>
+        <label htmlFor="name" className={ styles.adm__register__inputs__label }>
           Nome Completo:
           <input
             value={ name }
@@ -48,9 +50,10 @@ function AdminRegisterForm() {
             onChange={ (event) => setName(event.target.value) }
             id="name"
             name="name"
+            className={ styles.adm__register__inputs__input }
           />
         </label>
-        <label htmlFor="email">
+        <label htmlFor="email" className={ styles.adm__register__inputs__label }>
           E-Mail:
           <input
             value={ email }
@@ -59,9 +62,10 @@ function AdminRegisterForm() {
             onChange={ (event) => setEmail(event.target.value) }
             id="email"
             name="email"
+            className={ styles.adm__register__inputs__input }
           />
         </label>
-        <label htmlFor="password">
+        <label htmlFor="password" className={ styles.adm__register__inputs__label }>
           Senha:
           <input
             value={ password }
@@ -70,9 +74,10 @@ function AdminRegisterForm() {
             onChange={ (event) => setPassword(event.target.value) }
             id="password"
             name="password"
+            className={ styles.adm__register__inputs__input }
           />
         </label>
-        <label htmlFor="role">
+        <label htmlFor="role" className={ styles.adm__register__inputs__label }>
           Tipo:
           <select
             data-testid="admin_manage__select-role"
@@ -80,6 +85,7 @@ function AdminRegisterForm() {
             id="role"
             name="role"
             onChange={ (event) => setRole(event.target.value) }
+            className={ styles.adm__register__inputs__input }
           >
             <option value="seller">Vendedor</option>
             <option value="customer">Cliente</option>
@@ -92,15 +98,19 @@ function AdminRegisterForm() {
         value="register-button"
         onClick={ handleUserRegistration }
         disabled={ !canRegister }
+        className={ styles.adm__register__submit }
       >
         Cadastrar
       </button>
 
       {
         showError && (
-          <p className="error" data-testid="admin_manage__element-invalid-register">
+          <span
+            className={ styles.adm__register__error }
+            data-testid="admin_manage__element-invalid-register"
+          >
             Nome ou e-mail já cadastrado!
-          </p>
+          </span>
         )
       }
     </form>

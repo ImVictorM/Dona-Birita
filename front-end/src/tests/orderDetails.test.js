@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { LOGGED_CUSTOMER, LOGGED_SELLER } from './mocks/userTypes.mock';
 import { renderWithRouterAndProvider } from './utils/renderOptions';
@@ -16,6 +16,8 @@ import {
 
 const CUSTOMER_ORDER_DETAILS_ENDPOINT = `/customer/orders/${PENDING_ORDER.id}`;
 const SELLER_ORDER_DETAILS_ENDPOINT = `/seller/orders/${PENDING_ORDER.id}`;
+
+const LOADING_TEST_ID = 'loading-img';
 
 describe(`PATH: ${CUSTOMER_ORDER_DETAILS_ENDPOINT} - Customer order details`, () => {
   // Test id customer
@@ -35,6 +37,8 @@ describe(`PATH: ${CUSTOMER_ORDER_DETAILS_ENDPOINT} - Customer order details`, ()
     beforeEach(async () => {
       requestWithCORS.mockReturnValueOnce(PENDING_ORDER);
       renderWithRouterAndProvider(<App />, CUSTOMER_ORDER_DETAILS_ENDPOINT);
+
+      await waitForElementToBeRemoved(() => screen.getByTestId(LOADING_TEST_ID));
       await waitFor(() => expect(requestWithCORS).toHaveBeenCalledTimes(1));
     });
 
@@ -63,6 +67,7 @@ describe(`PATH: ${CUSTOMER_ORDER_DETAILS_ENDPOINT} - Customer order details`, ()
       requestWithCORS.mockReturnValueOnce(DELIVERED_ORDER);
 
       renderWithRouterAndProvider(<App />, CUSTOMER_ORDER_DETAILS_ENDPOINT);
+      await waitForElementToBeRemoved(() => screen.getByTestId(LOADING_TEST_ID));
       await waitFor(() => expect(requestWithCORS).toHaveBeenCalledTimes(1));
 
       const deliveredBtn = screen.getByTestId(DELIVERED_BTN_TEST_ID);
@@ -100,6 +105,8 @@ describe(`PATH: ${SELLER_ORDER_DETAILS_ENDPOINT} - Seller order details`, () => 
     beforeEach(async () => {
       requestWithCORS.mockReturnValueOnce(PENDING_ORDER);
       renderWithRouterAndProvider(<App />, SELLER_ORDER_DETAILS_ENDPOINT);
+
+      await waitForElementToBeRemoved(() => screen.getByTestId(LOADING_TEST_ID));
       await waitFor(() => expect(requestWithCORS).toHaveBeenCalledTimes(1));
     });
 
@@ -139,7 +146,9 @@ describe(`PATH: ${SELLER_ORDER_DETAILS_ENDPOINT} - Seller order details`, () => 
       requestWithCORS.mockReturnValueOnce(undefined);
       requestWithCORS.mockReturnValueOnce(IN_TRANSIT_ORDER);
 
-      renderWithRouterAndProvider(<App />, CUSTOMER_ORDER_DETAILS_ENDPOINT);
+      renderWithRouterAndProvider(<App />, SELLER_ORDER_DETAILS_ENDPOINT);
+
+      await waitForElementToBeRemoved(() => screen.getByTestId(LOADING_TEST_ID));
       await waitFor(() => expect(requestWithCORS).toHaveBeenCalledTimes(1));
 
       const prepareOrderBtn = screen.getByTestId(PREPARE_BTN_TEST_ID);
@@ -147,6 +156,8 @@ describe(`PATH: ${SELLER_ORDER_DETAILS_ENDPOINT} - Seller order details`, () => 
 
       expect(screen.getByTestId(STATUS_TEST_ID).textContent).toBe(PENDING_ORDER.status);
 
+      expect(prepareOrderBtn).toBeEnabled();
+      expect(dispathOrderBtn).not.toBeEnabled();
       userEvent.click(prepareOrderBtn);
 
       await waitFor(() => {
@@ -154,12 +165,16 @@ describe(`PATH: ${SELLER_ORDER_DETAILS_ENDPOINT} - Seller order details`, () => 
           .toBe(PREPARING_ORDER.status);
       });
 
+      expect(prepareOrderBtn).not.toBeEnabled();
+      expect(dispathOrderBtn).toBeEnabled();
       userEvent.click(dispathOrderBtn);
 
       await waitFor(() => {
         expect(screen.getByTestId(STATUS_TEST_ID).textContent)
           .toBe(IN_TRANSIT_ORDER.status);
       });
+
+      expect(dispathOrderBtn).not.toBeEnabled();
     });
   });
 });

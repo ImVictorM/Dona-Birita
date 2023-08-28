@@ -4,11 +4,13 @@ import UserList from '../components/admin/userList';
 
 function Admin() {
   return (
-    <section>
+    <>
       <Header />
-      <AdminRegisterForm />
-      <UserList />
-    </section>
+      <main>
+        <AdminRegisterForm />
+        <UserList />
+      </main>
+    </>
   );
 }
 

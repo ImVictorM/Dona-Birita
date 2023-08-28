@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import requestWithCORS from '../../utils/requestWithCORS';
 import { POST_USER_LOGIN } from '../../utils/backendEndpoints';
-import './loginForm.css';
+import logo from '../../images/donabiritaLogo.png';
+import styles from './loginForm.module.scss';
 
 function LoginForm() {
   const history = useHistory();
@@ -49,55 +50,68 @@ function LoginForm() {
   }
 
   return (
-    <form className="login-register-form">
-      <div className="inputs-container">
-        <h1>Login 🍺</h1>
-        <label htmlFor="email">
-          E-mail
-          <input
-            onChange={ (event) => setEmail(event.target.value) }
-            value={ email }
-            type="text"
-            data-testid="common_login__input-email"
-            id="email"
-            placeholder="Digite seu e-mail"
-          />
-        </label>
-        <label htmlFor="password">
-          Senha
-          <input
-            onChange={ (event) => setPassword(event.target.value) }
-            value={ password }
-            type="password"
-            data-testid="common_login__input-password"
-            id="password"
-            placeholder="Digite sua senha"
-          />
-        </label>
-        <div className="login-buttons">
-          <button
-            disabled={ loginIsDisabled }
-            type="button"
-            data-testid="common_login__button-login"
-            onClick={ handleLogin }
-          >
-            Login
-          </button>
-          <button
-            type="button"
-            data-testid="common_login__button-register"
-            onClick={ () => history.push('/register') }
-          >
-            Cadastrar
-          </button>
+    <form className={ styles.login }>
+      <img
+        src={ logo }
+        className={ styles.login__logo }
+        alt="dona birita logo"
+      />
+      <div className={ styles.login__container }>
+        <div className={ styles.login__inputs }>
+          <label htmlFor="email" className={ styles.login__label }>
+            E-mail
+            <input
+              onChange={ (event) => setEmail(event.target.value) }
+              value={ email }
+              type="text"
+              data-testid="common_login__input-email"
+              id="email"
+              placeholder="Digite seu e-mail"
+            />
+          </label>
+          <label htmlFor="password" className={ styles.login__label }>
+            Senha
+            <input
+              onChange={ (event) => setPassword(event.target.value) }
+              value={ password }
+              type="password"
+              data-testid="common_login__input-password"
+              id="password"
+              placeholder="Digite sua senha"
+            />
+          </label>
         </div>
+
         {
           showError && (
-            <p data-testid="common_login__element-invalid-email">
+            <span
+              data-testid="common_login__element-invalid-email"
+              className={ styles.login__error }
+            >
               Email ou senha incorreta!
-            </p>
+            </span>
           )
         }
+
+        <button
+          disabled={ loginIsDisabled }
+          type="button"
+          data-testid="common_login__button-login"
+          onClick={ handleLogin }
+          className={ styles.login__container__button }
+        >
+          Entrar
+        </button>
+
+        <div className={ styles.login__container__link }>
+          <p>Não tem uma conta?</p>
+          <Link
+            data-testid="common_login__button-register"
+            to="/register"
+          >
+            Cadastrar
+          </Link>
+        </div>
       </div>
     </form>
   );

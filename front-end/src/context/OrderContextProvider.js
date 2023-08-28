@@ -14,7 +14,7 @@ function OrderContextProvider({ children }) {
     };
 
     const orderFromDB = await requestWithCORS(options);
-    setSelectedOrder(orderFromDB);
+    setSelectedOrder(() => orderFromDB);
   }, []);
 
   const fetchUserOrders = useCallback(async () => {
@@ -33,8 +33,17 @@ function OrderContextProvider({ children }) {
       method: 'PATCH',
     };
     await requestWithCORS(options, { status });
-    fetchOrderByID(id);
+
+    await fetchOrderByID(id);
   }, [fetchOrderByID]);
+
+  const clearSelectOrder = useCallback(() => {
+    setSelectedOrder({});
+  }, []);
+
+  const clearOrders = useCallback(() => {
+    setOrders([]);
+  }, []);
 
   const value = useMemo(() => ({
     orders,
@@ -42,7 +51,17 @@ function OrderContextProvider({ children }) {
     fetchOrderByID,
     updateOrderStatus,
     fetchUserOrders,
-  }), [fetchOrderByID, fetchUserOrders, orders, selectedOrder, updateOrderStatus]);
+    clearOrders,
+    clearSelectOrder,
+  }), [
+    clearOrders,
+    clearSelectOrder,
+    fetchOrderByID,
+    fetchUserOrders,
+    orders,
+    selectedOrder,
+    updateOrderStatus,
+  ]);
 
   return (
     <OrderContext.Provider value={ value }>

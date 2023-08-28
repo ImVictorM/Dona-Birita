@@ -1,0 +1,15 @@
+@use '../../styles/' as *;
+
+.order__products {
+  padding: 30px 10px;
+  margin-bottom: 30px;
+}
+
+.order__products__table {
+  @include base-table;
+
+  &__title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+}

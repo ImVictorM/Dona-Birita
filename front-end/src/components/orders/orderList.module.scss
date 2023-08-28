@@ -1,0 +1,68 @@
+@use '../../styles/' as *;
+
+.orders {
+  @include center-flex(row);
+  @include white-background;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: start;
+  padding: 25px 10%;
+}
+
+.orders__card  {
+  background-color: $neutral-white;
+  border: 0.5px solid $secondary-color;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.623);
+  color: $black-font;
+  display: flex;
+  font-size: 20px;
+  justify-content: space-between;
+  margin: 5px;
+  max-width: 600px;
+  text-decoration: none;
+  width: 90%;
+
+  &__cell {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    padding: 10px;
+    text-align: center;
+    justify-content: space-between;
+  }
+  
+  &__cell__title {
+    color: $accent-font;
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 10px;
+  }
+
+  @include screen-size('xs', 'md') {
+    flex-direction: column;
+
+    &__cell {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      align-items: center;
+
+      &__title {
+       justify-self: flex-start;
+       margin: 5px 0;
+      }
+
+      >:last-child {
+        justify-self: flex-end;
+        text-align: end;
+      }
+    }
+  }
+}
+
+@include screen-size('xs', 'md') {
+  .orders {
+    padding: 25px 0;
+    justify-content: center;
+  }
+}

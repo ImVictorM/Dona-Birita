@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useContext, useState } from 'react';
 import { CartContext } from '../../context/Context';
-import './card.css';
+import styles from './card.module.scss';
 
 function Card({ id, name, imag, price }) {
   const [quantity, setQuantity] = useState(undefined);
@@ -41,14 +41,21 @@ function Card({ id, name, imag, price }) {
   }
 
   return (
-    <li className="card">
-      <p data-testid={ `customer_products__element-card-title-${id}` }>{ name }</p>
+    <li className={ styles.products__item }>
+      <p
+        data-testid={ `customer_products__element-card-title-${id}` }
+        className={ styles.products__item__name }
+      >
+        { name }
+
+      </p>
       <img
         data-testid={ `customer_products__img-card-bg-image-${id}` }
         src={ imag }
         alt={ name }
+        className={ styles.products__item__image }
       />
-      <div className="price-container">
+      <div className={ styles.products__item__price }>
         <span>R$: </span>
         <span
           data-testid={ `customer_products__element-card-price-${id}` }
@@ -56,7 +63,7 @@ function Card({ id, name, imag, price }) {
           { price.replace('.', ',') }
         </span>
       </div>
-      <div className="quantity-container">
+      <div className={ styles.products__item__quantity }>
         <button
           type="button"
           onClick={ handleClickMinus }

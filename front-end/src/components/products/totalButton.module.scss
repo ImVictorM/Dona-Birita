@@ -1,0 +1,31 @@
+@use '../../styles/' as *;
+
+.products__cartbtn {
+  @include base-button;
+  
+  border-radius: 70px;
+  bottom: 40px;
+  box-shadow: 0 0 3px black;
+  font-size: 20px;
+  height: 80px;
+  padding: 5px 30px;
+  position: fixed;
+  right: 30px;
+  width: 250px;
+
+  &:disabled {
+    background-color: $secondary-color;
+    box-shadow: none;
+    color: $white-font;
+    opacity: 0.3;
+  }
+}
+
+@include screen-size('xs', 'sm') {
+  .products__cartbtn {
+    bottom: 10px;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+}
+

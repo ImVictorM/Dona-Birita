@@ -1,0 +1,67 @@
+@use '../../styles' as *;
+
+.login {
+  @include center-block;
+  &__logo {
+    left: 50%;
+    position: absolute;
+    top: 0%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+  }
+}
+
+.login__container {
+  @include base-orange-box;
+
+  &__link {
+    margin-top: auto;
+  }
+}
+
+.login__inputs {
+  @include center-flex(column);
+  margin-top: 150px;
+  margin-bottom: 30px;
+  width: 100%;
+
+  input {
+    @include underline-input;
+    text-align: center;
+  }
+}
+
+.login__label {
+  @include label-text-above;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.575);
+  width: 85%;
+}
+
+
+.login__container__button {
+  @include base-button;
+  text-transform: uppercase;
+  width: 50%;
+}
+
+.login__container__link {
+  @include center-flex(column);
+  margin-bottom: 20px;
+
+  p {
+    font-weight: 900;
+    font-size: 15px;
+    color: $black-font;
+    margin-bottom: 7px;
+  }
+
+  a {
+    @include base-link($white-font)
+  }
+}
+
+.login__error {
+  @include base-error;
+  bottom: 25%;
+  position: absolute;
+}

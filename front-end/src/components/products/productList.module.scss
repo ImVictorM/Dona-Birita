@@ -1,0 +1,26 @@
+@use '../../styles/' as *;
+
+.wrapper {
+  @include white-background;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 0.7em;
+  list-style: none;
+  margin: auto;
+  max-width: 1200px;
+  padding: 25px 40px;
+  justify-content: center;
+}
+
+@include screen-size('xs', 'sm') {
+  .wrapper {
+    margin-bottom: 100px;
+  }
+  .products {
+    margin: 0 20px;
+    padding: 25px 7px;
+  }
+}
